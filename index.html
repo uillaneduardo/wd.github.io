@@ -25,42 +25,84 @@
 
   /* ======= HOME ======= */
   #homeScreen{min-height:100dvh; position:relative;}
-  .header-home{position:relative; padding:2rem 1rem; text-align:center; color:#fff;}
+  .header-home{position:relative; padding:2rem 1rem 1.25rem; text-align:center; color:#fff;}
+
+  /* Ícone usuário (mantém círculo) */
   .user-icon{
     position:fixed; top:1rem; right:1rem; z-index:20;
     width:44px; height:44px; border-radius:50%;
     border:2px solid #fff; background:#000; color:#fff;
     display:flex; align-items:center; justify-content:center;
   }
-  .hero-text{ color:#fff; text-align:center; margin-bottom:1rem; }
-  .hero-text .main-title{ font-weight:800; letter-spacing:.5px; }
-  .hero-text .subtitle{ }
 
-  .video-section{ background:#ffffff; border-radius:16px; padding:1rem; border:2px solid #000; }
-  .video-title{ color:#000; margin-top:.5rem; font-weight:700; }
+  /* HERO — maior contraste (card sólido, sem transparência) */
+  .hero-text{
+    display:inline-block;
+    background:#fff;
+    color:#000;
+    /*border:2px solid #000;
+    /*border-radius:12px; /* menos arredondado */
+    padding:.75rem 1rem;
+    text-align:center;
+    margin:0 auto 1rem;
+    /* box-shadow:0 6px 0 #000; */
+  }
+  .hero-text .main-title{ font-weight:800; letter-spacing:.5px; line-height:1.1; }
+  .hero-text .subtitle{ display:block; font-weight:600; margin-top:.15rem; }
+
+  /* SEÇÃO VÍDEO — levemente menor e menos arredondada */
+  .video-section{
+    background:#ffffff;
+    border-radius:10px; /* antes 16px */
+    padding:.75rem; /* antes 1rem */
+    border:2px solid #000;
+  }
+  .video-title{ color:#000; margin-top:.25rem; font-weight:700; }
   .video-description{ color:#333; }
 
   /* player + overlay de clique */
   #highlightVideo .col-12.col-lg-7{ position:relative; }
-  .video-preview{ width:100%; border-radius:12px; background:#000; min-height:220px; border:2px solid #000; }
+  .video-preview{
+    width:100%;
+    aspect-ratio:16/9; /* garante proporção e reduz altura visual */
+    border-radius:8px; /* antes 12px */
+    background:#000;
+    border:2px solid #000;
+  }
   .preview-tapzone{
     position:absolute; inset:0; border:0; padding:0; margin:0; background:transparent; cursor:pointer;
   }
 
+  /* carrossel */
   .thumb-list{
-    display:flex; gap:.75rem; overflow-x:auto; padding:.75rem .25rem;
+    display:flex; gap:.6rem; overflow-x:auto; padding:.6rem .25rem;
     scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch;
   }
   .thumb-item{
-    width:140px; height:88px; object-fit:cover; border-radius:10px;
+    width:150px; height:90px; object-fit:cover; border-radius:8px; /* antes 10px */
     scroll-snap-align:center; cursor:pointer; flex:0 0 auto;
     border:2px solid #000;
   }
 
-  .download-buttons{ display:flex; gap:.75rem; justify-content:center; }
-  .playstore-btn, .appstore-btn{ font-weight:700; }
+  /* BOTÕES DE DOWNLOAD — maiores (mantém cores/ícones) */
+  .download-buttons{ display:flex; gap:.8rem; justify-content:center; }
+  .playstore-btn, .appstore-btn{
+    font-weight:800;
+    padding:.9rem 1.25rem; /* maior */
+    font-size:1.05rem;     /* maior */
+    border-radius:12px;    /* menos arredondado */
+    border:2px solid #000;
+    box-shadow:0 4px 0 #000;
+  }
 
+  /* Espaço extra no mobile entre downloads e Join & Claim */
+  main.container{ padding-bottom:7.5rem; } /* geral */
+  @media (max-width: 576px){
+    main.container{ padding-bottom:10.5rem; } /* mais espaço no mobile */
+  }
+
+  /* JOIN & CLAIM — menor e menos arredondado */
   .join-claim-section{
     position:fixed; left:0; right:0; bottom:0; z-index:15;
     display:flex; flex-direction:column; align-items:center; gap:.35rem;
@@ -69,30 +111,35 @@
   .next-spin-text{ color:#fff; font-size:.9rem; }
   .fixed-bottom-btn{
     display:inline-flex; align-items:center; gap:.5rem; justify-content:center;
-    width:min(680px, 94vw);
+    width:min(520px, 92vw); /* antes 680px */
     background:var(--brand-yellow);
-    color:#000; border:2px solid #000; font-weight:800; padding:.9rem 1.2rem; border-radius:999px;
+    color:#000; border:2px solid #000; font-weight:800;
+    padding:.7rem 1rem;    /* menor */
+    border-radius:18px;    /* antes pílula total */
+    box-shadow:0 6px 0 #000;
   }
 
   /* ======= FEED ======= */
   #feedScreen{ display:none; position:fixed; inset:0; background:#000; z-index:30; }
   .feed-container{ position:relative; width:100%; height:100%; overflow:hidden; background:#000; }
-  #feedVideo.feed-video{ width:100%; height:100%; }
+  #feedVideo.feed-video{ width:100%; height:100%; will-change:transform; }
   .feed-actions{
     position:absolute; right:12px; top:50%; transform:translateY(-50%);
-    display:flex; flex-direction:column; align-items:center; gap:.65rem; color:#fff;
+    display:flex; flex-direction:column; align-items:center; gap:.6rem; color:#fff;
   }
   .feed-actions button{
     background:#000; border:2px solid #fff; color:#fff;
-    width:52px; height:52px; border-radius:12px; display:grid; place-items:center; font-size:1.35rem;
+    width:50px; height:50px; border-radius:10px; display:grid; place-items:center; font-size:1.25rem;
+    transition:transform .15s ease;
   }
-  .feed-actions .count{ font-size:.95rem; }
+  .feed-actions button:active{ transform:scale(.96); }
+  .feed-actions .count{ font-size:.9rem; }
   #backBtn{
     position:absolute; top:12px; left:12px; z-index:5;
-    background:#000; color:#fff; border:2px solid #fff; border-radius:999px; padding:.35rem .7rem;
+    background:#000; color:#fff; border:2px solid #fff; border-radius:18px; padding:.35rem .7rem;
   }
-  .progress-bar-container{ position:absolute; left:0; right:0; bottom:0; height:5px; background:#ddd; }
-  .progress-bar-fill{ height:100%; width:0%; background:var(--brand-yellow); }
+  .progress-bar-container{ position:absolute; left:0; right:0; bottom:0; height:6px; background:#222; }
+  .progress-bar-fill{ height:100%; width:0%; background:var(--brand-yellow); transition:width .18s linear; }
 
   .feed-tapzone{ position:absolute; inset:0; }
 
@@ -101,16 +148,16 @@
     position:fixed; inset:auto; display:none; z-index:40;
     left:50%; top:50%; transform:translate(-50%, -50%);
     width:min(92vw, 520px); max-height:min(86vh, 720px);
-    background:#ffffff; color:#000; border:3px solid #000; border-radius:20px;
+    background:#ffffff; color:#000; border:3px solid #000; border-radius:14px; /* antes 20px */
     overflow:hidden;
-    box-shadow: 0 10px 0 #000; /* sombra sólida (sem transparência) no estilo "cartão" */
+    box-shadow: 0 10px 0 #000; /* sombra sólida (sem transparência) */
   }
   .popup-login .header{
     display:flex; justify-content:space-between; align-items:center;
     padding:1rem; border-bottom:3px solid #000; background:#fff;
   }
   .btn-close{
-    width:40px; height:40px; border-radius:50%; border:3px solid #000;
+    width:38px; height:38px; border-radius:10px; border:3px solid #000; /* menos arredondado */
     background:#000; color:#fff; display:grid; place-items:center;
   }
   .popup-login .content{ padding:1rem; }
@@ -119,6 +166,7 @@
   .next-reward-time{ color:#000; font-weight:800; }
   .btn-login-google, .btn-login-apple{
     width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
+    border-radius:12px; box-shadow:0 5px 0 #000;
   }
 
   /* ======= UTIL ======= */
@@ -130,16 +178,16 @@
 <!-- =================== HOME =================== -->
 <div id="homeScreen">
   <header class="header-home">
-    <h1 class="hero-text mb-1">
+    <h1 class="hero-text mb-2">
       <span class="main-title h1 d-block">Wheel Done</span>
       <small class="subtitle">Mobile car simulator with clutch and manual gear</small>
     </h1>
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
 
-  <main class="container pb-5">
-    <!-- Seção Video Destaque -->
-    <section id="highlightVideo" class="video-section">
+  <main class="container">
+    <!-- Seção Video Destaque (um pouco menor) -->
+    <section id="highlightVideo" class="video-section mt-2">
       <div class="row g-3 align-items-stretch">
         <div class="col-12 col-lg-7">
           <!-- Player YouTube + overlay de clique -->
@@ -147,7 +195,7 @@
           <button id="previewTap" class="preview-tapzone" aria-label="Abrir feed"><span class="visually-hidden">Abrir feed</span></button>
         </div>
         <div class="col-12 col-lg-5 d-flex flex-column">
-          <h4 class="video-title">Manual Mastery — Clutch & Gear Control</h4>
+          <h4 class="video-title">Manual Mastery — Clutch &amp; Gear Control</h4>
           <p class="video-description">
             Sinta a embreagem, troque marchas no tempo perfeito e domine as ruas.
             Essa seção mostra o vídeo em destaque; toque para abrir o feed vertical.
@@ -163,14 +211,14 @@
       </div>
     </section>
 
-    <!-- Download Buttons -->
+    <!-- Download Buttons (maiores) -->
     <section id="downloadButtons" class="download-buttons my-4">
       <a href="#" class="btn btn-dark playstore-btn"><i class="bi bi-google-play"></i> Play Store</a>
       <a href="#" class="btn btn-secondary appstore-btn"><i class="bi bi-apple"></i> App Store</a>
     </section>
   </main>
 
-  <!-- Join & Claim fixo -->
+  <!-- Join & Claim fixo (menor) -->
   <section id="joinAndClaim" class="join-claim-section">
     <p id="nextSpinText" class="next-spin-text">next spin restart: <span id="nextSpinEta">20h57m</span></p>
     <button id="joinClaimBtn" class="fixed-bottom-btn">
@@ -332,7 +380,7 @@
       const cur = feedPlayer.getCurrentTime? feedPlayer.getCurrentTime() : 0;
       const p = dur ? (cur/dur)*100 : 0;
       progressFill.style.width = p + '%';
-    }, 200);
+    }, 180);
   }
 
   // Pause/Play no toque central do feed
@@ -357,7 +405,7 @@
     shareCount.textContent = (+shareCount.textContent + 1);
   });
 
-  // Swipe com animação que acompanha o dedo
+  // Swipe com animação mais fluida
   const feedContainer = document.getElementById('feedContainer');
   let startY = 0, currentY = 0, swiping = false;
 
@@ -365,14 +413,16 @@
     swiping = true;
     startY = e.touches[0].clientY;
     currentY = startY;
-    document.getElementById('feedVideo').style.transition = 'none';
+    const el = document.getElementById('feedVideo');
+    el.style.transition = 'none';
   }, {passive:true});
 
   feedContainer.addEventListener('touchmove', (e)=>{
     if(!swiping) return;
     currentY = e.touches[0].clientY;
     const dy = currentY - startY;
-    document.getElementById('feedVideo').style.transform = `translateY(${dy}px)`;
+    const el = document.getElementById('feedVideo');
+    el.style.transform = `translateY(${dy}px)`;
   }, {passive:true});
 
   feedContainer.addEventListener('touchend', ()=>{
@@ -380,9 +430,8 @@
     swiping = false;
     const dy = currentY - startY;
     const el = document.getElementById('feedVideo');
-    el.style.transition = 'transform .25s ease';
-    const threshold = 100;
-
+    const threshold = Math.min(120, window.innerHeight * 0.18);
+    el.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1)';
     if(dy < -threshold && currentIndex < ytVideos.length-1){
       // próximo
       currentIndex++;
@@ -390,7 +439,7 @@
       setTimeout(()=>{
         feedPlayer.loadVideoById(ytVideos[currentIndex], 0, "hd1080");
         el.style.transform = 'translateY(0)';
-      }, 250);
+      }, 300);
     } else if(dy > threshold && currentIndex > 0){
       // anterior
       currentIndex--;
@@ -398,7 +447,7 @@
       setTimeout(()=>{
         feedPlayer.loadVideoById(ytVideos[currentIndex], 0, "hd1080");
         el.style.transform = 'translateY(0)';
-      }, 250);
+      }, 300);
     } else {
       el.style.transform = 'translateY(0)';
     }
