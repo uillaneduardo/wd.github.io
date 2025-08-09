@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wheel Done — Spin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root{
+  --brand-yellow:#ffc107;
+  --brand-black:#000000;
+  --brand-white:#ffffff;
+  --neutral-gray:#e5e5e5;
+}
+body{
+  margin:0; background:#000 url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop") center/cover no-repeat fixed;
+  color:#fff; font-family:sans-serif; overflow-x:hidden;
+}
+.header-home{position:relative; padding:2rem 1rem; text-align:center; color:#fff;}
+.user-icon{
+  position:fixed; top:1rem; right:1rem; z-index:20;
+  width:44px; height:44px; border-radius:50%;
+  border:2px solid #fff; background:#000; color:#fff;
+  display:flex; align-items:center; justify-content:center;
+}
+/* Roleta */
+.wheel-container{display:flex; flex-direction:column; align-items:center; margin-top:1rem;}
+.wheel{
+  width:300px; height:300px; border-radius:50%; border:4px solid var(--brand-black);
+  position:relative; overflow:hidden; background:var(--neutral-gray);
+  transition:transform 4s ease-out;
+}
+.pointer{
+  width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent;
+  border-bottom:25px solid red; position:absolute; top:-25px; left:50%; transform:translateX(-50%);
+  z-index:5;
+}
+.spin-btn{
+  position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+  background:var(--brand-yellow); border:2px solid var(--brand-black); color:#000;
+  padding:1rem 1.5rem; border-radius:12px; font-weight:800; box-shadow:0 4px 0 #000;
+}
+/* Botões de modo */
+.mode-buttons{display:flex; gap:.5rem; margin-top:1rem;}
+.mode-buttons button{
+  flex:1; background:var(--brand-yellow); color:#000; font-weight:800;
+  border:2px solid var(--brand-black); border-radius:10px; padding:.6rem; box-shadow:0 3px 0 #000;
+}
+/* Inventário */
+.inventory{
+  background:#fff; color:#000; border:2px solid #000; border-radius:12px; padding:1rem; margin:1rem; width:100%; max-width:500px;
+}
+.inventory h4{text-align:center; font-weight:800; margin-bottom:.75rem;}
+.inv-grid{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:.5rem;
+}
+.inv-item{
+  height:80px; background:var(--neutral-gray); border:2px solid #000; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; font-size:.85rem; text-align:center; padding:.25rem;
+}
+</style>
+</head>
+<body>
+
+<header class="header-home">
+  <h1 class="h3 fw-bold">Daily Spin</h1>
+  <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
+</header>
+
+<main class="container d-flex flex-column align-items-center">
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <canvas id="wheelCanvas" class="wheel"></canvas>
+    <button class="spin-btn" id="spinBtn">SPIN</button>
+  </div>
+  <div class="mode-buttons w-100 mt-3">
+    <button id="modeFree">Free</button>
+    <button id="modeSpecial">Special</button>
+  </div>
+  <div class="inventory mt-3">
+    <h4>Inventário</h4>
+    <div class="inv-grid" id="inventoryGrid">
+      <!-- Itens aqui -->
+    </div>
+  </div>
+</main>
+
+<script>
+const canvas = document.getElementById('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
+const invGrid = document.getElementById('inventoryGrid');
+
+let prizes = ["100 Coins","200 Coins","Extra Spin","Skin","50 Coins","500 Coins","Special Car","Jackpot"];
+let colors = ["#ffc107","#fff","#ffc107","#fff","#ffc107","#fff","#ffc107","#fff"];
+let startAngle = 0;
+let arc = Math.PI / (prizes.length/2);
+let spinAngle = 0;
+let spinTime = 0;
+let spinTimeTotal = 0;
+
+function drawWheel(){
+  const outsideRadius = 150;
+  const textRadius = 120;
+  const insideRadius = 30;
+  ctx.clearRect(0,0,300,300);
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 2;
+  ctx.font = 'bold 14px sans-serif';
+  for(let i=0;i<prizes.length;i++){
+    let angle = startAngle + i*arc;
+    ctx.fillStyle = colors[i];
+    ctx.beginPath();
+    ctx.arc(150,150,outsideRadius, angle, angle+arc, false);
+    ctx.arc(150,150,insideRadius, angle+arc, angle, true);
+    ctx.fill();
+    ctx.save();
+    ctx.fillStyle = "#000";
+    ctx.translate(150 + Math.cos(angle+arc/2)*textRadius,
+                  150 + Math.sin(angle+arc/2)*textRadius);
+    ctx.rotate(angle+arc/2);
+    ctx.fillText(prizes[i], -ctx.measureText(prizes[i]).width/2, 0);
+    ctx.restore();
+  }
+}
+function rotateWheel(){
+  spinTime += 30;
+  if(spinTime >= spinTimeTotal){
+    stopRotateWheel();
+    return;
+  }
+  let spinAngleIncrement = easeOut(spinTime, 0.2, spinAngle, spinTimeTotal);
+  startAngle += (spinAngleIncrement * Math.PI/180);
+  drawWheel();
+  requestAnimationFrame(rotateWheel);
+}
+function stopRotateWheel(){
+  let degrees = startAngle * 180/Math.PI + 90;
+  let arcd = arc * 180/Math.PI;
+  let index = Math.floor((360 - (degrees % 360)) / arcd);
+  ctx.save();
+  ctx.font = 'bold 16px sans-serif';
+  alert("Você ganhou: " + prizes[index]);
+  addToInventory(prizes[index]);
+  ctx.restore();
+}
+function easeOut(t, b, c, d){
+  let ts = (t/=d)*t;
+  let tc = ts*t;
+  return b+c*(tc + -3*ts + 3*t);
+}
+spinBtn.addEventListener('click', ()=>{
+  spinAngle = Math.random()*10 + 10;
+  spinTime = 0;
+  spinTimeTotal = Math.random()*3000 + 4000;
+  rotateWheel();
+});
+function addToInventory(item){
+  let div = document.createElement('div');
+  div.className = 'inv-item';
+  div.textContent = item;
+  invGrid.appendChild(div);
+}
+// Inicializa inventário vazio 3x3
+for(let i=0;i<9;i++){
+  let div = document.createElement('div');
+  div.className = 'inv-item';
+  div.textContent = "-";
+  invGrid.appendChild(div);
+}
+drawWheel();
+</script>
+
+</body>
+</html>
