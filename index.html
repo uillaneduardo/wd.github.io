@@ -34,6 +34,7 @@
   }
   .hero-text{ color:#fff; text-align:center; margin-bottom:1rem; }
   .hero-text .main-title{ font-weight:800; letter-spacing:.5px; }
+  .hero-text .subtitle{ }
 
   .video-section{ background:#ffffff; border-radius:16px; padding:1rem; border:2px solid #000; }
   .video-title{ color:#000; margin-top:.5rem; font-weight:700; }
@@ -102,7 +103,7 @@
     width:min(92vw, 520px); max-height:min(86vh, 720px);
     background:#ffffff; color:#000; border:3px solid #000; border-radius:20px;
     overflow:hidden;
-    box-shadow: 0 10px 0 #000; /* sombra sólida */
+    box-shadow: 0 10px 0 #000; /* sombra sólida (sem transparência) no estilo "cartão" */
   }
   .popup-login .header{
     display:flex; justify-content:space-between; align-items:center;
@@ -118,18 +119,6 @@
   .next-reward-time{ color:#000; font-weight:800; }
   .btn-login-google, .btn-login-apple{
     width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
-  }
-
-  /* ======= RESPONSIVO ======= */
-  /* Espaço extra entre os botões de download e o botão Join & Claim no mobile */
-  @media (max-width: 991.98px){
-    #downloadButtons{ margin-bottom: 7rem; } /* ~altura do botão fixo + respiro */
-    /* Ocultar título e descrição do vídeo na Home (mantidos no DOM para SEO) */
-    .video-title, .video-description{ display:none !important; }
-  }
-  @media (min-width: 992px){
-    /* Desktop: título e descrição visíveis */
-    .video-title, .video-description{ display:block; }
   }
 
   /* ======= UTIL ======= */
