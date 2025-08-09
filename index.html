@@ -42,9 +42,8 @@
   /* player + overlay de clique */
   #highlightVideo .col-12.col-lg-7{ position:relative; }
   .video-preview{ width:100%; border-radius:12px; background:#000; min-height:220px; border:2px solid #000; }
-  .video-preview iframe{ pointer-events:none; } /* evita capturar o toque */
   .preview-tapzone{
-    position:absolute; inset:0; border:0; padding:0; margin:0; background:transparent; cursor:pointer; z-index:5;
+    position:absolute; inset:0; border:0; padding:0; margin:0; background:transparent; cursor:pointer;
   }
 
   .thumb-list{
@@ -122,12 +121,14 @@
   }
 
   /* ======= RESPONSIVO ======= */
-  /* Mobile: mais espaço entre download e Join&Claim; esconder título/descrição do vídeo */
+  /* Espaço extra entre os botões de download e o botão Join & Claim no mobile */
   @media (max-width: 991.98px){
-    #downloadButtons{ margin-bottom: 7rem; }
+    #downloadButtons{ margin-bottom: 7rem; } /* ~altura do botão fixo + respiro */
+    /* Ocultar título e descrição do vídeo na Home (mantidos no DOM para SEO) */
     .video-title, .video-description{ display:none !important; }
   }
   @media (min-width: 992px){
+    /* Desktop: título e descrição visíveis */
     .video-title, .video-description{ display:block; }
   }
 
@@ -251,7 +252,7 @@
   function updateEta(){
     if(etaMinutes<0) return;
     const h = Math.floor(etaMinutes/60);
-    the m = etaMinutes%60;
+    const m = etaMinutes%60;
     nextSpinEtaEl.textContent = `${String(h).padStart(2,'0')}h${String(m).padStart(2,'0')}m`;
     etaMinutes--;
   }
@@ -259,17 +260,6 @@
   setInterval(updateEta, 60_000);
 
   /* ===== YouTube Players ===== */
-  function bindPreviewTap(){
-    const btn = document.getElementById('previewTap');
-    if(!btn || btn.dataset.bound) return;
-    btn.dataset.bound = '1';
-    btn.addEventListener('click', ()=>{
-      const vid = (window.previewPlayer && previewPlayer.getVideoData && previewPlayer.getVideoData().video_id) || ytVideos[0];
-      openFeed(vid);
-    });
-  }
-  document.addEventListener('DOMContentLoaded', bindPreviewTap);
-
   let previewPlayer, feedPlayer, previewStopTimer=null;
 
   window.onYouTubeIframeAPIReady = function(){
@@ -292,7 +282,6 @@
   function onPreviewReady(){
     try{ previewPlayer.mute(); }catch(e){}
     try{ previewPlayer.playVideo(); }catch(e){}
-    bindPreviewTap(); // redundância saudável
     if (PREVIEW_SECONDS > 0) {
       clearTimeout(previewStopTimer);
       previewPlayer.seekTo(0, true);
