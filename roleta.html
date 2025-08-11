@@ -34,32 +34,24 @@
     border:2px solid #fff; background:#000; color:#fff;
     display:flex; align-items:center; justify-content:center;
   }
-    .spinTicket{
-    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+  .spinTicket{
     float:left; 
     margin:0 1rem 1rem 0;
     flex:1; background:var(--lighter-red); color:#ffffff; font-weight:800;
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
-
-    .spinHome{
-    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+  .spinHome{
     float:left; 
     margin:0 1rem 1rem 0;
     flex:1; background:var(--brand-white); color:#000000; font-weight:800;
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
-
-    .conquistas{
-      float:left; 
-    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+  .conquistas{
+    float:left; 
     flex:1; background:var(--brand-yellow); color:#000000; font-weight:800;
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
-
-  .clear {
-    clear: both;
-  }
+  .clear { clear: both; }
 
   /* ======= LAYOUT DA TELA SPIN ======= */
   #spinScreen{min-height:100dvh; position:relative;}
@@ -68,26 +60,23 @@
     padding:1rem; box-sizing:border-box;
   }
 
-  /* ======= ROLETa ======= */
+  /* ======= ROLETA ======= */
   #spinWheel.card-section{ position:relative; }
-
   .wheel-wrap{
     position:relative;
-    /* antes: width:min(92vw, 420px) */
-    width:min(100%, 420px);     /* respeita o padding do retângulo pai */
+    width:min(100%, 420px);
     margin:0 auto;
   } 
   .wheel-canvas{
-  display:block;
-  width:100%;
-  height:auto;
-  aspect-ratio:1/1;
-  /* mantém o círculo dentro do wrapper sem “vazar” por causa da borda */
-  box-sizing:border-box;
-  border-radius:50%;
-  border:4px solid var(--brand-black);
-  background:var(--neutral-gray);
-}
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio:1/1;
+    box-sizing:border-box;
+    border-radius:50%;
+    border:4px solid var(--brand-black);
+    background:var(--neutral-gray);
+  }
   .pointer{
     position:absolute; left:50%; top:-6px; transform:translateX(-50%);
     width:0; height:0;
@@ -111,8 +100,6 @@
   .mode-btn.active{ outline:3px solid #000; }
 
   /* ======= INVENTÁRIO ======= */
-  #spinInventory.card-section{}
-
   .inventory-head{
     display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:.75rem;
   }
@@ -150,16 +137,31 @@
     width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
   }
 
-    /* ======= CONQUISTAS (popup ancorado ao botão) ======= */
-  .achievements-wrap{ position:relative; float:left; margin:0 1rem 1rem 0; }
-  .popup-achievements.popup-login{
-    position:absolute; top:calc(100% + 8px); right:0; left:auto;
-    transform:none; display:none; z-index:45;
-    width:min(92vw, 420px); max-height:min(70vh, 520px);
-    border-radius:14px; box-shadow:0 10px 0 #000; /* mesmo estilo do login */
-    overflow:auto;
+  /* ======= POPUP CONQUISTAS ======= */
+  .conquistas-wrap { position: relative; float: left; margin: 0 1rem 1rem 0; color: #000;}
+  .popup-achievements {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: auto;
+    left: 0;
+    transform: none;
+    display: none;
+    z-index: 45;
+    width: min(92vw, 420px);
+    max-height: min(70vh, 520px);
+    border-radius: 14px;
+    box-shadow: 0 10px 0 #000;
+    overflow: auto;
+    background: #fff;
+    border: 3px solid #000;
   }
-  .achv-list{ display:flex; flex-direction:column; gap:.6rem; margin-top:.5rem; }
+  .popup-achievements .header{
+    display:flex; align-items:center;
+    padding:1rem; border-bottom:3px solid #000; background:#fff;
+  }
+  .popup-achievements .header h5{ margin:0; }
+  .popup-achievements .content{ padding:1rem; }
+  .achv-list{ display:flex; flex-direction:column; gap:.6rem; }
   .achv-item{
     display:flex; align-items:flex-start; justify-content:space-between; gap:.75rem;
     background:#fff; border:2px solid #000; border-radius:12px; padding:.6rem .8rem;
@@ -168,17 +170,22 @@
   .achv-title{ margin:0; font-weight:800; }
   .achv-desc{ margin:.1rem 0 0; font-size:.9rem; color:#333; }
   .achv-status{ display:flex; align-items:center; gap:.5rem; white-space:nowrap; font-weight:800; }
-
-  /* Botão “Obtido” (verde, mesma linguagem visual) */
   .btn-obtained{
     background:#28a745; color:#000; font-weight:800;
-    border:3px solid #000; border-radius:10px; padding:.35rem .6rem;
-    box-shadow:0 3px 0 #000;
+    border:3px solid #000; border-radius:10px; padding:.35rem .6rem; box-shadow:0 3px 0 #000;
   }
-
-  /* “XP atual / necessário” para não obtidos */
   .xp-meter{ font-weight:800; }
 
+  /* Mobile: alinhado à tela e responsivo */
+  @media (max-width: 576px){
+    .popup-achievements{
+      position: fixed;
+      left: 8px;
+      right: 8px;
+      width: auto;
+      max-height: min(72vh, 560px);
+    }
+  }
 
   /* ======= UTIL ======= */
   .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
@@ -193,23 +200,15 @@
     <button id="spinHome" class="spinHome" type="button" aria-label="Home"><i class="bi bi-house"></i> Home</button>
     <!-- Botão de Tickets -->
     <button id="spinTickets" class="spinTicket" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i> 2 Tickets</button>
-
-    <!-- Botão de Conquistas + popup ancorado -->
-    <div class="achievements-wrap">
-      <button id="conquistas" class="conquistas" type="button" aria-label="Conquistas">
-        <i class="bi bi-flag"></i> Conquistas
-      </button>
-
-      <!-- Popup Conquistas (segue padrão do popup-login) -->
-      <aside id="achievementsPopup" class="popup-achievements popup-login" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
+    <!-- Botão de Conquistas + popup -->
+    <div class="conquistas-wrap">
+      <button id="conquistas" class="conquistas" type="button" aria-label="Conquistas"><i class="bi bi-flag"></i> Conquistas</button>
+      <aside id="achievementsPopup" class="popup-achievements" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
         <div class="header">
           <h5 id="achievementsTitle" class="m-0">Aumente seu nível e obtenha mais conquistas.</h5>
-          <button id="closeAchievements" class="btn-close" aria-label="Fechar"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="content">
-          <!-- linha separadora já é o border-bottom da .header, igual ao login -->
           <div class="achv-list">
-            <!-- Exemplo: item obtido -->
             <div class="achv-item">
               <div class="text">
                 <p class="achv-title">Novato da Estrada</p>
@@ -219,22 +218,19 @@
                 <button type="button" class="btn-obtained">Obtido</button>
               </div>
             </div>
-
-            <!-- Exemplo: item não obtido -->
             <div class="achv-item">
               <div class="text">
                 <p class="achv-title">Piloto em Treinamento</p>
                 <p class="achv-desc">Alcance o nível 2 acumulando experiência na roleta.</p>
               </div>
               <div class="achv-status">
-                <span class="xp-meter" aria-label="Progresso de experiência">120 / 300 XP</span>
+                <span class="xp-meter">120 / 300 XP</span>
               </div>
             </div>
           </div>
         </div>
       </aside>
     </div>
-
     <!-- Botão de Usuário -->
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
@@ -311,35 +307,41 @@
   document.getElementById('loginApple').addEventListener('click', ()=>{ isLoggedIn=true; closeLogin(); alert('Logado com Apple (simulação)'); });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && loginPopup.style.display==='block') closeLogin(); });
 
+  /* ===== Navegação básica ===== */
+  document.getElementById('spinHome').addEventListener('click', ()=>{ window.location.href='index.html'; });
 
-  /* ===== Conquistas (popup ancorado) ===== */
+  /* ===== Conquistas (popup ancorado + responsivo) ===== */
   const conquistasBtn   = document.getElementById('conquistas');
   const achievementsPop = document.getElementById('achievementsPopup');
-  const closeAchBtn     = document.getElementById('closeAchievements');
 
-  function openAchievements(){ achievementsPop.style.display = 'block'; }
+  function openAchievements(){ achievementsPop.style.display = 'block'; layoutAchievements(); }
   function closeAchievements(){ achievementsPop.style.display = 'none'; }
 
-  conquistasBtn.addEventListener('click', (e)=>{
-    // alterna visibilidade alinhada ao botão
+  function layoutAchievements(){
+    // Em mobile, alinhar ao header dinamicamente
+    const isMobile = window.matchMedia('(max-width: 576px)').matches;
+    if(!isMobile) return; // CSS cobre desktop/tablet
+    const header = document.querySelector('.header-home');
+    const top = Math.round(header.getBoundingClientRect().bottom) + 8; // 8px gap
+    achievementsPop.style.top = top + 'px';
+  }
+
+  conquistasBtn.addEventListener('click', ()=>{
     if(achievementsPop.style.display === 'block') closeAchievements();
     else openAchievements();
   });
 
-  // Fechar no X
-  closeAchBtn.addEventListener('click', closeAchievements);
-
-  // Clique fora fecha
-  document.addEventListener('click', (e)=>{
-    const wrap = e.target.closest('.achievements-wrap');
+  // Clique/touch fora fecha (mobile e desktop)
+  function outsideHandler(e){
+    const wrap = e.target.closest('.conquistas-wrap');
     if(!wrap && achievementsPop.style.display === 'block') closeAchievements();
-  });
+  }
+  document.addEventListener('click', outsideHandler, {passive:true});
+  document.addEventListener('touchstart', outsideHandler, {passive:true});
 
-  // ESC fecha
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape' && achievementsPop.style.display === 'block') closeAchievements();
-  });
-
+  // Recalcula posição quando redimensionar/orientação mudar
+  window.addEventListener('resize', ()=>{ if(achievementsPop.style.display==='block') layoutAchievements(); }, {passive:true});
+  window.addEventListener('orientationchange', ()=>{ if(achievementsPop.style.display==='block') layoutAchievements(); });
 
   /* ===== Roleta ===== */
   const canvas  = document.getElementById('wheelCanvas');
@@ -363,58 +365,20 @@
   let spinTimeTotal = 0;
   let animReq = null;
 
-  // function drawWheel(){
-  //   const size = canvas.width; // canvas é quadrado
-  //   const center = size/2;
-  //   const outsideRadius = center - 10;
-  //   const insideRadius  = 38;
-  //   const textRadius    = center - 60;
-
-  //   ctx.clearRect(0,0,size,size);
-  //   ctx.strokeStyle = "#000";
-  //   ctx.lineWidth = 2;
-  //   ctx.font = 'bold 16px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif';
-
-  //   for(let i=0;i<prizes.length;i++){
-  //     const angle = startAngle + i*arc;
-  //     ctx.fillStyle = colors[i];
-  //     ctx.beginPath();
-  //     ctx.arc(center,center,outsideRadius, angle, angle+arc, false);
-  //     ctx.arc(center,center,insideRadius, angle+arc, angle, true);
-  //     ctx.fill();
-  //     ctx.save();
-  //     ctx.fillStyle = "#000";
-  //     ctx.translate(center + Math.cos(angle+arc/2)*textRadius, center + Math.sin(angle+arc/2)*textRadius);
-  //     ctx.rotate(angle+arc/2);
-  //     const label = prizes[i];
-  //     ctx.fillText(label, -ctx.measureText(label).width/2, 0);
-  //     ctx.restore();
-  //   }
-  //   // hub central
-  //   ctx.beginPath();
-  //   ctx.arc(center, center, insideRadius, 0, Math.PI*2);
-  //   ctx.fillStyle = "#fff";
-  //   ctx.fill();
-  //   ctx.strokeStyle = "#000";
-  //   ctx.lineWidth = 3;
-  //   ctx.stroke();
-  // }
-
-    function drawWheel(){
+  function drawWheel(){
     // Use sempre pixels de CSS ao desenhar (evita "dobro de escala" no mobile)
     const dpr = window.devicePixelRatio || 1;
     const cssSize = canvas.clientWidth || canvas.getBoundingClientRect().width || 320;
-    const size = cssSize;                 // tamanho lógico em CSS px
+    const size = cssSize;                 
     const center = size / 2;
     const outsideRadius = center - 10;
     const insideRadius  = Math.max(34, Math.round(size * 0.09));
     const textRadius    = center - Math.max(52, Math.round(size * 0.14));
     const fontPx        = Math.max(12, Math.round(size * 0.04));
 
-    // Limpa usando pixels do *buffer* e reconfigura a transformação
     ctx.setTransform(1,0,0,1,0,0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.setTransform(dpr,0,0,dpr,0,0); // desenhar em CSS px, que serão escalados ao buffer
+    ctx.setTransform(dpr,0,0,dpr,0,0);
 
     ctx.strokeStyle = "#000";
     ctx.lineWidth   = 2;
@@ -451,7 +415,6 @@
     ctx.stroke();
   }
   
-
   function easeOut(t, b, c, d){
     let ts = (t/=d)*t; let tc = ts*t;
     return b + c*(tc + -3*ts + 3*t);
@@ -520,7 +483,6 @@
       slot.classList.remove('empty');
       slot.textContent = item;
     } else {
-      // sem slot vazio, empurra e adiciona no final
       const div = document.createElement('div');
       div.className = 'inv-item';
       div.textContent = item;
@@ -531,29 +493,26 @@
 
   // Responsivo: mantém canvas nítido em HiDPI
   function resizeCanvas(){
-  const dpr = window.devicePixelRatio || 1;
-  const wrap = document.querySelector('.wheel-wrap');
+    const dpr = window.devicePixelRatio || 1;
+    const wrap = document.querySelector('.wheel-wrap');
 
-  // Tamanho visual (CSS) do wrapper
-  const wrapWidth = Math.round(wrap.getBoundingClientRect().width);
-  canvas.style.width  = wrapWidth + 'px';
-  canvas.style.height = wrapWidth + 'px';
+    const wrapWidth = Math.round(wrap.getBoundingClientRect().width);
+    canvas.style.width  = wrapWidth + 'px';
+    canvas.style.height = wrapWidth + 'px';
 
-  // Use a largura útil do canvas (sem borda) para o buffer (evita “andar” 1–4px)
-  const cssSize = Math.round(canvas.clientWidth);
-  canvas.width  = Math.round(cssSize * dpr);
-  canvas.height = Math.round(cssSize * dpr);
+    const cssSize = Math.round(canvas.clientWidth);
+    canvas.width  = Math.round(cssSize * dpr);
+    canvas.height = Math.round(cssSize * dpr);
 
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  drawWheel();
-}
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    drawWheel();
+  }
 
   // Boot/responsividade
   window.addEventListener('resize', resizeCanvas, {passive:true});
   window.addEventListener('orientationchange', resizeCanvas);
-  // inicializa depois que layout assentar
   requestAnimationFrame(resizeCanvas);
-
+  renderEmptyInventory();
 </script>
 </body>
 </html>
