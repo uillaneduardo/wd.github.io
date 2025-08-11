@@ -113,6 +113,14 @@
   }
   .inv-item.empty{ font-weight:600; color:#555; }
 
+  /* ======= AUMENTA A ESPESSURA DOS ÍCONES DENTRO DOS BOTÕES ======= */  
+  .spinHome i.bi,
+  .spinTicket i.bi,
+  .conquistas i.bi,
+  .mode-btn i.bi {
+    -webkit-text-stroke: 1px var(--brand-black);
+  }
+
   /* ======= POPUP LOGIN (parcial, sem transparência) ======= */
   .popup-login{
     position:fixed; inset:auto; display:none; z-index:40;
@@ -187,11 +195,39 @@
     }
   }
 
+  /* ======= APP LOADER (tela cheia, sem transparência) ======= */
+  #appLoader{
+    position:fixed; inset:0; z-index:9999;
+    background:var(--brand-black); color:#000;
+    display:flex; align-items:center; justify-content:center;
+    border:0; /* sólido, sem blur */
+  }
+  #appLoader .loader-content{
+    background:#fff; border:3px solid #000; border-radius:16px;
+    padding:1rem 1.25rem; text-align:center; box-shadow:0 10px 0 #000;
+    min-width: 220px;
+  }
+  .loader-icon{ font-size:2rem; color:#000; display:block; margin-bottom:.5rem; }
+  .loader-text{ margin:.25rem 0 .5rem; font-weight:800; color:#000; }
+
+  /* animação de saída */
+  #appLoader.hide{
+    opacity:0; pointer-events:none; transition:opacity .35s ease-out;
+  }
+
   /* ======= UTIL ======= */
   .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
 </style>
 </head>
 <body>
+  <!-- Splash / Loader -->
+<div id="appLoader" aria-live="polite">
+  <div class="loader-content">
+    <i class="bi bi-steering-wheel loader-icon" aria-hidden="true"></i>
+    <p class="loader-text">Carregando a roleta...</p>
+    <div class="spinner-border text-warning" role="status" aria-label="Carregando"></div>
+  </div>
+</div>
 
 <!-- =================== SPIN SCREEN =================== -->
 <div id="spinScreen">
@@ -291,6 +327,34 @@
 
 
 <script>
+
+  /* ===== Splash: esconde quando a roleta estiver pronta ===== */
+  const appLoader = document.getElementById('appLoader');
+  function hideLoader(){
+    if(!appLoader) return;
+    appLoader.classList.add('hide');
+    // remove do DOM depois da animação
+    setTimeout(()=> appLoader.remove(), 400);
+  }
+
+  // Já existe a função resizeCanvas() que termina chamando drawWheel().
+  // Vamos garantir que, na PRIMEIRA renderização completa, esconda o loader.
+  let firstWheelPainted = false;
+  const _drawWheelOriginal = drawWheel;
+  drawWheel = function(){
+    _drawWheelOriginal();
+    if(!firstWheelPainted){
+      firstWheelPainted = true;
+      // pequeno delay para sensação de “app”
+      setTimeout(hideLoader, 350);
+    }
+  };
+
+  // fallback: se algo atrasar demais
+  window.addEventListener('load', () => {
+    setTimeout(()=> { if(!firstWheelPainted) hideLoader(); }, 2500);
+  });
+
   /* ===== Estado de login (mesmo padrão de gating do index) ===== */
   let isLoggedIn = false;
 

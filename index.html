@@ -169,11 +169,40 @@
     border-radius:12px; box-shadow:0 5px 0 #000;
   }
 
+   /* ======= ADICIONA UMA ANIMAÇÃO ANTES DE CARREGAR O CONTEÚDO DA PÁGINA ======= */
+  #appLoader {
+    position: fixed;
+    inset: 0;
+    background: var(--brand-black);
+    color: var(--brand-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+  .loader-logo {
+    max-width: 160px;
+    margin-bottom: 1rem;
+  }
+  #appLoader .spinner-border {
+    width: 3rem;
+    height: 3rem;
+  }
+
   /* ======= UTIL ======= */
   .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
 </style>
 </head>
 <body>
+<!-- Tela de Carregamento -->
+<div id="appLoader">
+  <div class="loader-content">
+    <img src="logo.png" alt="Wheel Done" class="loader-logo">
+    <div class="spinner-border text-warning" role="status"></div>
+    <p>Carregando...</p>
+  </div>
+</div>
 
 <!-- =================== HOME =================== -->
 <div id="homeScreen">
@@ -277,6 +306,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    /* ===== Adiciona uma animação ao carregar a tela ===== */
+    window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('appLoader').style.display = 'none';
+    }, 1500); // tempo da animação antes de exibir a página
+  });
+
   /* ===== Config ===== */
   const PREVIEW_SECONDS = 6; // pré-visualização de 6s
   let isLoggedIn = false;
