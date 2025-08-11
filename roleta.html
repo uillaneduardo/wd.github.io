@@ -14,6 +14,8 @@
     --brand-black:#000000;
     --brand-white:#ffffff;
     --neutral-gray:#e5e5e5;
+    --lighter-red:#c44242;
+    --lighter-yellow:#dab74e;
   }
   html,body{height:100%}
   body{
@@ -27,6 +29,18 @@
   /* ======= HEADER (mesmo padrão da Home) ======= */
   .header-home{position:relative; padding:2rem 1rem; text-align:center; color:#fff;}
   .user-icon{
+    position:fixed; top:1rem; right:1rem; z-index:20;
+    width:44px; height:44px; border-radius:50%;
+    border:2px solid #fff; background:#000; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+    .spinTicket{
+    position:fixed; top:1rem; right:1rem; z-index:20;
+    width:44px; height:44px; border-radius:50%;
+    border:2px solid #fff; background:#000; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+    .spinCoins{
     position:fixed; top:1rem; right:1rem; z-index:20;
     width:44px; height:44px; border-radius:50%;
     border:2px solid #fff; background:#000; color:#fff;
@@ -118,7 +132,11 @@
 <!-- =================== SPIN SCREEN =================== -->
 <div id="spinScreen">
   <header class="header-home">
-    <h1 class="h3 fw-bold m-0">Daily Spin</h1>
+    <!-- Botão de Tickets -->
+    <button id="spinTickets" class="spinTickets-btn active" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i></button>
+    <!-- Botão de Moedas -->
+    <button id="spinCoins" class="spinCoins-btn active" type="button" aria-label="Coins"><i class="bi bi-coin"></i></button>
+    <!-- Botão de Usuário -->
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
 
