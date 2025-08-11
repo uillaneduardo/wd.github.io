@@ -478,7 +478,8 @@
   // Join & Claim: abre login se não autenticado
   document.getElementById('joinClaimBtn').addEventListener('click', ()=>{
     if(!isLoggedIn) return openLogin();
-    alert('Prêmio resgatado! (simulação)');
+    // alert('Prêmio resgatado! (simulação)');
+    window.location.href = 'roleta.html';
   });
 
   // ESC fecha popup
