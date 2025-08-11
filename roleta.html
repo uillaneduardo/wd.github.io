@@ -328,6 +328,14 @@
 
 <script>
 
+  /* ===== REDIRECIONA AO CLICAR NO BOTÃO HOME ===== */
+  document.getElementById('spinHome').addEventListener('click', ()=>{
+    // if(!isLoggedIn) return openLogin();
+    // alert('Prêmio resgatado! (simulação)');
+    window.location.href = 'index.html';
+    // Simula redirecionamento para roleta
+  });
+
   /* ===== Splash: esconde quando a roleta estiver pronta ===== */
   const appLoader = document.getElementById('appLoader');
   function hideLoader(){

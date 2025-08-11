@@ -505,10 +505,10 @@
   closeLoginPopup.addEventListener('click', closeLogin);
 
   document.getElementById('loginGoogle').addEventListener('click', ()=>{
-    isLoggedIn = true; closeLogin(); alert('Logado com Google (simulação)');
+    isLoggedIn = true; closeLogin(); alert('Logado com Google (simulação)'); window.location.href = 'roleta.html';
   });
   document.getElementById('loginApple').addEventListener('click', ()=>{
-    isLoggedIn = true; closeLogin(); alert('Logado com Apple (simulação)');
+    isLoggedIn = true; closeLogin(); alert('Logado com Apple (simulação)'); window.location.href = 'roleta.html';
   });
 
   // Join & Claim: abre login se não autenticado
