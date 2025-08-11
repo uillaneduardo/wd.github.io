@@ -150,6 +150,36 @@
     width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
   }
 
+    /* ======= CONQUISTAS (popup ancorado ao botão) ======= */
+  .achievements-wrap{ position:relative; float:left; margin:0 1rem 1rem 0; }
+  .popup-achievements.popup-login{
+    position:absolute; top:calc(100% + 8px); right:0; left:auto;
+    transform:none; display:none; z-index:45;
+    width:min(92vw, 420px); max-height:min(70vh, 520px);
+    border-radius:14px; box-shadow:0 10px 0 #000; /* mesmo estilo do login */
+    overflow:auto;
+  }
+  .achv-list{ display:flex; flex-direction:column; gap:.6rem; margin-top:.5rem; }
+  .achv-item{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:.75rem;
+    background:#fff; border:2px solid #000; border-radius:12px; padding:.6rem .8rem;
+  }
+  .achv-item .text{ flex:1; min-width:0; }
+  .achv-title{ margin:0; font-weight:800; }
+  .achv-desc{ margin:.1rem 0 0; font-size:.9rem; color:#333; }
+  .achv-status{ display:flex; align-items:center; gap:.5rem; white-space:nowrap; font-weight:800; }
+
+  /* Botão “Obtido” (verde, mesma linguagem visual) */
+  .btn-obtained{
+    background:#28a745; color:#000; font-weight:800;
+    border:3px solid #000; border-radius:10px; padding:.35rem .6rem;
+    box-shadow:0 3px 0 #000;
+  }
+
+  /* “XP atual / necessário” para não obtidos */
+  .xp-meter{ font-weight:800; }
+
+
   /* ======= UTIL ======= */
   .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
 </style>
@@ -163,8 +193,48 @@
     <button id="spinHome" class="spinHome" type="button" aria-label="Home"><i class="bi bi-house"></i> Home</button>
     <!-- Botão de Tickets -->
     <button id="spinTickets" class="spinTicket" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i> 2 Tickets</button>
-    <!-- Botão de Conquistas -->
-    <button id="conquistas" class="conquistas" type="button" aria-label="Conquistas"><i class="bi bi-flag"></i> Conquistas</button>
+
+    <!-- Botão de Conquistas + popup ancorado -->
+    <div class="achievements-wrap">
+      <button id="conquistas" class="conquistas" type="button" aria-label="Conquistas">
+        <i class="bi bi-flag"></i> Conquistas
+      </button>
+
+      <!-- Popup Conquistas (segue padrão do popup-login) -->
+      <aside id="achievementsPopup" class="popup-achievements popup-login" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
+        <div class="header">
+          <h5 id="achievementsTitle" class="m-0">Aumente seu nível e obtenha mais conquistas.</h5>
+          <button id="closeAchievements" class="btn-close" aria-label="Fechar"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="content">
+          <!-- linha separadora já é o border-bottom da .header, igual ao login -->
+          <div class="achv-list">
+            <!-- Exemplo: item obtido -->
+            <div class="achv-item">
+              <div class="text">
+                <p class="achv-title">Novato da Estrada</p>
+                <p class="achv-desc">Complete seu primeiro giro na roleta.</p>
+              </div>
+              <div class="achv-status">
+                <button type="button" class="btn-obtained">Obtido</button>
+              </div>
+            </div>
+
+            <!-- Exemplo: item não obtido -->
+            <div class="achv-item">
+              <div class="text">
+                <p class="achv-title">Piloto em Treinamento</p>
+                <p class="achv-desc">Alcance o nível 2 acumulando experiência na roleta.</p>
+              </div>
+              <div class="achv-status">
+                <span class="xp-meter" aria-label="Progresso de experiência">120 / 300 XP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
     <!-- Botão de Usuário -->
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
@@ -240,6 +310,36 @@
   document.getElementById('loginGoogle').addEventListener('click', ()=>{ isLoggedIn=true; closeLogin(); alert('Logado com Google (simulação)'); });
   document.getElementById('loginApple').addEventListener('click', ()=>{ isLoggedIn=true; closeLogin(); alert('Logado com Apple (simulação)'); });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && loginPopup.style.display==='block') closeLogin(); });
+
+
+  /* ===== Conquistas (popup ancorado) ===== */
+  const conquistasBtn   = document.getElementById('conquistas');
+  const achievementsPop = document.getElementById('achievementsPopup');
+  const closeAchBtn     = document.getElementById('closeAchievements');
+
+  function openAchievements(){ achievementsPop.style.display = 'block'; }
+  function closeAchievements(){ achievementsPop.style.display = 'none'; }
+
+  conquistasBtn.addEventListener('click', (e)=>{
+    // alterna visibilidade alinhada ao botão
+    if(achievementsPop.style.display === 'block') closeAchievements();
+    else openAchievements();
+  });
+
+  // Fechar no X
+  closeAchBtn.addEventListener('click', closeAchievements);
+
+  // Clique fora fecha
+  document.addEventListener('click', (e)=>{
+    const wrap = e.target.closest('.achievements-wrap');
+    if(!wrap && achievementsPop.style.display === 'block') closeAchievements();
+  });
+
+  // ESC fecha
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && achievementsPop.style.display === 'block') closeAchievements();
+  });
+
 
   /* ===== Roleta ===== */
   const canvas  = document.getElementById('wheelCanvas');
@@ -453,6 +553,7 @@
   window.addEventListener('orientationchange', resizeCanvas);
   // inicializa depois que layout assentar
   requestAnimationFrame(resizeCanvas);
+
 </script>
 </body>
 </html>
