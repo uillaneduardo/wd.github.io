@@ -35,16 +35,21 @@
     display:flex; align-items:center; justify-content:center;
   }
     .spinTicket{
-    position:fixed; top:1rem; right:1rem; z-index:20;
-    width:44px; height:44px; border-radius:50%;
-    border:2px solid #fff; background:#000; color:#fff;
-    display:flex; align-items:center; justify-content:center;
+    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+    float:left; 
+    margin:0 1rem 1rem 0;
+    flex:1; background:var(--lighter-red); color:#ffffff; font-weight:800;
+    border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
     .spinCoins{
-    position:fixed; top:1rem; right:1rem; z-index:20;
-    width:44px; height:44px; border-radius:50%;
-    border:2px solid #fff; background:#000; color:#fff;
-    display:flex; align-items:center; justify-content:center;
+      float:left; 
+    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+    flex:1; background:var(--lighter-red); color:#ffffff; font-weight:800;
+    border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
+  }
+
+  .clear {
+    clear: both;
   }
 
   /* ======= LAYOUT DA TELA SPIN ======= */
@@ -133,12 +138,13 @@
 <div id="spinScreen">
   <header class="header-home">
     <!-- Botão de Tickets -->
-    <button id="spinTickets" class="spinTickets-btn active" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i></button>
+    <button id="spinTickets" class="spinTicket" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i> 2 Tickets</button>
     <!-- Botão de Moedas -->
-    <button id="spinCoins" class="spinCoins-btn active" type="button" aria-label="Coins"><i class="bi bi-coin"></i></button>
+    <button id="spinCoins" class="spinCoins" type="button" aria-label="Coins"><i class="bi bi-coin"></i> 300 Moedas</button>
     <!-- Botão de Usuário -->
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
+  <div class="clear"></div>
 
   <main class="container pb-5">
     <!-- Roleta -->
