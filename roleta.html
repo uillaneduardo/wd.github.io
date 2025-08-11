@@ -50,10 +50,10 @@
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
 
-    .spinCoins{
+    .conquistas{
       float:left; 
     /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
-    flex:1; background:var(--lighter-red); color:#ffffff; font-weight:800;
+    flex:1; background:var(--brand-yellow); color:#000000; font-weight:800;
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
 
@@ -112,6 +112,7 @@
 
   /* ======= INVENTÁRIO ======= */
   #spinInventory.card-section{}
+
   .inventory-head{
     display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:.75rem;
   }
@@ -159,11 +160,11 @@
 <div id="spinScreen">
   <header class="header-home">
     <!-- Botão de Home -->
-    <button id="spinHome" class="spinHome" type="button" aria-label="Home"><i class="bi bi-home"></i> Home</button>
+    <button id="spinHome" class="spinHome" type="button" aria-label="Home"><i class="bi bi-house"></i> Home</button>
     <!-- Botão de Tickets -->
     <button id="spinTickets" class="spinTicket" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i> 2 Tickets</button>
-    <!-- Botão de Moedas -->
-    <button id="spinCoins" class="spinCoins" type="button" aria-label="Coins"><i class="bi bi-coin"></i> 300 Moedas</button>
+    <!-- Botão de Conquistas -->
+    <button id="conquistas" class="conquistas" type="button" aria-label="Conquistas"><i class="bi bi-flag"></i> Conquistas</button>
     <!-- Botão de Usuário -->
     <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
   </header>
@@ -221,6 +222,7 @@
     <div class="text-center mt-2" style="font-size:.9rem;">Ao continuar, você concorda com os Termos.</div>
   </div>
 </aside>
+
 
 <script>
   /* ===== Estado de login (mesmo padrão de gating do index) ===== */
