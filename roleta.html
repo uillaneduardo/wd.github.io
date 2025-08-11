@@ -41,6 +41,15 @@
     flex:1; background:var(--lighter-red); color:#ffffff; font-weight:800;
     border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
   }
+
+    .spinHome{
+    /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
+    float:left; 
+    margin:0 1rem 1rem 0;
+    flex:1; background:var(--brand-white); color:#000000; font-weight:800;
+    border:2px solid #000; border-radius:12px; padding:.7rem; box-shadow:0 4px 0 #000;
+  }
+
     .spinCoins{
       float:left; 
     /* position: absolute; top: 1rem; left: 1rem; z-index: 20; */
@@ -137,6 +146,8 @@
 <!-- =================== SPIN SCREEN =================== -->
 <div id="spinScreen">
   <header class="header-home">
+    <!-- Botão de Home -->
+    <button id="spinHome" class="spinHome" type="button" aria-label="Home"><i class="bi bi-home"></i> Home</button>
     <!-- Botão de Tickets -->
     <button id="spinTickets" class="spinTicket" type="button" aria-label="Tickets"><i class="bi bi-ticket"></i> 2 Tickets</button>
     <!-- Botão de Moedas -->
