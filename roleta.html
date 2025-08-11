@@ -70,12 +70,24 @@
 
   /* ======= ROLETa ======= */
   #spinWheel.card-section{ position:relative; }
-  .wheel-wrap{ position:relative; width:min(92vw, 420px); margin:0 auto; }
+
+  .wheel-wrap{
+    position:relative;
+    /* antes: width:min(92vw, 420px) */
+    width:min(100%, 420px);     /* respeita o padding do retângulo pai */
+    margin:0 auto;
+  } 
   .wheel-canvas{
-    width:100%; height:auto; aspect-ratio:1/1;
-    display:block; border-radius:50%; border:4px solid var(--brand-black);
-    background:var(--neutral-gray);
-  }
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1/1;
+  /* mantém o círculo dentro do wrapper sem “vazar” por causa da borda */
+  box-sizing:border-box;
+  border-radius:50%;
+  border:4px solid var(--brand-black);
+  background:var(--neutral-gray);
+}
   .pointer{
     position:absolute; left:50%; top:-6px; transform:translateX(-50%);
     width:0; height:0;
@@ -417,20 +429,22 @@
 
   // Responsivo: mantém canvas nítido em HiDPI
   function resizeCanvas(){
-    const dpr = window.devicePixelRatio || 1;
-    const wrap = document.querySelector('.wheel-wrap');
-    const wrapWidth = Math.round(wrap.getBoundingClientRect().width); // CSS px (quadrado)
+  const dpr = window.devicePixelRatio || 1;
+  const wrap = document.querySelector('.wheel-wrap');
 
-    // Define tamanho visual (CSS) e tamanho do buffer (device px)
-    canvas.style.width  = wrapWidth + 'px';
-    canvas.style.height = wrapWidth + 'px';
-    canvas.width  = Math.round(wrapWidth * dpr);
-    canvas.height = Math.round(wrapWidth * dpr);
+  // Tamanho visual (CSS) do wrapper
+  const wrapWidth = Math.round(wrap.getBoundingClientRect().width);
+  canvas.style.width  = wrapWidth + 'px';
+  canvas.style.height = wrapWidth + 'px';
 
-    // Contexto desenhará em CSS px; escala aplicada para nitidez
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    drawWheel();
-  }
+  // Use a largura útil do canvas (sem borda) para o buffer (evita “andar” 1–4px)
+  const cssSize = Math.round(canvas.clientWidth);
+  canvas.width  = Math.round(cssSize * dpr);
+  canvas.height = Math.round(cssSize * dpr);
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  drawWheel();
+}
 
   // Boot/responsividade
   window.addEventListener('resize', resizeCanvas, {passive:true});
