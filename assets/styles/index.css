@@ -1,0 +1,184 @@
+  :root{
+    --brand-yellow:#ffc107;
+    --brand-black:#000000;
+    --brand-white:#ffffff;
+    --neutral-gray:#e5e5e5;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:#000 url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop") center/cover no-repeat fixed;
+    color:#111;
+    overflow-x:hidden;
+  }
+
+  /* ======= HOME ======= */
+  #homeScreen{min-height:100dvh; position:relative;}
+  .header-home{position:relative; padding:2rem 1rem 1.25rem; text-align:center; color:#fff;}
+
+  /* Ícone usuário (mantém círculo) */
+  .user-icon{
+    position:fixed; top:1rem; right:1rem; z-index:20;
+    width:44px; height:44px; border-radius:50%;
+    border:2px solid #fff; background:#000; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* HERO — maior contraste (card sólido, sem transparência) */
+  .hero-text{
+    display:inline-block;
+    /* background:#fff; */
+    color:#000;
+    /* border:2px solid #000; */
+    /* border-radius:12px; /* menos arredondado */
+    padding:.75rem 1rem;
+    text-align:center;
+    margin:0 auto 1rem;
+    /* box-shadow:0 6px 0 #000; */
+  }
+  .hero-text .main-title{ font-weight:800; letter-spacing:.5px; line-height:1.1; }
+  .hero-text .subtitle{ display:block; font-weight:600; margin-top:.15rem; }
+
+  /* SEÇÃO VÍDEO — levemente menor e menos arredondada */
+  .video-section{
+    background:#ffffff;
+    border-radius:10px; /* antes 16px */
+    padding:.75rem; /* antes 1rem */
+    border:2px solid #000;
+  }
+  .video-title{ color:#000; margin-top:.25rem; font-weight:700; }
+  .video-description{ color:#333; }
+
+  /* player + overlay de clique */
+  #highlightVideo .col-12.col-lg-7{ position:relative; }
+  .video-preview{
+    width:100%;
+    aspect-ratio:16/9; /* garante proporção e reduz altura visual */
+    border-radius:8px; /* antes 12px */
+    background:#000;
+    border:2px solid #000;
+  }
+  .preview-tapzone{
+    position:absolute; inset:0; border:0; padding:0; margin:0; background:transparent; cursor:pointer;
+  }
+
+  /* carrossel */
+  .thumb-list{
+    display:flex; gap:.6rem; overflow-x:auto; padding:.6rem .25rem;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .thumb-item{
+    width:150px; height:90px; object-fit:cover; border-radius:8px; /* antes 10px */
+    scroll-snap-align:center; cursor:pointer; flex:0 0 auto;
+    border:2px solid #000;
+  }
+
+  /* BOTÕES DE DOWNLOAD — maiores (mantém cores/ícones) */
+  .download-buttons{ display:flex; gap:.8rem; justify-content:center; }
+  .playstore-btn, .appstore-btn{
+    font-weight:800;
+    padding:.9rem 1.25rem; /* maior */
+    font-size:1.05rem;     /* maior */
+    border-radius:12px;    /* menos arredondado */
+    border:2px solid #000;
+    box-shadow:0 4px 0 #000;
+  }
+
+  /* Espaço extra no mobile entre downloads e Join & Claim */
+  main.container{ padding-bottom:7.5rem; } /* geral */
+  @media (max-width: 576px){
+    main.container{ padding-bottom:10.5rem; } /* mais espaço no mobile */
+  }
+
+  /* JOIN & CLAIM — menor e menos arredondado */
+  .join-claim-section{
+    position:fixed; left:0; right:0; bottom:0; z-index:15;
+    display:flex; flex-direction:column; align-items:center; gap:.35rem;
+    padding:.5rem .75rem .75rem;
+  }
+  .next-spin-text{ color:#fff; font-size:.9rem; }
+  .fixed-bottom-btn{
+    display:inline-flex; align-items:center; gap:.5rem; justify-content:center;
+    width:min(520px, 92vw); /* antes 680px */
+    background:var(--brand-yellow);
+    color:#000; border:2px solid #000; font-weight:800;
+    padding:.7rem 1rem;    /* menor */
+    border-radius:18px;    /* antes pílula total */
+    box-shadow:0 6px 0 #000;
+  }
+
+  /* ======= FEED ======= */
+  #feedScreen{ display:none; position:fixed; inset:0; background:#000; z-index:30; }
+  .feed-container{ position:relative; width:100%; height:100%; overflow:hidden; background:#000; }
+  #feedVideo.feed-video{ width:100%; height:100%; will-change:transform; }
+  .feed-actions{
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:.6rem; color:#fff;
+  }
+  .feed-actions button{
+    background:#000; border:2px solid #fff; color:#fff;
+    width:50px; height:50px; border-radius:10px; display:grid; place-items:center; font-size:1.25rem;
+    transition:transform .15s ease;
+  }
+  .feed-actions button:active{ transform:scale(.96); }
+  .feed-actions .count{ font-size:.9rem; }
+  #backBtn{
+    position:absolute; top:12px; left:12px; z-index:5;
+    background:#000; color:#fff; border:2px solid #fff; border-radius:18px; padding:.35rem .7rem;
+  }
+  .progress-bar-container{ position:absolute; left:0; right:0; bottom:0; height:6px; background:#222; }
+  .progress-bar-fill{ height:100%; width:0%; background:var(--brand-yellow); transition:width .18s linear; }
+
+  .feed-tapzone{ position:absolute; inset:0; }
+
+  /* ======= POPUP LOGIN (PARCIAL, CENTRALIZADO, SEM TRANSPARÊNCIA) ======= */
+  .popup-login{
+    position:fixed; inset:auto; display:none; z-index:40;
+    left:50%; top:50%; transform:translate(-50%, -50%);
+    width:min(92vw, 520px); max-height:min(86vh, 720px);
+    background:#ffffff; color:#000; border:3px solid #000; border-radius:14px; /* antes 20px */
+    overflow:hidden;
+    box-shadow: 0 10px 0 #000; /* sombra sólida (sem transparência) */
+  }
+  .popup-login .header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1rem; border-bottom:3px solid #000; background:#fff;
+  }
+  .btn-close{
+    width:38px; height:38px; border-radius:10px; border:3px solid #000; /* menos arredondado */
+    background:#000; color:#fff; display:grid; place-items:center;
+  }
+  .popup-login .content{ padding:1rem; }
+  .reward-text{ color:#111; }
+  .reward-icons{ display:flex; gap:.75rem; font-size:1.35rem; margin:.5rem 0; color:#000; }
+  .next-reward-time{ color:#000; font-weight:800; }
+  .btn-login-google, .btn-login-apple{
+    width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
+    border-radius:12px; box-shadow:0 5px 0 #000;
+  }
+
+   /* ======= ADICIONA UMA ANIMAÇÃO ANTES DE CARREGAR O CONTEÚDO DA PÁGINA ======= */
+  #appLoader {
+    position: fixed;
+    inset: 0;
+    background: var(--brand-black);
+    color: var(--brand-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+  }
+  .loader-logo {
+    max-width: 160px;
+    margin-bottom: 1rem;
+  }
+  #appLoader .spinner-border {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* ======= UTIL ======= */
+  .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
+
