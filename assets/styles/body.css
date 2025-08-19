@@ -1,0 +1,264 @@
+/* ===================== */
+/*      Vertices         */
+/* ===================== */
+:root {
+    /* Vértices numéricos (0–100) para LANDSCAPE */
+    --lx1: 0;
+    --ly1: 30;
+    --lx2: 70;
+    --ly2: 0;
+    --lx3: 100;
+    --ly3: 0;
+    --lx4: 100;
+    --ly4: 70;
+    --lx5: 30;
+    --ly5: 100;
+    --lx6: 0;
+    --ly6: 100;
+
+    /* Vértices numéricos (0–100) para PORTRAIT (ajuste como quiser) */
+    --px1: 50;
+    /*0*/
+    --py1: 0;
+    /*10*/
+
+    --px2: 100;
+    /*70*/
+    --py2: 12;
+    /*0*/
+
+    --px3: 100;
+    /*100*/
+    --py3: 22.5;
+    /*0*/
+
+    --px4: 100;
+    /*100*/
+    --py4: 35;
+    /*20*/
+
+    --px5: 0;
+    /*0*/
+    --py5: 12;
+    /*35*/
+
+    --px6: 0;
+    /*0*/
+    --py6: 0;
+    /*22.5*/
+
+    /* Ângulos calculados a partir dos pontos 1 e 2 */
+    --ldx: calc((var(--lx2) - var(--lx1)) * 1vw);
+    --ldy: calc((var(--ly2) - var(--ly1)) * 1vh);
+    --ltape-angle: atan2(var(--ldy), var(--ldx));
+
+    --pdx: abs(calc((var(--px2) - var(--px1)) * 1vw));
+    --pdy: abs(calc((var(--py2) - var(--py1)) * 1vh));
+    --ptape-angle: atan2(var(--pdy), var(--pdx));
+
+    /* Diferença horizontal (X) e vertical (Y) entre px3 e px6 */
+    --w-p3p6: abs(calc((var(--px3) - var(--px6)) * 1vw));
+    --h-p3p6: abs(calc((var(--py3) - var(--py6)) * 1vh));
+
+    /* Hipotenusa */
+    --hyp-p3p6: hypot(var(--w-p3p6), var(--h-p3p6));
+
+}
+
+body {
+    background-color: var(--cor-liberdade);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/*main *{
+    border: 2px dashed black;
+}*/
+
+.page-footer {
+    padding-top: 5vh;
+    padding-bottom: 10vh;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.page-footer * {
+    margin: 0 auto;
+}
+
+html {
+    scrollbar-color: var(--cor-autoescola) var(--cor-adrenalina);
+}
+
+#supporters-wall header {
+    background-color: var(--cor-predominante);
+    color: var(--cor-autoescola);
+    width: 100%;
+    text-align: center;
+}
+
+#download {
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+}
+
+.playstore-btn,
+.appstore-btn {
+    font-family: var(--font-title);
+    font-weight: 400;
+    padding: 10px;
+    font-size: 0.90rem;
+    border-radius: 12px;
+    border: 2px solid var(--cor-autoescola);
+    max-width: 100px;
+    color: var(--cor-contrastante);
+}
+
+@media(orientation: landscape) {
+
+    .inner-scroll-landscape {
+        z-index: 0;
+        position: fixed;
+        box-sizing: border-box;
+
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        overflow: auto;
+        scrollbar-color: var(--cor-autoescola) var(--cor-adrenalina);
+
+    }
+
+    .clipped-footer-mask-landscape,
+    .clipped-header-mask-landscape {
+        position: fixed;
+        z-index: 1;
+        background-color: var(--cor-autoescola);
+    }
+
+    .wrapper-header,
+    .wrapper-footer {
+        position: fixed;
+        z-index: 1;
+        background-color: var(--cor-predominante);
+    }
+
+    .clipped-footer-landscape,
+    .clipped-header-landscape,
+    .viewer-on {
+        transform: rotate(var(--ltape-angle));
+        text-align: center;
+        position: fixed;
+        z-index: 2;
+    }
+
+    .wrapper-header {
+
+        left: calc(var(--lx1)* 1%);
+        right: calc((100 - var(--lx2)) * 1% - 10px);
+        bottom: calc((100 - var(--ly1)) * 1% - 10px);
+        top: calc(var(--ly2) * 1%);
+
+        clip-path: polygon(0% 0%,
+                100% 0%,
+                0% 100%);
+    }
+
+    .clipped-header-mask-landscape {
+
+        left: calc(var(--lx1)* 1%);
+        right: calc((100 - var(--lx2)) * 1%);
+        bottom: calc((100 - var(--ly1)) * 1%);
+        top: calc(var(--ly2) * 1%);
+
+        clip-path: polygon(0% 0%,
+                100% 0%,
+                0% 100%);
+    }
+
+
+    .clipped-footer-mask-landscape {
+
+        left: calc(var(--lx5) * 1%);
+        right: calc((100 - var(--lx4)) * 1%);
+        bottom: calc((100 - var(--ly5)) * 1%);
+        top: calc(var(--ly4) * 1%);
+
+
+        clip-path: polygon(0% 100%,
+                100% 0%,
+                100% 100%);
+    }
+
+    .wrapper-footer {
+
+        left: calc(var(--lx5) * 1% - 10px);
+        right: calc((100 - var(--lx4)) * 1%);
+        bottom: calc((100 - var(--ly5)) * 1%);
+        top: calc(var(--ly4) * 1% - 10px);
+
+
+        clip-path: polygon(0% 100%,
+                100% 0%,
+                100% 100%);
+    }
+
+    .clipped-footer-landscape,
+    .viewer-on {
+        left: 60%;
+        right: 0%;
+        top: 77%;
+        text-align: center;
+    }
+
+    .clipped-header-landscape {
+        left: -2%;
+        right: 60%;
+        bottom: 77%;
+    }
+
+    #video-menu {
+        right: -2%;
+    }
+
+    #launch-event h3 {
+        font-size: clamp(1rem, 4vh, 2rem);
+        text-align: center;
+    }
+
+    #download {
+        margin-top: 2vh;
+        right: -3%;
+    }
+}
+
+@media(orientation: portrait) {
+    .body-tape {
+        position: fixed;
+        z-index: -2;
+        background-color: var(--cor-autoescola);
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        clip-path: polygon(calc(var(--px1) * 1%) calc(var(--py1) * 1%),
+                calc(var(--px2) * 1%) calc(var(--py2) * 1%),
+                calc(var(--px3) * 1%) calc(var(--py3) * 1%),
+                calc(var(--px4) * 1%) calc(var(--py4) * 1%),
+                calc(var(--px5) * 1%) calc(var(--py5) * 1%),
+                calc(var(--px6) * 1%) calc(var(--py6) * 1%));
+    }
+    p, td{
+        font-size: clamp(0.80rem, 3vw, 1.5rem);
+    }
+    #launch-event h3 {
+        font-size: clamp(0.80rem, 3vw, 1.5rem);
+        text-align: center;
+    }
+
+}

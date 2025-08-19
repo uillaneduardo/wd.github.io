@@ -1,0 +1,15 @@
+/* Estilo base interno */
+#popup { border: 0; padding: 0; }
+#popup::backdrop { background: rgba(0,0,0,.5); }
+.popup-panel { background: #fff; max-width: 520px; width: min(92vw, 520px); margin: 0; }
+.popup-close { position: absolute; top: .75rem; right: .75rem; }
+
+/* Fallback (quando não há <dialog>) */
+.popup-fb-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; }
+.popup-fb { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; }
+.popup-fb[aria-hidden="false"],
+.popup-fb-backdrop[aria-hidden="false"] { display: flex; }
+.popup-fb .popup-panel { position: relative; padding: 1.25rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+/* Travar scroll do body quando aberto (fallback) */
+.body-lock { overflow: hidden; }

@@ -1,0 +1,91 @@
+/* === videopage.css — Feed vertical 9:16 com dois players (ativo + buffer) === */
+
+/* Overlay full-screen do feed */
+.wd-feed {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+  display: none;
+}
+
+/* Travar rolagem do body quando o feed abre (aplique via JS) */
+.wd-body-lock {
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Container responsivo 9:16 sem pulo da barra de URL */
+.wd-feed__viewport {
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  background: black;
+}
+
+/* Área onde os dois players ficam empilhados e animam */
+.wd-feed__stack {
+  position: absolute;
+  inset: 0;
+}
+
+/* Cada “tela” (ativo / buffer) ocupa 100% e pode ser traduzida */
+.wd-feed__pane {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* iframe 16:9 preenchendo a altura e recortando laterais para 9:16 */
+.wd-feed__pane iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  height: 100%;
+  width: 177.78%; /* 16/9 */
+  transform: translate(-50%, -50%);
+  border: 0;
+  display: block;
+}
+
+/* Tapzone central (pausa/retoma) */
+.wd-feed__tap {
+  position: absolute;
+  inset: 0;
+}
+
+/* Ações laterais (opcional) */
+.wd-feed__actions {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  color: var(--cor-contrastante);
+}
+.wd-feed__actions button{
+  background:#000; border:2px solid var(--cor-contrastante); color:var(--cor-contrastante);
+  width:50px; height:50px; border-radius:10px; display:grid; place-items:center; font-size:1.25rem;
+  transition:transform .15s ease;
+}
+.wd-feed__actions button:active{ transform:scale(.96); }
+.wd-feed__count{ font-size:.9rem; color:var(--cor-contrastante); }
+
+/* Botão back (canto superior esquerdo) */
+.wd-feed__back {
+  position:absolute; top:12px; left:12px; z-index:5;
+  background:black; color:var(--cor-contrastante); border:2px solid var(--cor-contrastante); border-radius:18px; padding:.35rem .7rem;
+}
+
+/* Barra de progresso */
+.wd-feed__progress {
+  position:absolute; left:0; right:0; bottom:0; height:6px; background:#222;
+}
+.wd-feed__progress-fill {
+  height:100%; width:0%; background:var(--cor-autoescola);
+  transition: width .18s linear;
+}

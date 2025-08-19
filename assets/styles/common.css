@@ -1,0 +1,284 @@
+:root {
+    --cor-autoescola: #FFE500;
+    --cor-liberdade: #00FFFF;
+    --cor-adrenalina: #E036E3;
+    --cor-predominante: black;
+    --cor-contrastante: white;
+
+    --font-title: 'Russo One', sans-serif;
+}
+
+.container-floating-top {
+    position: fixed;
+    z-index: 2;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+}
+
+.container-floating-bottom {
+    position: fixed;
+    z-index: 2;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
+
+/**Styles**/
+.style-autoescola {
+    border-radius: 20px;
+    border: 3px solid var(--cor-predominante);
+    background-color: var(--cor-autoescola);
+}
+
+.style-adrenalina {
+    border-radius: 20px;
+    border: 3px solid var(--cor-predominante);
+    background-color: var(--cor-adrenalina);
+}
+
+.style-dark-adrenalina {
+    border-radius: 20px;
+    border: 3px solid var(--cor-adrenalina);
+    background-color: var(--cor-predominante);
+    color: var(--cor-adrenalina);
+}
+
+.style-dark {
+    background-color: var(--cor-predominante);
+    color: var(--cor-contrastante);
+}
+
+/**********/
+
+/** TABLE **/
+.table-autoescola {
+    border-collapse: separate;
+    /* permite espaçamento entre linhas */
+    border-spacing: 0px 12px;
+    /* gavetas separadas */
+    width: 100%;
+}
+
+.table-autoescola th {
+    font-weight: 600;
+    opacity: .85;
+    padding: 10px 14px;
+}
+
+.table-autoescola tr {
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr 2fr;
+}
+
+.table-autoescola tbody tr {
+
+    background: var(--cor-autoescola);
+    box-shadow:
+        4px 4px var(--cor-predominante),
+        -4px -4px var(--cor-adrenalina);
+
+    padding: 6px 0px;
+    margin: 12px 0;
+}
+
+.table-autoescola tbody td {
+    text-align: center;
+}
+
+/*****************/
+
+
+@media(orientation: landscape) and (pointer: fine) {
+
+    .container-floating-top {
+        right: 30px;
+    }
+
+}
+
+
+@media(orientation: landscape) {
+
+    .container,
+    .container-l,
+    .container-l-side,
+    .container-l-autoescola,
+    .container-l-adrenalina {
+        width: 80%;
+        max-width: 900px;
+        margin: 10px auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .container-l-side {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: start;
+        gap: 20px;
+    }
+
+    .container-l-side>* {
+        flex: 1;
+    }
+
+    .container-l-autoescola {
+        border-radius: 20px;
+        border: 5px solid var(--cor-predominante);
+        background-color: var(--cor-autoescola);
+    }
+
+    .hidden-landscape {
+        position: fixed !important;
+        /* tira do fluxo */
+        z-index: -5;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        /* impede scroll */
+        clip: rect(0, 0, 0, 0);
+        /* recorta */
+        white-space: nowrap;
+        /* evita quebra de linha */
+        border: 0;
+    }
+
+    .container-full-body {
+        width: 100%;
+        height: 50vh;
+        margin-top: 25vh;
+        box-sizing: border-box;
+    }
+}
+
+/*MOBILE LANDSCAPE*/
+@media(max-width: 900px) and (orientation: landscape) {
+    .viewer-off:not(.desktop-landscape) {
+        position: fixed !important;
+        z-index: -5;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+        box-sizing: unset;
+    }
+}
+
+/*DESKTOP LANDSCAPE*/
+@media(min-width: 900px) and (orientation: landscape) {
+
+    .viewer-off:not(.mobile-landscape) {
+        position: fixed !important;
+        z-index: -5;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+        box-sizing: unset;
+    }
+}
+
+@media(orientation: portrait) {
+
+    .container,
+    .container-p,
+    .container-p-autoescola,
+    .container-p-adrenalina,
+    .container-p-side {
+        width: 85%;
+        max-width: 720px;
+        padding: 20px;
+        margin: 25vh auto;
+        box-sizing: border-box;
+    }
+
+    .container-p-autoescola,
+    .style-p-autoescola {
+        border-radius: 20px;
+        border: 3px solid var(--cor-predominante);
+        background-color: var(--cor-autoescola);
+    }
+
+    .container-p-adrenalina,
+    .style-p-adrenalina {
+        border-radius: 20px;
+        border: 3px solid var(--cor-predominante);
+        background-color: var(--cor-adrenalina);
+    }
+
+    .container-p-dark-adrenalina,
+    .style-p-dark-adrenalina {
+        border-radius: 20px;
+        border: 3px solid var(--cor-adrenalina);
+        background-color: var(--cor-predominante);
+        color: var(--cor-adrenalina);
+    }
+
+    .container-p-side {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: start;
+        gap: 5px;
+    }
+
+    .hidden-portrait {
+        position: fixed !important;
+        /* tira do fluxo */
+        z-index: -5;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        /* impede scroll */
+        clip: rect(0, 0, 0, 0);
+        /* recorta */
+        white-space: nowrap;
+        /* evita quebra de linha */
+        border: 0;
+    }
+
+    .container-p-floating-top,
+    .container-p-floating-bottom {
+        position: fixed;
+        z-index: 2;
+        padding: 5px 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.75);
+    }
+
+    .container-p-floating-top {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .container-p-floating-bottom {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .container-full-body {
+        padding: 20px 10px;
+        width: 100%;
+        margin-top: 25vh;
+        box-sizing: border-box;
+    }
+
+}
