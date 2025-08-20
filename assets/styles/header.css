@@ -1,5 +1,6 @@
 #header-user {
   text-align: right;
+  z-index: 9;
 }
 
 .user-button {
@@ -43,8 +44,8 @@ h3 {
     z-index: -1;
 
     left: 8px;
-    bottom: calc((100 - var(--py6)) * 1%);
-    transform: translate(0, 50%) rotate(var(--ptape-angle));
+    top: calc((var(--py6))*1%);
+    transform: translate(0, -50%) rotate(var(--ptape-angle));
     transform-origin: left bottom;
 
     margin: 0;

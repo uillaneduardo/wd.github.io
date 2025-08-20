@@ -10,7 +10,7 @@
 
 .container-floating-top {
     position: fixed;
-    z-index: 2;
+    z-index: 100;
     top: 10px;
     left: 10px;
     right: 10px;
@@ -18,10 +18,16 @@
 
 .container-floating-bottom {
     position: fixed;
-    z-index: 2;
+    z-index: 100;
     bottom: 10px;
     left: 10px;
     right: 10px;
+}
+
+.header-button {
+  display: inline;
+  border-radius: 200px;
+  padding: 5px;
 }
 
 /**Styles**/
@@ -29,6 +35,12 @@
     border-radius: 20px;
     border: 3px solid var(--cor-predominante);
     background-color: var(--cor-autoescola);
+}
+
+.style-dark-autoescola {
+  background-color: var(--cor-predominante);
+  color: var(--cor-autoescola);
+  border: 3px solid var(--cor-autoescola);
 }
 
 .style-adrenalina {
@@ -200,7 +212,7 @@
     .container-p-autoescola,
     .container-p-adrenalina,
     .container-p-side {
-        width: 85%;
+        width: 95%;
         max-width: 720px;
         padding: 20px;
         margin: 25vh auto;

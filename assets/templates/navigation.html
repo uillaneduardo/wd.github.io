@@ -5,6 +5,17 @@
     <!-- Navegação das páginas em formato de vídeo por slide-->
     <div id="navigation-player" class="switcher-view">
 
+      <div id="video-page" class="closed-ui" role="dialog" aria-modal="true">
+        
+        <div class="container-floating-top">
+          <button id="btn-close-video" class="header-button style-dark-autoescola" aria-label="voltar"><i class="bi bi-arrow-left-short me-2"></i>voltar</button>
+        </div>
+
+        <div id="player-a" class="video-page-content" style="background-color: red;"></div>
+        <div id="player-b" class="video-page-content" style="background-color: green;"></div>
+        <div id="player-c" class="video-page-content" style="background-color: blue;"></div>
+      </div>
+
       <div id="btn-open-video">
         <!-- Player principal -->
         <iframe id="video-frame"

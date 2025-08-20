@@ -24,7 +24,7 @@
 #video-thumbs-swiper .swiper-slide {
   width: 28%;
   max-width: 160px;
-  min-width: 60px;
+  min-width: 100px;
   aspect-ratio: 16/9;
 }
 
