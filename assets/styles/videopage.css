@@ -12,6 +12,16 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+#video-page-frame{
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
+}
+
 .video-page-content{
   width: 100vw;
   height: 100vh;
