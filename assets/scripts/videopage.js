@@ -3,7 +3,7 @@ const bodyUi = document.querySelectorAll(".scrollable");
 const videoPage = document.getElementById("video-page");
 
 const firstExit = document.getElementById("player-first-exit");
-const lastExit  = document.getElementById("player-last-exit");
+const lastExit = document.getElementById("player-last-exit");
 
 let activeCard = null;
 let lastActiveCard = null;
@@ -15,6 +15,7 @@ const videoCards = Array.from(cards).filter(el => el !== firstExit && el !== las
 const videoPageIframe = document.getElementById("video-page-frame");
 const cardMainSlide = document.getElementById("card-video");
 const thumbsSwiper = document.getElementById("video-thumbs-swiper");
+const bar = document.getElementById('vp-progress');
 
 const btnCloseVideoPage = document.getElementById("btn-close-video");
 
@@ -24,7 +25,12 @@ let unlistenSnapEnd = null;
 cardMainSlide.addEventListener("click", startVideoPage);
 btnCloseVideoPage.addEventListener("click", finishVideoPage);
 
-function startVideoPage(){
+
+ensureYTAPI(initVideoPagePlayer);
+applyVideoPageThumbnails();
+
+
+function startVideoPage() {
   openVideoPage();
   closed = false;
 
@@ -35,9 +41,12 @@ function startVideoPage(){
 
   // listener de scrollend só enquanto estiver aberto
   unlistenSnapEnd = addSnapEndListener(videoPage, videoPageIframe);
+  videoPage.addEventListener('click', togglePlayPause);
+  togglePlayPause();
+  startVideoProgressLoop();
 }
 
-function finishVideoPage(){
+function finishVideoPage() {
 
   if (typeof unlistenSnapEnd === 'function') {
     unlistenSnapEnd();
@@ -45,18 +54,21 @@ function finishVideoPage(){
   }
   closeVideoPage();
   closed = true;
+  videoPage.removeEventListener('click', togglePlayPause);
+
+  stopVideoProgressLoop();
 
   if (videoPagePlayer && typeof videoPagePlayer.stopVideo === 'function') {
     videoPagePlayer.stopVideo();
   }
 }
 
-function openVideoPage(){
+function openVideoPage() {
   bodyUi.forEach(ui => ui.classList.add("block-ui"));
   videoPage.classList.remove("closed-ui");
 }
 
-function closeVideoPage(){
+function closeVideoPage() {
   videoPage.classList.add("closed-ui");
   bodyUi.forEach(ui => ui.classList.remove("block-ui"));
 }
@@ -98,6 +110,7 @@ function onSnapEnd(container) {
   // Se for card de saída, fecha
   if (activeCard === firstExit || activeCard === lastExit) {
     finishVideoPage();
+    stopVideoProgressLoop();
     return;
   }
   alignToCard(activeCard);
@@ -131,18 +144,20 @@ function alignVideoPageToActiveThumb() {
 }
 
 //Posiciona o vídeo na tela
-function alignToCard(card){
+function alignToCard(card) {
   // target.offsetTop é a posição do card dentro do próprio #video-page
   videoPageIframe.style.transform = `translateY(${card.offsetTop}px)`;
+  bar.style.transform = `translateY(${card.offsetTop}px)`;
 }
 
 function initVideoPagePlayer() {
   videoPagePlayer = new YT.Player('video-page-frame', {
-    playerVars: { playsinline:1, rel:0, modestbranding:1, controls:0, autoplay:1 },
+    playerVars: { playsinline: 1, rel: 0, modestbranding: 1, controls: 0, autoplay: 1 },
     events: {
       onReady: () => {
         const initial = activeCard || getActiveCard(videoPage);
         updateVideoPagePlayer(initial);
+        startVideoProgressLoop();
       }
     }
   });
@@ -182,15 +197,15 @@ function applyVideoPageThumbnails() {
     if (!id) return;
 
     const tryMax = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-    const tryHQ  = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    const tryHQ = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 
     // Preload com fallback
     const probe = new Image();
 
     const applyBG = (url) => {
       // aplica uma única vez as propriedades base
-      card.style.backgroundImage  = `url("${url}")`;
-      card.style.backgroundSize   = 'cover';
+      card.style.backgroundImage = `url("${url}")`;
+      card.style.backgroundSize = 'cover';
       card.style.backgroundPosition = 'center';
       card.style.backgroundRepeat = 'no-repeat';
     };
@@ -206,5 +221,113 @@ function applyVideoPageThumbnails() {
   });
 }
 
-ensureYTAPI(initVideoPagePlayer);
-applyVideoPageThumbnails();
+function togglePlayPause() {
+  if (!videoPagePlayer) return;
+
+  const state = videoPagePlayer.getPlayerState();
+  // 1 = playing, 2 = paused
+  if (state === YT.PlayerState.PLAYING) {
+    videoPagePlayer.pauseVideo();
+  } else {
+    videoPagePlayer.playVideo();
+  }
+}
+
+
+
+
+//PROGRESS BAR\\
+
+let _vpLoop = null;
+
+function startVideoProgressLoop() {
+  if (_vpLoop != null) return; // já rodando
+
+  if (!bar) return;
+
+  const step = () => {
+    if (videoPagePlayer) {
+      const dur = videoPagePlayer.getDuration() || 0;
+      const cur = videoPagePlayer.getCurrentTime() || 0;
+      const pct = dur ? (cur / dur) * 100 : 0;
+
+      bar.style.setProperty('--vp-progress', pct.toFixed(2));
+      bar.setAttribute('aria-valuenow', String(pct.toFixed(0)));
+
+      // 👇 replay automático quando faltar 1s
+      if (dur > 0 && cur >= dur - 1) {
+        videoPagePlayer.seekTo(0, true);
+        videoPagePlayer.playVideo();
+      }
+    }
+    _vpLoop = requestAnimationFrame(step);
+  };
+
+  _vpLoop = requestAnimationFrame(step);
+  
+}
+
+function stopVideoProgressLoop() {
+  if (_vpLoop != null) cancelAnimationFrame(_vpLoop);
+  _vpLoop = null;
+}
+
+(function wireProgressInteractions() {
+  if (!bar) return;
+
+  let seeking = false;
+
+  const posToTime = (clientX) => {
+    const rect = bar.getBoundingClientRect();
+    const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+    const ratio = rect.width ? (x / rect.width) : 0;
+    const dur = videoPagePlayer?.getDuration?.() || 0;
+    return { time: ratio * dur, pct: ratio * 100 };
+  };
+
+  bar.addEventListener('pointerdown', (e) => {
+    if (!videoPagePlayer) return;
+    seeking = true;
+    bar.classList.add('is-seeking');
+    bar.setPointerCapture(e.pointerId);
+    const { time, pct } = posToTime(e.clientX);
+    bar.style.setProperty('--vp-progress', pct.toFixed(2));
+    videoPagePlayer.seekTo(time, true);
+  });
+
+  bar.addEventListener('pointermove', (e) => {
+    if (!seeking || !videoPagePlayer) return;
+    const { time, pct } = posToTime(e.clientX);
+    bar.style.setProperty('--vp-progress', pct.toFixed(2));
+    // opcional: só aplicar o seek final no pointerup; se preferir live-scrub, mantenha aqui:
+    videoPagePlayer.seekTo(time, true);
+  });
+
+  bar.addEventListener('pointerup', (e) => {
+    if (!seeking || !videoPagePlayer) return;
+    seeking = false;
+    bar.classList.remove('is-seeking');
+    const { time, pct } = posToTime(e.clientX);
+    bar.style.setProperty('--vp-progress', pct.toFixed(2));
+    videoPagePlayer.seekTo(time, true);
+    if (bar.hasPointerCapture?.(e.pointerId)) bar.releasePointerCapture(e.pointerId);
+    startVideoProgressLoop(); // 👈 garante retomada
+  });
+})();
+
+// Ligue/desligue o loop conforme o estado do player:
+function handlePlayerStateChange(ev) {
+  const S = YT.PlayerState;
+
+  // mantém o loop da barra ativo
+  if (_vpLoop == null) startVideoProgressLoop();
+
+  // replay automático ao finalizar
+  if (ev.data === S.ENDED) {
+    if (closed) return;                          // não faz nada se a videopage estiver fechada
+    if (!videoPagePlayer) return;
+
+    videoPagePlayer.seekTo(0, true);             // volta para o início
+    videoPagePlayer.playVideo();                 // toca novamente
+  }
+}
