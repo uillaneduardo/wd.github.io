@@ -264,7 +264,7 @@ function startVideoProgressLoop() {
   };
 
   _vpLoop = requestAnimationFrame(step);
-  
+
 }
 
 function stopVideoProgressLoop() {
@@ -321,13 +321,4 @@ function handlePlayerStateChange(ev) {
 
   // mantém o loop da barra ativo
   if (_vpLoop == null) startVideoProgressLoop();
-
-  // replay automático ao finalizar
-  if (ev.data === S.ENDED) {
-    if (closed) return;                          // não faz nada se a videopage estiver fechada
-    if (!videoPagePlayer) return;
-
-    videoPagePlayer.seekTo(0, true);             // volta para o início
-    videoPagePlayer.playVideo();                 // toca novamente
-  }
 }

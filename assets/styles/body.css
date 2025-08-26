@@ -130,8 +130,13 @@ html {
 
         overflow: auto;
         scrollbar-color: var(--cor-autoescola) var(--cor-adrenalina);
-
     }
+    /*#background{
+        background-image: url("../images/bg-body@1x.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top;
+    }*/
 
     .clipped-footer-mask-landscape,
     .clipped-header-mask-landscape {
