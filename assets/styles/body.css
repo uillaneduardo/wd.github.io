@@ -71,6 +71,12 @@ body {
     box-sizing: border-box;
 }
 
+#background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+}
+
 /*main *{
     border: 2px dashed black;
 }*/
@@ -118,6 +124,10 @@ html {
 
 @media(orientation: landscape) {
 
+    #background{
+        background-image: url("../images/bg-body@1x.png");
+    }
+    
     .inner-scroll-landscape {
         z-index: 0;
         position: fixed;
@@ -131,12 +141,6 @@ html {
         overflow: auto;
         scrollbar-color: var(--cor-autoescola) var(--cor-adrenalina);
     }
-    /*#background{
-        background-image: url("../images/bg-body@1x.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: top;
-    }*/
 
     .clipped-footer-mask-landscape,
     .clipped-header-mask-landscape {
@@ -264,6 +268,10 @@ html {
     #launch-event h3 {
         font-size: clamp(0.80rem, 3vw, 1.5rem);
         text-align: center;
+    }
+    #background{
+        padding-top: 25vh;
+        background-image: url("../images/bg-body@p1x.png");
     }
 
 }

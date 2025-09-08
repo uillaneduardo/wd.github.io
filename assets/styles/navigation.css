@@ -102,4 +102,7 @@
   #video-frame{
     pointer-events: none;
   }
+  #navigation{
+    margin-top: 0;
+  }
 }
