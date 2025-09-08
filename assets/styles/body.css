@@ -74,7 +74,7 @@ body {
 #background {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: top;
+    background-position: center top;
 }
 
 /*main *{
@@ -272,6 +272,7 @@ html {
     #background{
         padding-top: 25vh;
         background-image: url("../images/bg-body@p1x.png");
+        background-position: left top;
     }
 
 }
