@@ -112,18 +112,7 @@
 
 @media(orientation: landscape) {
 
-    .container,
-    .container-l,
-    .container-l-side,
-    .container-l-autoescola,
-    .container-l-adrenalina {
-        width: 80%;
-        max-width: 900px;
-        margin: 10px auto;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
+    
     .container-l-side {
         width: 100%;
         display: flex;
@@ -184,6 +173,18 @@
         border: 0;
         box-sizing: unset;
     }
+    .container,
+    .container-l,
+    .container-l-side,
+    .container-l-autoescola,
+    .container-l-adrenalina {
+        width: 70%;
+        max-width: 500px;
+        margin: 10px auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
 }
 
 /*DESKTOP LANDSCAPE*/
@@ -202,6 +203,17 @@
         white-space: nowrap;
         border: 0;
         box-sizing: unset;
+    }
+    .container,
+    .container-l,
+    .container-l-side,
+    .container-l-autoescola,
+    .container-l-adrenalina {
+        width: 80%;
+        max-width: 900px;
+        margin: 10px auto;
+        padding: 10px;
+        box-sizing: border-box;
     }
 }
 

@@ -127,6 +127,21 @@ html {
     #background{
         background-image: url("../images/bg-body@1x.png");
     }
+    #dw-ellen{
+        background-image: url("../images/dw-ellen.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: right bottom;
+        height: 60vh;
+        width: 25vw;
+
+        position: fixed;
+        z-index: 0;
+        right: 0%;
+        bottom: 10%;
+
+        pointer-events: none;
+    }
     
     .inner-scroll-landscape {
         z-index: 0;
