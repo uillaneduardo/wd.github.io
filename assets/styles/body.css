@@ -122,6 +122,30 @@ html {
     color: var(--cor-contrastante);
 }
 
+
+.social-link {
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.social-link i {
+  font-size: 1.5rem;
+  color: white;
+}
+
+#legal a{
+    color: white;
+}
+
+.social-link:visited i, #legal:visited a{
+  color: white;
+}
+
+.social-link:hover i, #legal:hover a {
+  color: var(--cor-autoescola);
+}
+
+
 @media(orientation: landscape) {
 
     #background{
@@ -257,6 +281,9 @@ html {
     #download {
         margin-top: 2vh;
         right: -3%;
+    }
+    .page-footer{
+        padding-bottom: 200px;
     }
 }
 
