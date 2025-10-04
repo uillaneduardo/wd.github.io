@@ -1,26 +1,29 @@
-#header-user {
+.header-user {
   text-align: right;
   z-index: 9;
 }
 
-.user-button {
+.header-button, .header-round-button {
   display: inline;
-  border-radius: 200px;
-  background-color: var(--cor-predominante);
-  color: var(--cor-autoescola);
-  border-color: var(--cor-autoescola);
+  border-radius: 999px;
   padding: 5px;
 }
 
-.user-button i {
-  width: 25px;
-  height: 25px;
-  margin-right: 5px;
-  border-radius: 50%;
+.header-button{
+  padding-right: 25px;
+  padding-left: 25px;
+  text-decoration: none;
+}
+.header-button *{
+  font-family: var(--font-title);
+  font-weight: 400;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 12px;
 }
 
-#header-user p {
-  display: inline;
+.header-round-button * {
+  font-size: 1.25rem;
 }
 
 h1,

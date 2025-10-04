@@ -24,41 +24,94 @@
     right: 10px;
 }
 
-.header-button {
-  display: inline;
-  border-radius: 200px;
-  padding: 5px;
-}
 
 /**Styles**/
-.style-autoescola {
-    border-radius: 20px;
-    border: 3px solid var(--cor-predominante);
+.style-sombra-adrenalina{
+    box-shadow: 10px 10px 0 var(--cor-adrenalina);
+}
+.style-rebelde-r{
+     transform: rotate(2deg);
+}
+.style-rebelde-l{
+     transform: rotate(-2deg);
+}
+
+.btn-sombra-adrenalina{
+    box-shadow: 6px 6px 0 var(--cor-adrenalina);
+}
+.btn-autoescola, .btn-liberdade, .btn-desabilitado{
+    border-radius: 5px;
+    border: 2px solid var(--cor-predominante);
+    padding: 10px;
+
+    font-family: var(--font-title);
+    font-weight: 400;
+    font-size: 0.90rem;
+
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+
+    margin: 10px 10px;
+}
+
+.btn-autoescola{
     background-color: var(--cor-autoescola);
 }
+.btn-liberdade{
+    background-color: var(--cor-liberdade);
+}
+.btn-desabilitado{
+    background-color: grey;
+}
 
-.style-dark-autoescola {
+
+.style-autoescola, .body-autoescola{
+    background-color: var(--cor-autoescola);
+    color: var(--cor-predominante);
+}
+
+.style-dark-autoescola, .body-dark-autoescola {
   background-color: var(--cor-predominante);
   color: var(--cor-autoescola);
-  border: 3px solid var(--cor-autoescola);
 }
 
-.style-adrenalina {
-    border-radius: 20px;
-    border: 3px solid var(--cor-predominante);
+.style-liberdade, .body-liberdade{
+    background-color: var(--cor-liberdade);
+    color: var(--cor-predominante);
+}
+
+.style-adrenalina, .body-adrenalina{
     background-color: var(--cor-adrenalina);
+    color: var(--cor-predominante);
 }
 
-.style-dark-adrenalina {
-    border-radius: 20px;
-    border: 3px solid var(--cor-adrenalina);
+.style-dark-adrenalina, .body-dark-adrenalina{
     background-color: var(--cor-predominante);
     color: var(--cor-adrenalina);
 }
-
-.style-dark {
+.style-dark, .body-dark {
     background-color: var(--cor-predominante);
     color: var(--cor-contrastante);
+}
+
+
+
+.style-autoescola, .style-liberdade, .style-adrenalina, .style-dark{
+    border-radius: 20px;
+    border: 3px solid var(--cor-predominante);
+}
+.style-dark-autoescola{
+    border-radius: 20px;
+    border: 3px solid var(--cor-autoescola);
+}
+.style-dark-liberdade{
+    border-radius: 20px;
+    border: 3px solid var(--cor-liberdade);
+}
+.style-dark-adrenalina{
+    border-radius: 20px;
+    border: 3px solid var(--cor-adrenalina);
 }
 
 /**********/
@@ -227,8 +280,12 @@
         width: 95%;
         max-width: 720px;
         padding: 20px;
-        margin: 15vh auto;
+        margin: 10px auto;
         box-sizing: border-box;
+    }
+    .space-vertical-p{
+        margin-top: 15vh;
+        margin-bottom: 15vh;
     }
 
     .container-p-autoescola,

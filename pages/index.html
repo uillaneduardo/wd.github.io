@@ -23,7 +23,6 @@
     <!--JS-->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script defer src="../assets/scripts/modular.js"></script>
     <script defer src="../assets/scripts/data-fit-container.js"></script>
     <script defer src="../assets/scripts/navigation.js"></script>
     <script defer src="../assets/scripts/videopage.js"></script>
@@ -32,7 +31,7 @@
     <script defer src="../assets/scripts/home.js"></script>
 </head>
 
-<body class="scrollable">
+<body class="scrollable body-liberdade">
     <div class="inner-scroll-landscape scrollable">
         <div id="background">
 
@@ -40,10 +39,14 @@
             <!--------HEADER------->
             <!--------------------->
             <header>
-                <div data-include="../assets/templates/header.html" data-insert="outer"></div>
+
+                <div class="header-user container-floating-top">
+                    <button id="btn-login" class="header-round-button style-dark-autoescola" aria-label="Login">
+                        <i class="bi bi-person-fill"></i></button>
+                </div>
+
                 <h1 class="header-title clipped-header-landscape" data-text-fit-box="portrait"
-                    data-fit-container="self">
-                    Wheel Done</h1>
+                    data-fit-container="self">Wheel Done</h1>
             </header>
 
             <!--------------------->
@@ -55,7 +58,124 @@
                     <div class="body-tape clipped-header-mask-landscape"></div>
                 </div>
 
-                <nav data-include="../assets/templates/navigation.html" data-insert="outer"></nav>
+                <nav>
+
+                    <div id="navigation" aria-label="Menu de vídeos" class="container-p-autoescola container-l-side space-vertical-p">
+
+                        <!-- Navegação das páginas em formato de vídeo por slide-->
+                        <div id="navigation-player" class="switcher-view">
+
+                            <div id="video-page" class="closed-ui" role="dialog" aria-modal="true">
+
+                                <div class="container-floating-top">
+                                    <button id="btn-close-video" class="header-button style-dark-autoescola"
+                                        aria-label="voltar"><i class="bi bi-arrow-left-short me-2"></i><a>voltar</a></button>
+                                </div>
+
+                                <iframe
+                                    src="https://www.youtube.com/embed/dSLyIuevwCI?enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                    id="video-page-frame" title="video-frame-page" loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen referrerpolicy="strict-origin-when-cross-origin">
+                                </iframe>
+
+                                <div id="player-first-exit" class="video-page-content"
+                                    style="background-color: rgba(0, 0, 0, 0.5);"></div>
+                                <div id="player-a" class="video-page-content" data-ytid-videopage="dSLyIuevwCI"
+                                    style="background-color: green;"></div>
+                                <div id="player-b" class="video-page-content" data-ytid-videopage="stLA0DCWEsA"
+                                    style="background-color: pink;"></div>
+                                <div id="player-c" class="video-page-content" data-ytid-videopage="t6Li1RaYfQ4"
+                                    style="background-color: yellow;"></div>
+                                <div id="player-d" class="video-page-content" data-ytid-videopage="mm0yhuURM5U"
+                                    style="background-color: blue;"></div>
+                                <div id="player-last-exit" class="video-page-content"
+                                    style="background-color: rgba(0, 0, 0, 0.5);"></div>
+
+                                <div id="vp-progress" class="vp-progress" role="slider" aria-valuemin="0"
+                                    aria-valuemax="100" aria-valuenow="0" aria-label="Progresso do vídeo">
+
+                                    <div class="vp-progress__fill"></div>
+
+                                </div>
+
+                            </div>
+
+                            <div id="card-video">
+                                <!-- Player principal -->
+                                <iframe id="video-frame"
+                                    src="https://www.youtube.com/embed/dSLyIuevwCI?enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                    title="Rick Astley - Never Gonna Give You Up" loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen referrerpolicy="strict-origin-when-cross-origin">
+                                </iframe>
+                            </div>
+
+
+
+                            <footer id="video-menu" data-viewer="hide">
+
+
+                                <!-- Carrossel de thumbnails -->
+                                <div class="swiper" id="video-thumbs-swiper" aria-label="Lista de vídeos">
+                                    <div class="swiper-wrapper">
+
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="dSLyIuevwCI"
+                                                data-title="Você e eu, o jogo que a gente sempre quis!"
+                                                data-description="Wheel Done vai além de um jogo com embreagem e marcha manual para celular e eu vou te provar isso! Autoescola, cidade, trânsito, outros jogadores, missões, trabalho, empreendimentos, corridas e muito mais!"
+                                                aria-label="Reproduzir: Rick Astley - Never Gonna Give You Up">
+                                                <img src="https://img.youtube.com/vi/dSLyIuevwCI/hqdefault.jpg"
+                                                    alt="Miniatura: Rick Astley - Never Gonna Give You Up"
+                                                    loading="lazy">
+                                            </button>
+                                        </div>
+
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="stLA0DCWEsA"
+                                                data-title="Mark Ronson - Uptown Funk ft. Bruno Mars"
+                                                data-description="Lançada em 2014, Uptown Funk é uma colaboração explosiva entre o produtor Mark Ronson e o carismático Bruno Mars, que presta homenagem às batidas e grooves do funk e soul dos anos 70 e 80. A canção combina metais poderosos, linhas de baixo pulsantes e um refrão irresistível que convida qualquer um a dançar. Com um videoclipe cheio de estilo e energia, a música rapidamente se tornou um sucesso global, ocupando o topo das paradas por semanas e conquistando diversos prêmios, incluindo o Grammy de Gravação do Ano. Uptown Funk é um verdadeiro hino das pistas de dança modernas, que mantém viva a essência do funk clássico com um toque contemporâneo."
+                                                aria-label="Reproduzir: Mark Ronson - Uptown Funk ft. Bruno Mars">
+                                                <img src="https://img.youtube.com/vi/stLA0DCWEsA/hqdefault.jpg"
+                                                    alt="Miniatura: Uptown Funk" loading="lazy">
+                                            </button>
+                                        </div>
+
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="t6Li1RaYfQ4"
+                                                data-title="Luis Fonsi - Despacito ft. Daddy Yankee"
+                                                data-description="Despacito, lançada em 2017, é um marco na história da música latina e um dos vídeos mais assistidos da história do YouTube. A parceria entre Luis Fonsi e Daddy Yankee criou um reggaeton melódico que mistura romantismo e sensualidade, com uma produção impecável que conquistou públicos de todas as idades. A canção não apenas quebrou recordes de streaming e vendas, mas também ajudou a consolidar o reggaeton e a música em espanhol no mercado internacional como nunca antes. Seu refrão suave e envolvente, aliado a um videoclipe vibrante e colorido, transformou Despacito em um fenômeno cultural que ainda ressoa anos após seu lançamento."
+                                                aria-label="Reproduzir: Luis Fonsi - Despacito ft. Daddy Yankee">
+                                                <img src="https://img.youtube.com/vi/t6Li1RaYfQ4/hqdefault.jpg"
+                                                    alt="Miniatura: Despacito" loading="lazy">
+                                            </button>
+                                        </div>
+
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="mm0yhuURM5U"
+                                                data-title="Nirvana - Smells Like Teen Spirit"
+                                                data-description="Considerada a canção que definiu o movimento grunge dos anos 90, Smells Like Teen Spirit, lançada em 1991 pelo Nirvana, é muito mais do que um sucesso comercial. Escrita por Kurt Cobain, a faixa combina guitarras distorcidas, vocais intensos e uma energia crua que capturou a frustração e o espírito rebelde de toda uma geração. O videoclipe, ambientado em um ginásio escolar decadente, com estudantes se revoltando e destruindo tudo, ajudou a solidificar a música como um hino de contestação juvenil. Até hoje, a canção é lembrada como um ponto de virada na música alternativa, levando o grunge ao mainstream e influenciando bandas e artistas por décadas."
+                                                aria-label="Reproduzir: Nirvana - Smells Like Teen Spirit">
+                                                <img src="https://img.youtube.com/vi/mm0yhuURM5U/hqdefault.jpg"
+                                                    alt="Miniatura: Smells Like Teen Spirit" loading="lazy">
+                                            </button>
+                                        </div>
+
+                                    </div> <!--swiper-wrapper-->
+                                </div> <!--swiper-->
+
+                            </footer>
+
+                        </div> <!--navigation-player-->
+
+                        <div id="navigation-description" class="hidden-portrait">
+                            <h2 id="video-title">Title</h2>
+                            <p id="video-description">Description.</p>
+                        </div> <!--navigation-description-->
+
+                    </div>
+
+                </nav>
 
                 <section id="supporters-wall" class="switcher-view container-p-autoescola container-l-autoescola">
 
@@ -178,7 +298,8 @@
                 <section id="legal" class="container" aria-label="legal">
                     <p>Wheel Done é de propriedade do Studio PlayMarques</p>
                     <p>
-                        <a href="https://play-marques.gitbook.io/wheel-done/privacy/pt-br" target="_blank">Política de Privacidade</a> |
+                        <a href="https://play-marques.gitbook.io/wheel-done/privacy/pt-br" target="_blank">Política de
+                            Privacidade</a> |
                         <a href="#" target="_blank">Termos de uso</a>
                     </p>
                 </section>
@@ -211,8 +332,10 @@
 
                 <footer id="download" data-viewer="hide" aria-label="Download"
                     class="container-p-side container-l-side">
+                    
                     <a href="https://play.google.com/store/apps/details?id=com.playmarques.wheeldone"
-                        class="btn playstore-btn style-dark"><i class="bi bi-google-play"></i> Play Store</a>
+                    class="btn playstore-btn style-dark"><i class="bi bi-google-play"></i> Play Store</a>
+
                     <a href="#" class="btn appstore-btn style-dark"><i class="bi bi-apple"></i> App Store</a>
                 </footer>
 
