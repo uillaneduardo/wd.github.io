@@ -11,9 +11,9 @@ await service.load();
 
 const root = document.documentElement;
 const wrapperRecompensa = document.getElementById("wrapper-recompensa");
-const slotA = document.getElementById("slot-a");
-const slotB = document.getElementById("slot-b");
-const slotC = document.getElementById("slot-c");
+const cardSlotA = document.getElementById("slot-a");
+const cardSlotB = document.getElementById("slot-b");
+const cardSlotC = document.getElementById("slot-c");
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");
 
@@ -25,7 +25,7 @@ const recompensaSwiper = new Swiper('#area-recompensa', {
     centerInsufficientSlides: true,
     centeredSlidesBounds: true,
     initialSlide: 1,
-    freeMode: { enabled: false, sticky: true },
+    freeMode: { enabled: true, sticky: true },
     grabCursor: true,
     keyboard: { enabled: true }
 });
@@ -41,33 +41,17 @@ btnSelecionarOferta.addEventListener('click', () => {
     teleportSwap(recompensaSwiper, 'right', selecionarOferta);
 });
 
-slotA.addEventListener('click', () => {revelandoSlot(slotA)});
-slotB.addEventListener('click', () => {revelandoSlot(slotB)});
-slotC.addEventListener('click', () => {revelandoSlot(slotC)});
+cardSlotA.addEventListener('click', () => {revelandoSlot(cardSlotA)});
+cardSlotB.addEventListener('click', () => {revelandoSlot(cardSlotB)});
+cardSlotC.addEventListener('click', () => {revelandoSlot(cardSlotC)});
 
-slotA.addEventListener('animationend', () => {aoRevelarSlot(slotA)});
-slotB.addEventListener('animationend', () => {aoRevelarSlot(slotB)});
-slotC.addEventListener('animationend', () => {aoRevelarSlot(slotC)});
+cardSlotA.addEventListener('animationend', () => {aoRevelarSlot(cardSlotA)});
+cardSlotB.addEventListener('animationend', () => {aoRevelarSlot(cardSlotB)});
+cardSlotC.addEventListener('animationend', () => {aoRevelarSlot(cardSlotC)});
 
 selecionarDiario();
 
 function selecionarDiario() {
-
-    slotA.style.setProperty('--slot-card', service.getCardUrl(Slot.A));
-    slotB.style.setProperty('--slot-card', service.getCardUrl(Slot.B));
-    slotC.style.setProperty('--slot-card', service.getCardUrl(Slot.C));
-
-    slotA.style.setProperty('--cor-raridade', service.getRarityColor(Slot.A));
-    slotB.style.setProperty('--cor-raridade', service.getRarityColor(Slot.B));
-    slotC.style.setProperty('--cor-raridade', service.getRarityColor(Slot.C));
-
-    slotA.classList.add(service.getStateClassToAdd(Slot.A));
-    slotB.classList.add(service.getStateClassToAdd(Slot.B));
-    slotC.classList.add(service.getStateClassToAdd(Slot.C));
-
-    slotA.classList.remove(service.getStateClassToRemove(Slot.A));
-    slotB.classList.remove(service.getStateClassToRemove(Slot.B));
-    slotC.classList.remove(service.getStateClassToRemove(Slot.C));
 
     btnSelecionarDiario.classList.remove('btn-liberdade');
     btnSelecionarDiario.classList.add('btn-autoescola');
@@ -75,25 +59,10 @@ function selecionarDiario() {
     btnSelecionarOferta.classList.remove('btn-autoescola');
     btnSelecionarOferta.classList.add('btn-liberdade');
 
+    aoSelecionar(Slot.A, Slot.B, Slot.C);
     removerAguardandoRevelar();
 }
 function selecionarOferta() {
-
-    slotA.style.setProperty('--slot-card', service.getCardUrl(Slot.D));
-    slotB.style.setProperty('--slot-card', service.getCardUrl(Slot.E));
-    slotC.style.setProperty('--slot-card', service.getCardUrl(Slot.F));
-
-    slotA.style.setProperty('--cor-raridade', service.getRarityColor(Slot.D));
-    slotB.style.setProperty('--cor-raridade', service.getRarityColor(Slot.E));
-    slotC.style.setProperty('--cor-raridade', service.getRarityColor(Slot.F));
-
-    slotA.classList.add(service.getStateClassToAdd(Slot.D));
-    slotB.classList.add(service.getStateClassToAdd(Slot.E));
-    slotC.classList.add(service.getStateClassToAdd(Slot.F));
-
-    slotA.classList.remove(service.getStateClassToRemove(Slot.D));
-    slotB.classList.remove(service.getStateClassToRemove(Slot.E));
-    slotC.classList.remove(service.getStateClassToRemove(Slot.F));
 
     btnSelecionarDiario.classList.remove('btn-autoescola');
     btnSelecionarDiario.classList.add('btn-liberdade');
@@ -101,7 +70,30 @@ function selecionarOferta() {
     btnSelecionarOferta.classList.remove('btn-liberdade');
     btnSelecionarOferta.classList.add('btn-autoescola');
 
+    aoSelecionar(Slot.D, Slot.E, Slot.F);
     removerAguardandoRevelar();
+}
+
+function aoSelecionar(slotA, slotB, slotC){
+    cardSlotA.style.setProperty('--slot-card', service.getCardUrl(slotA));
+    cardSlotB.style.setProperty('--slot-card', service.getCardUrl(slotB));
+    cardSlotC.style.setProperty('--slot-card', service.getCardUrl(slotC));
+
+    cardSlotA.style.setProperty('--slot-silhueta', service.getMaskUrl(slotA));
+    cardSlotB.style.setProperty('--slot-silhueta', service.getMaskUrl(slotB));
+    cardSlotC.style.setProperty('--slot-silhueta', service.getMaskUrl(slotC));
+
+    cardSlotA.style.setProperty('--cor-raridade', service.getRarityColor(slotA));
+    cardSlotB.style.setProperty('--cor-raridade', service.getRarityColor(slotB));
+    cardSlotC.style.setProperty('--cor-raridade', service.getRarityColor(slotC));
+
+    cardSlotA.classList.add(service.getStateClassToAdd(slotA));
+    cardSlotB.classList.add(service.getStateClassToAdd(slotB));
+    cardSlotC.classList.add(service.getStateClassToAdd(slotC));
+
+    cardSlotA.classList.remove(service.getStateClassToRemove(slotA));
+    cardSlotB.classList.remove(service.getStateClassToRemove(slotB));
+    cardSlotC.classList.remove(service.getStateClassToRemove(slotC));
 }
 
 function revelandoSlot(cardSlot){
@@ -115,9 +107,9 @@ function aoRevelarSlot(cardSlot){
     cardSlot.classList.add('slot-raridade');
 }
 function removerAguardandoRevelar(){
-    slotA.classList.remove('aguardando-revelar');
-    slotB.classList.remove('aguardando-revelar');
-    slotC.classList.remove('aguardando-revelar');
+    cardSlotA.classList.remove('aguardando-revelar');
+    cardSlotB.classList.remove('aguardando-revelar');
+    cardSlotC.classList.remove('aguardando-revelar');
 }
 
 
