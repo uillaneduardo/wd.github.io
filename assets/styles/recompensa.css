@@ -33,6 +33,14 @@
 
 .swiper-slide{
     position: relative;
+    display: grid;
+    grid-template-rows: 15% 20% 40% 25%;
+    justify-items: center;
+    align-items: center;
+    text-align: justify;
+    overflow: hidden;
+
+
     width: 60%;
     max-width: 240px;
     aspect-ratio: 9/16;
@@ -44,6 +52,13 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+.swiper-slide h3{grid-row: 1;}
+.swiper-slide p{grid-row: 2; width: 80%;}
+.swiper-slide button{grid-row: 4;}
+.swiper-slide > *{
+    opacity: 0;
+    pointer-events: none;
 }
 .swiper-slide::after{
     position: absolute;
@@ -71,9 +86,16 @@
 .slot-raridade{
     background-image: var(--slot-card);
 }
+.slot-raridade > *{
+    opacity: 1;
+    pointer-events: initial;
+}
+
 .revelando-card{
+    cursor: pointer;
     background-image: var(--slot-silhueta);
 }
+
 
 .aguardando-revelar{
     animation: aguardar-revelar .18s linear 10;
@@ -109,8 +131,11 @@
 }
 
 #resgate-recompensa p{
-    margin: 20px;
+    margin: 5px;
     color: grey;
+}
+#reset-time{
+    color: var(--cor-autoescola);
 }
 
 #progresso-resumido{

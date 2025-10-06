@@ -10,6 +10,7 @@ const service = new RewardService(source);
 await service.load();
 
 const root = document.documentElement;
+const resetTime = document.getElementById("reset-time");
 const wrapperRecompensa = document.getElementById("wrapper-recompensa");
 const cardSlotA = document.getElementById("slot-a");
 const cardSlotB = document.getElementById("slot-b");
@@ -154,3 +155,39 @@ function teleportSwap(swiper, dir = 'left', midAction = () => { }) {
     }, { once: true });
 }
 
+function atualizarContagemRegressiva() {
+  if (!resetTime) return;
+
+  const agora = new Date();
+  const meiaNoite = new Date();
+
+  // Define o horário de reset para o próximo dia às 00:00:00
+  meiaNoite.setHours(24, 0, 0, 0);
+
+  const diferenca = meiaNoite - agora;
+
+  if (diferenca <= 0) {
+    resetTime.textContent = "00:00:00s";
+    // Recarrega a página ao atingir meia-noite
+    location.reload();
+    return;
+  }
+
+  // Calcula horas, minutos e segundos restantes
+  const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+  const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+  const segundos = Math.floor((diferenca / 1000) % 60);
+
+  // Formata o tempo no estilo 16:59:10s
+  const tempoFormatado =
+    (horas < 10 ? "0" : "") + horas + ":" +
+    (minutos < 10 ? "0" : "") + minutos + ":" +
+    (segundos < 10 ? "0" : "") + segundos + "s";
+
+  resetTime.textContent = tempoFormatado;
+}
+
+// Atualiza a cada segundo
+setInterval(atualizarContagemRegressiva, 1000);
+// Atualiza imediatamente ao carregar
+atualizarContagemRegressiva();

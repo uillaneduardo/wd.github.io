@@ -25,6 +25,9 @@
     right: 10px;
 }
 
+button{
+    cursor: pointer;
+}
 
 /**Styles**/
 .style-sombra-adrenalina{
@@ -44,6 +47,9 @@
     border-radius: 5px;
     border: 2px solid var(--cor-predominante);
     padding: 10px;
+
+    width: fit-content;
+    height: fit-content;
 
     font-family: var(--font-title);
     font-weight: 400;

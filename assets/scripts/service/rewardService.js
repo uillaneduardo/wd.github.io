@@ -101,7 +101,7 @@ export class RewardService {
     else return 'revelando-card';
   }
   getStateClassToRemove(slot){
-    if(this.isLocked(slot)) return;
+    if(this.isLocked(slot)) return 'slot-raridade';
     if(this.isRevealed(slot)) return 'revelando-card';
     else return 'slot-raridade';
   }
