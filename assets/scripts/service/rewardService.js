@@ -78,18 +78,18 @@ export class RewardService {
   getCardPath(slot) { return this.getSlot(slot)?.cardPath ?? ''; }
   getMaskPath(slot) { return this.getSlot(slot)?.maskPath ?? ''; }
 
+  revelarCarta(){revealed = true;}
+
   getIconUrl(slot) {
     const p = this.getSlot(slot)?.iconPath;
     return p ? `url("${p}")` : 'none';
   }
-
   getCardUrl(slot) {
     let p;
     if(this.isRevealed(slot)) p = this.getSlot(slot)?.cardPath;
     else p = this.getSlot(slot)?.maskPath;
     return p ? `url("${p}")` : 'none';
   }
-
   getRarityColor(slot){
     if(this.isLocked(slot)) return 'var(--cor-predominante)';
     const rarity = this.getRarity(slot);

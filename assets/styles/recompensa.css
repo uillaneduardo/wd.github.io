@@ -71,20 +71,20 @@
     pointer-events: none;
 }
 
-
+.aguardando-revelar::after,
+.revelando-card:hover::after,
 .slot-raridade::after{
     border-color: var(--cor-raridade);
 }
 
+.aguardando-revelar,
 .slot-raridade:hover,
 .revelando-card:hover{
   box-shadow: 0 0 28px var(--cor-raridade);
   filter: drop-shadow(0 0 18px var(--cor-raridade));
   transition: filter .2s ease;
 }
-.revelando-card:hover::after{
-    border-color: var(--cor-raridade);
-}
+
 .aguardando-revelar{
     animation: aguardar-revelar .18s linear 10;
 }

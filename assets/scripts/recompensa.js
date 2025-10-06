@@ -41,9 +41,13 @@ btnSelecionarOferta.addEventListener('click', () => {
     teleportSwap(recompensaSwiper, 'right', selecionarOferta);
 });
 
-slotA.addEventListener('click', () => {revelarSlot(slotA)});
-slotA.addEventListener('click', () => {revelarSlot(slotB)});
-slotA.addEventListener('click', () => {revelarSlot(slotC)});
+slotA.addEventListener('click', () => {revelandoSlot(slotA)});
+slotB.addEventListener('click', () => {revelandoSlot(slotB)});
+slotC.addEventListener('click', () => {revelandoSlot(slotC)});
+
+slotA.addEventListener('animationend', () => {aoRevelarSlot(slotA)});
+slotB.addEventListener('animationend', () => {aoRevelarSlot(slotB)});
+slotC.addEventListener('animationend', () => {aoRevelarSlot(slotC)});
 
 selecionarDiario();
 
@@ -52,7 +56,6 @@ function selecionarDiario() {
     slotA.style.setProperty('--slot-card', service.getCardUrl(Slot.A));
     slotB.style.setProperty('--slot-card', service.getCardUrl(Slot.B));
     slotC.style.setProperty('--slot-card', service.getCardUrl(Slot.C));
-
 
     slotA.style.setProperty('--cor-raridade', service.getRarityColor(Slot.A));
     slotB.style.setProperty('--cor-raridade', service.getRarityColor(Slot.B));
@@ -71,13 +74,14 @@ function selecionarDiario() {
 
     btnSelecionarOferta.classList.remove('btn-autoescola');
     btnSelecionarOferta.classList.add('btn-liberdade');
+
+    removerAguardandoRevelar();
 }
 function selecionarOferta() {
 
     slotA.style.setProperty('--slot-card', service.getCardUrl(Slot.D));
     slotB.style.setProperty('--slot-card', service.getCardUrl(Slot.E));
     slotC.style.setProperty('--slot-card', service.getCardUrl(Slot.F));
-
 
     slotA.style.setProperty('--cor-raridade', service.getRarityColor(Slot.D));
     slotB.style.setProperty('--cor-raridade', service.getRarityColor(Slot.E));
@@ -96,12 +100,24 @@ function selecionarOferta() {
 
     btnSelecionarOferta.classList.remove('btn-liberdade');
     btnSelecionarOferta.classList.add('btn-autoescola');
+
+    removerAguardandoRevelar();
 }
 
-function revelarSlot(cardSlot){
+function revelandoSlot(cardSlot){
     if(cardSlot.classList.contains('revelando-card')){
         cardSlot.classList.add('aguardando-revelar');
     }
+}
+function aoRevelarSlot(cardSlot){
+    cardSlot.classList.remove('aguardando-revelar');
+    cardSlot.classList.remove('revelando-card');
+    cardSlot.classList.add('slot-raridade');
+}
+function removerAguardandoRevelar(){
+    slotA.classList.remove('aguardando-revelar');
+    slotB.classList.remove('aguardando-revelar');
+    slotC.classList.remove('aguardando-revelar');
 }
 
 
