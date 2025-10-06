@@ -12,10 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
     <!--CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="../assets/styles/common.css">
     <link rel="stylesheet" href="../assets/styles/body.css">
     <link rel="stylesheet" href="../assets/styles/header.css">
+    <link rel="stylesheet" href="../assets/styles/recompensa.css">
     <link rel="stylesheet" href="../assets/styles/popup.css">
+    <!--JS-->
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer type="module" src="../assets/scripts/recompensa.js"></script>
+
 </head>
 
 <body class="body-dark">
@@ -32,44 +38,35 @@
     </header>
 
     <main>
-        <div id="roleta" class="container style-dark">
+        <div id="recompensa" class="container style-dark">
 
-            <div id="selecionar-roleta" class="container-l-side container-p-side">
+            <div id="selecionar-recompensa" class="container-l-side container-p-side">
 
-                <a id="btn-roleta-diaria" aria-label="roleta diária"
+                <a id="btn-recompensa-diaria" aria-label="recompensa diária"
                     class="btn-liberdade btn-sombra-adrenalina style-rebelde-l" href="#">
-                    <i>Roleta Diária</i>
+                    <i>Recompensa Diária</i>
                 </a>
 
-                <a id="btn-roleta-especial" aria-label="roleta especial"
+                <a id="btn-oferta-especial" aria-label="oferta especial"
                     class="btn-autoescola btn-sombra-adrenalina style-rebelde-l" href="#">
-                    <i>Roleta Especial</i>
-                </a>                
-
-            </div>
-
-            <div id="wheel-spin">
-                <div id="wheel-background">
-                    <div id="wheel-carro" class="wheel-premio"></div>
-                    <div id="wheel-jante" class="wheel-premio"></div>
-                    <div id="wheel-mascote" class="wheel-premio"></div>
-                    <div id="wheel-pintura" class="wheel-premio"></div>
-                    <div id="wheel-outfit" class="wheel-premio"></div>
-                    <div id="wheel-adesivo" class="wheel-premio"></div>
-                </div>
-                <div id="wheel-brake"></div>
-            </div>
-
-            <div id="girar-roleta">
-                
-                <a id="btn-girar" aria-label="girar" class="btn-autoescola btn-sombra-adrenalina style-rebelde-l"
-                    href="#">
-                    <i>Girar</i>
+                    <i>Oferta Especial</i>
                 </a>
 
+            </div>
+
+            <div id="area-recompensa" class="swiper">
+                <div id="wrapper-recompensa" class="swiper-wrapper">
+                    <div id="slot-a" class="swiper-slide"></div>
+                    <div id="slot-b" class="swiper-slide"></div>
+                    <div id="slot-c" class="swiper-slide"></div>
+                </div>
+            </div>
+
+            <div id="resgate-recompensa">
+                <p> Toque na carta para revelar a silhueta. Em 16:59:10s elas serão trocadas</p>
                 <a id="btn-premios" aria-label="prêmios" class="btn-autoescola btn-sombra-adrenalina style-rebelde-l"
                     href="#">
-                    <i>Prêmios</i>
+                    <i>Coleção</i>
                 </a>
 
             </div>
