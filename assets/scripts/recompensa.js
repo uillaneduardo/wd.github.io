@@ -90,24 +90,29 @@ function aoSelecionar(slotA, slotB, slotC){
     cardSlotC.style.setProperty('--cor-raridade', service.getRarityColor(slotC));
 
     cardSlotA.querySelector("h3").textContent = service.getTitle(slotA);
-    cardSlotA.querySelector("p").textContent = service.getDescription(slotA);
     cardSlotA.querySelector("button").textContent = service.getPrettyPrice(slotA);
 
     cardSlotB.querySelector("h3").textContent = service.getTitle(slotB);
-    cardSlotB.querySelector("p").textContent = service.getDescription(slotB);
     cardSlotB.querySelector("button").textContent = service.getPrettyPrice(slotB);
 
     cardSlotC.querySelector("h3").textContent = service.getTitle(slotC);
-    cardSlotC.querySelector("p").textContent = service.getDescription(slotC);
     cardSlotC.querySelector("button").textContent = service.getPrettyPrice(slotC);
 
-    cardSlotA.classList.add(service.getStateClassToAdd(slotA));
-    cardSlotB.classList.add(service.getStateClassToAdd(slotB));
-    cardSlotC.classList.add(service.getStateClassToAdd(slotC));
+    const classAddA = service.getStateClassToAdd(slotA);
+    const classAddB = service.getStateClassToAdd(slotB);
+    const classAddC = service.getStateClassToAdd(slotC);
 
-    cardSlotA.classList.remove(service.getStateClassToRemove(slotA));
-    cardSlotB.classList.remove(service.getStateClassToRemove(slotB));
-    cardSlotC.classList.remove(service.getStateClassToRemove(slotC));
+    const classRemoveA = service.getStateClassToRemove(slotA);
+    const classRemoveB = service.getStateClassToRemove(slotB);
+    const classRemoveC = service.getStateClassToRemove(slotC);
+
+    if(classAddA && classAddA.length)cardSlotA.classList.add(...classAddA);
+    if(classAddB && classAddB.length)cardSlotB.classList.add(...classAddB);
+    if(classAddC && classAddC.length)cardSlotC.classList.add(...classAddC);
+
+    if(classRemoveA && classRemoveA.length)cardSlotA.classList.remove(...classRemoveA);
+    if(classRemoveB && classRemoveB.length)cardSlotB.classList.remove(...classRemoveB);
+    if(classRemoveC && classRemoveC.length)cardSlotC.classList.remove(...classRemoveC);
 }
 
 function revelandoSlot(cardSlot){

@@ -97,13 +97,13 @@ export class RewardService {
   }
   getStateClassToAdd(slot){
     if(this.isLocked(slot)) return;
-    if(this.isRevealed(slot)) return 'slot-raridade';
-    else return 'revelando-card';
+    if(this.isRevealed(slot)) return ['slot-raridade'];
+    else return ['revelando-card'];
   }
   getStateClassToRemove(slot){
-    if(this.isLocked(slot)) return 'slot-raridade';
-    if(this.isRevealed(slot)) return 'revelando-card';
-    else return 'slot-raridade';
+    if(this.isLocked(slot)) return ['slot-raridade', 'revelando-card'];
+    if(this.isRevealed(slot)) return ['revelando-card'];
+    else return ['slot-raridade'];
   }
   getPrettyPrice(slot){
     let pprice = this.getPrice(slot);

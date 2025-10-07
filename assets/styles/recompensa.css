@@ -34,10 +34,9 @@
 .swiper-slide{
     position: relative;
     display: grid;
-    grid-template-rows: 15% 20% 40% 25%;
+    grid-template-rows: 10% 10% 60% 10% 10%;
     justify-items: center;
     align-items: center;
-    text-align: justify;
     overflow: hidden;
 
 
@@ -53,8 +52,7 @@
     background-size: contain;
     background-position: center;
 }
-.swiper-slide h3{grid-row: 1;}
-.swiper-slide p{grid-row: 2; width: 80%;}
+.swiper-slide h3{grid-row: 2; width: 78%; text-align: center;}
 .swiper-slide button{grid-row: 4;}
 .swiper-slide > *{
     opacity: 0;

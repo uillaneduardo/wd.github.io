@@ -21,6 +21,7 @@
     <!--JS-->
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script defer type="module" src="../assets/scripts/recompensa.js"></script>
+    <script defer src="../assets/scripts/popup.js"></script>
 
 </head>
 
@@ -58,17 +59,14 @@
                 <div id="wrapper-recompensa" class="swiper-wrapper">
                     <div id="slot-a" class="swiper-slide">
                         <h3>Nome do item</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt similique officia possimus dolor</p>
                         <button class="btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
                     </div>
                     <div id="slot-b" class="swiper-slide">
                         <h3>Nome do item</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt similique officia possimus dolor</p>
                         <button class="btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
                     </div>
                     <div id="slot-c" class="swiper-slide">
                         <h3>Nome do item</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt similique officia possimus dolor</p>
                         <button class="btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
                     </div>
                 </div>
@@ -76,8 +74,8 @@
 
             <div id="resgate-recompensa">
                 <p> Toque na carta para revelar a silhueta. Em <i id="reset-time">16:59:10s</i> elas serão trocadas</p>
-                <button id="btn-premios" aria-label="prêmios" class="btn-autoescola btn-sombra-adrenalina style-rebelde-l"
-                    href="#">
+                <button id="btn-premios" aria-label="prêmios"
+                    class="btn-autoescola btn-sombra-adrenalina style-rebelde-l" href="#">
                     <i>Coleção</i>
                 </button>
 
@@ -105,6 +103,15 @@
             </div>
         </div>
     </main>
+
+    <!--------------------->
+    <!--------POPUP-------->
+    <!--------------------->
+    <dialog id="popup" aria-labelledby="popup-title" aria-describedby="popup-content">
+        <button id="popup-close" class="popup-close" aria-label="Fechar">×</button>
+        <h2 id="popup-title"></h2>
+        <div id="popup-content"></div>
+    </dialog>
 
 </body>
 
