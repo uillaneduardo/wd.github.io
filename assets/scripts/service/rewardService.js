@@ -105,4 +105,10 @@ export class RewardService {
     if(this.isRevealed(slot)) return 'revelando-card';
     else return 'slot-raridade';
   }
+  getPrettyPrice(slot){
+    let pprice = this.getPrice(slot);
+    if(this.isClaimed(slot)) return 'Obtido';
+    if(pprice > 0) return pprice;
+    else return 'Grátis';
+  }
 }

@@ -25,8 +25,9 @@ const recompensaSwiper = new Swiper('#area-recompensa', {
     centeredSlides: true,
     centerInsufficientSlides: true,
     centeredSlidesBounds: true,
+    slideToClickedSlide: true,
     initialSlide: 1,
-    freeMode: { enabled: true, sticky: true },
+    freeMode: { enabled: false, sticky: true },
     grabCursor: true,
     keyboard: { enabled: true }
 });
@@ -87,6 +88,18 @@ function aoSelecionar(slotA, slotB, slotC){
     cardSlotA.style.setProperty('--cor-raridade', service.getRarityColor(slotA));
     cardSlotB.style.setProperty('--cor-raridade', service.getRarityColor(slotB));
     cardSlotC.style.setProperty('--cor-raridade', service.getRarityColor(slotC));
+
+    cardSlotA.querySelector("h3").textContent = service.getTitle(slotA);
+    cardSlotA.querySelector("p").textContent = service.getDescription(slotA);
+    cardSlotA.querySelector("button").textContent = service.getPrettyPrice(slotA);
+
+    cardSlotB.querySelector("h3").textContent = service.getTitle(slotB);
+    cardSlotB.querySelector("p").textContent = service.getDescription(slotB);
+    cardSlotB.querySelector("button").textContent = service.getPrettyPrice(slotB);
+
+    cardSlotC.querySelector("h3").textContent = service.getTitle(slotC);
+    cardSlotC.querySelector("p").textContent = service.getDescription(slotC);
+    cardSlotC.querySelector("button").textContent = service.getPrettyPrice(slotC);
 
     cardSlotA.classList.add(service.getStateClassToAdd(slotA));
     cardSlotB.classList.add(service.getStateClassToAdd(slotB));
