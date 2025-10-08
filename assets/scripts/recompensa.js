@@ -152,7 +152,7 @@ function popupConfirmarCompra(slot) {
                             [${cardRaridade}]
                         </i>`;
     const cardDescription = service.getDescription(slotSelecionado);
-    const cardIcone = service.getIconPath(slotSelecionado);
+    const cardIcone = service.getIconPath(slotSelecionado, '../assets/');
     const cardPrice = service.getPrettyPrice(slotSelecionado);
     
     const contentInflate =

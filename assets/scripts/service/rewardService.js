@@ -21,9 +21,9 @@ export class RewardService {
       title: 'Bloqueado',
       description: 'Esse slot está bloqueado',
       rarity: null,
-      iconPath: '../images/icone-cadeado.png',
-      cardPath: '../images/silhueta-cadeado.png',
-      maskPath: '../images/silhueta-cadeado.png',
+      iconPath: 'images/icone-cadeado.png',
+      cardPath: 'images/silhueta-cadeado.png',
+      maskPath: 'images/silhueta-cadeado.png',
       claimed: false,
       revealed: true,
       price: null
@@ -74,13 +74,13 @@ export class RewardService {
   getPrice(slot) { return this.getSlot(slot)?.price ?? 0; }
   getTitle(slot) { return this.getSlot(slot)?.title ?? ''; }
   getDescription(slot) { return this.getSlot(slot)?.description ?? ''; }
-  getIconPath(slot) { return this.getSlot(slot)?.iconPath ?? ''; }
-  getCardPath(slot) { return this.getSlot(slot)?.cardPath ?? ''; }
-  getMaskPath(slot) { return this.getSlot(slot)?.maskPath ?? ''; }
+  getIconPath(slot, relativo = '../') { return `${relativo}${this.getSlot(slot)?.iconPath ?? ''}`;}
+  getCardPath(slot, relativo = '../') { return `${relativo}${this.getSlot(slot)?.cardPath ?? ''}`;}
+  getMaskPath(slot, relativo = '../') { return `${relativo}${this.getSlot(slot)?.maskPath ?? ''}`;}
 
-  getIconUrl(slot) {return `url("${this.getSlot(slot)?.iconPath}")`;}
-  getCardUrl(slot) {return `url("${this.getSlot(slot)?.cardPath}")`;}
-  getMaskUrl(slot) {return `url("${this.getSlot(slot)?.maskPath}")`;}
+  getIconUrl(slot, relativo = '../') {return `url("${this.getIconPath(slot, relativo)}")`;}
+  getCardUrl(slot, relativo = '../') {return `url("${this.getCardPath(slot, relativo)}")`;}
+  getMaskUrl(slot, relativo = '../') {return `url("${this.getMaskPath(slot, relativo)}")`;}
 
   getRarityColor(slot){
     if(this.isLocked(slot)) return 'var(--cor-predominante)';
