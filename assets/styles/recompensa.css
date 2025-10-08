@@ -31,12 +31,20 @@
     padding-top: 25px;
 }
 
-.swiper-slide{
-    position: relative;
+.card-grid{
     display: grid;
     grid-template-rows: 10% 10% 60% 10% 10%;
     justify-items: center;
     align-items: center;
+}
+.card-grid-1{grid-row: 1;}
+.card-grid-2{grid-row: 2;}
+.card-grid-3{grid-row: 3;}
+.card-grid-4{grid-row: 4;}
+.card-grid-5{grid-row: 5;}
+
+.swiper-slide{
+    position: relative;
     overflow: hidden;
 
 
@@ -52,8 +60,7 @@
     background-size: contain;
     background-position: center;
 }
-.swiper-slide h3{grid-row: 2; width: 78%; text-align: center;}
-.swiper-slide button{grid-row: 4;}
+.swiper-slide h3{width: 78%; text-align: center;}
 .swiper-slide > *{
     opacity: 0;
     pointer-events: none;

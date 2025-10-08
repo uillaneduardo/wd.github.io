@@ -78,10 +78,7 @@ export class RewardService {
   getCardPath(slot) { return this.getSlot(slot)?.cardPath ?? ''; }
   getMaskPath(slot) { return this.getSlot(slot)?.maskPath ?? ''; }
 
-  getIconUrl(slot) {
-    const p = this.getSlot(slot)?.iconPath;
-    return p ? `url("${p}")` : 'none';
-  }
+  getIconUrl(slot) {return `url("${this.getSlot(slot)?.iconPath}")`;}
   getCardUrl(slot) {return `url("${this.getSlot(slot)?.cardPath}")`;}
   getMaskUrl(slot) {return `url("${this.getSlot(slot)?.maskPath}")`;}
 
@@ -110,5 +107,14 @@ export class RewardService {
     if(this.isClaimed(slot)) return 'Obtido';
     if(pprice > 0) return pprice;
     else return 'Grátis';
+  }
+  getPrettyRarity(slot){
+    const rarity = this.getRarity(slot);
+    switch(rarity){
+      case 'C': return "Comum";
+      case 'R': return "Raro";
+      case 'E': return "Épico";
+      case 'L': return "Limitado";
+    }
   }
 }

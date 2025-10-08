@@ -1,4 +1,4 @@
-import { Slot } from './service/slots.js';
+import { GROUP, Slot } from './service/slots.js';
 import { RewardService } from './service/rewardService.js';
 import { MockServerSource } from './service/mockServerSource.js';
 import { LocalJsonSource } from './service/localJsonSource.js';
@@ -17,6 +17,7 @@ const cardSlotB = document.getElementById("slot-b");
 const cardSlotC = document.getElementById("slot-c");
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");
+let btnSelecionado = GROUP.DAILY;
 
 const recompensaSwiper = new Swiper('#area-recompensa', {
     direction: 'horizontal',
@@ -43,18 +44,23 @@ btnSelecionarOferta.addEventListener('click', () => {
     teleportSwap(recompensaSwiper, 'right', selecionarOferta);
 });
 
-cardSlotA.addEventListener('click', () => {revelandoSlot(cardSlotA)});
-cardSlotB.addEventListener('click', () => {revelandoSlot(cardSlotB)});
-cardSlotC.addEventListener('click', () => {revelandoSlot(cardSlotC)});
+cardSlotA.addEventListener('click', () => { revelandoSlot(cardSlotA) });
+cardSlotB.addEventListener('click', () => { revelandoSlot(cardSlotB) });
+cardSlotC.addEventListener('click', () => { revelandoSlot(cardSlotC) });
 
-cardSlotA.addEventListener('animationend', () => {aoRevelarSlot(cardSlotA)});
-cardSlotB.addEventListener('animationend', () => {aoRevelarSlot(cardSlotB)});
-cardSlotC.addEventListener('animationend', () => {aoRevelarSlot(cardSlotC)});
+cardSlotA.addEventListener('animationend', () => { aoRevelarSlot(cardSlotA) });
+cardSlotB.addEventListener('animationend', () => { aoRevelarSlot(cardSlotB) });
+cardSlotC.addEventListener('animationend', () => { aoRevelarSlot(cardSlotC) });
+
+cardSlotA.querySelector("button").addEventListener('click', () => {popupConfirmarCompra(Slot.A)});
+cardSlotB.querySelector("button").addEventListener('click', () => {popupConfirmarCompra(Slot.B)});
+cardSlotC.querySelector("button").addEventListener('click', () => {popupConfirmarCompra(Slot.C)});
 
 selecionarDiario();
 
 function selecionarDiario() {
 
+    btnSelecionado = GROUP.DAILY;
     btnSelecionarDiario.classList.remove('btn-liberdade');
     btnSelecionarDiario.classList.add('btn-autoescola');
 
@@ -66,6 +72,7 @@ function selecionarDiario() {
 }
 function selecionarOferta() {
 
+    btnSelecionado = GROUP.SPECIAL;
     btnSelecionarDiario.classList.remove('btn-autoescola');
     btnSelecionarDiario.classList.add('btn-liberdade');
 
@@ -76,7 +83,7 @@ function selecionarOferta() {
     removerAguardandoRevelar();
 }
 
-function aoSelecionar(slotA, slotB, slotC){
+function aoSelecionar(slotA, slotB, slotC) {
     cardSlotA.style.setProperty('--slot-card', service.getCardUrl(slotA));
     cardSlotB.style.setProperty('--slot-card', service.getCardUrl(slotB));
     cardSlotC.style.setProperty('--slot-card', service.getCardUrl(slotC));
@@ -106,32 +113,68 @@ function aoSelecionar(slotA, slotB, slotC){
     const classRemoveB = service.getStateClassToRemove(slotB);
     const classRemoveC = service.getStateClassToRemove(slotC);
 
-    if(classAddA && classAddA.length)cardSlotA.classList.add(...classAddA);
-    if(classAddB && classAddB.length)cardSlotB.classList.add(...classAddB);
-    if(classAddC && classAddC.length)cardSlotC.classList.add(...classAddC);
+    if (classAddA && classAddA.length) cardSlotA.classList.add(...classAddA);
+    if (classAddB && classAddB.length) cardSlotB.classList.add(...classAddB);
+    if (classAddC && classAddC.length) cardSlotC.classList.add(...classAddC);
 
-    if(classRemoveA && classRemoveA.length)cardSlotA.classList.remove(...classRemoveA);
-    if(classRemoveB && classRemoveB.length)cardSlotB.classList.remove(...classRemoveB);
-    if(classRemoveC && classRemoveC.length)cardSlotC.classList.remove(...classRemoveC);
+    if (classRemoveA && classRemoveA.length) cardSlotA.classList.remove(...classRemoveA);
+    if (classRemoveB && classRemoveB.length) cardSlotB.classList.remove(...classRemoveB);
+    if (classRemoveC && classRemoveC.length) cardSlotC.classList.remove(...classRemoveC);
 }
 
-function revelandoSlot(cardSlot){
-    if(cardSlot.classList.contains('revelando-card')){
+function revelandoSlot(cardSlot) {
+    if (cardSlot.classList.contains('revelando-card')) {
         cardSlot.classList.add('aguardando-revelar');
     }
 }
-function aoRevelarSlot(cardSlot){
+function aoRevelarSlot(cardSlot) {
     cardSlot.classList.remove('aguardando-revelar');
     cardSlot.classList.remove('revelando-card');
     cardSlot.classList.add('slot-raridade');
 }
-function removerAguardandoRevelar(){
+function removerAguardandoRevelar() {
     cardSlotA.classList.remove('aguardando-revelar');
     cardSlotB.classList.remove('aguardando-revelar');
     cardSlotC.classList.remove('aguardando-revelar');
 }
 
+function popupConfirmarCompra(slot) {
+    const slotSelecionado = slot + 3 * btnSelecionado;
+    if(service.isClaimed(slotSelecionado) || service.isLocked(slotSelecionado)) return;
 
+    const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
+    const buttonClasses = 'btn-autoescola btn-sombra-adrenalina style-rebelde-r';
+
+    const cardRaridade = service.getPrettyRarity(slotSelecionado);
+    const cardRaridadeCor = service.getRarityColor(slotSelecionado);
+    const cardTitle = `${service.getTitle(slotSelecionado)} 
+                        <i style="color: ${cardRaridadeCor}; font-size: 0.90rem; background-color: black;">
+                            [${cardRaridade}]
+                        </i>`;
+    const cardDescription = service.getDescription(slotSelecionado);
+    const cardIcone = service.getIconPath(slotSelecionado);
+    const cardPrice = service.getPrettyPrice(slotSelecionado);
+    
+    const contentInflate =
+        `<div style="display: flex; flex-direction: column; align-items: center; max-width: 300px;">
+
+            <h3 style="text-align: center;">${cardTitle}</h3>
+
+            <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Ícone">
+
+            <p style="text-align: justify;">
+                ${cardDescription}<br>
+                Custo: ${cardPrice}
+            </p>
+
+            <button class="${buttonClasses}">Confirmar</button>
+
+        </div>`
+    ;
+
+    Popup.show({ title: '', content: contentInflate, classes: popupClasses });
+
+}
 
 /**
  * Joga o Swiper pra fora e volta pro centro.
@@ -174,35 +217,35 @@ function teleportSwap(swiper, dir = 'left', midAction = () => { }) {
 }
 
 function atualizarContagemRegressiva() {
-  if (!resetTime) return;
+    if (!resetTime) return;
 
-  const agora = new Date();
-  const meiaNoite = new Date();
+    const agora = new Date();
+    const meiaNoite = new Date();
 
-  // Define o horário de reset para o próximo dia às 00:00:00
-  meiaNoite.setHours(24, 0, 0, 0);
+    // Define o horário de reset para o próximo dia às 00:00:00
+    meiaNoite.setHours(24, 0, 0, 0);
 
-  const diferenca = meiaNoite - agora;
+    const diferenca = meiaNoite - agora;
 
-  if (diferenca <= 0) {
-    resetTime.textContent = "00:00:00s";
-    // Recarrega a página ao atingir meia-noite
-    location.reload();
-    return;
-  }
+    if (diferenca <= 0) {
+        resetTime.textContent = "00:00:00s";
+        // Recarrega a página ao atingir meia-noite
+        location.reload();
+        return;
+    }
 
-  // Calcula horas, minutos e segundos restantes
-  const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
-  const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
-  const segundos = Math.floor((diferenca / 1000) % 60);
+    // Calcula horas, minutos e segundos restantes
+    const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+    const segundos = Math.floor((diferenca / 1000) % 60);
 
-  // Formata o tempo no estilo 16:59:10s
-  const tempoFormatado =
-    (horas < 10 ? "0" : "") + horas + ":" +
-    (minutos < 10 ? "0" : "") + minutos + ":" +
-    (segundos < 10 ? "0" : "") + segundos + "s";
+    // Formata o tempo no estilo 16:59:10s
+    const tempoFormatado =
+        (horas < 10 ? "0" : "") + horas + ":" +
+        (minutos < 10 ? "0" : "") + minutos + ":" +
+        (segundos < 10 ? "0" : "") + segundos + "s";
 
-  resetTime.textContent = tempoFormatado;
+    resetTime.textContent = tempoFormatado;
 }
 
 // Atualiza a cada segundo

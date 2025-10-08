@@ -2,7 +2,7 @@
 
 // "Enum" de slots e grupos
 export const Slot = Object.freeze({ A: 0, B: 1, C: 2, D: 3, E: 4, F: 5 });
-export const GROUP = Object.freeze({ DAILY: 1, SPECIAL: 2 });
+export const GROUP = Object.freeze({ DAILY: 0, SPECIAL: 1 });
 export const SLOT_GROUP = Object.freeze({
   A: GROUP.DAILY, B: GROUP.DAILY, C: GROUP.DAILY,
   D: GROUP.SPECIAL, E: GROUP.SPECIAL, F: GROUP.SPECIAL

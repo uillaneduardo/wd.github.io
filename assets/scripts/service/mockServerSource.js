@@ -10,9 +10,9 @@ export class MockServerSource {
       title: group === 'daily' ? 'Recompensa Diária' : 'Oferta Especial',
       description: group === 'daily' ? 'Item grátis do dia' : 'Oferta por tempo limitado',
       rarity: ['C','R','E','L'][Math.floor(Math.random()*4)],
-      iconPath: '../images/icone-carro.png',
-      cardPath: '../images/card-carro.png',
-      maskPath: '../images/silhueta-carro.png',
+      iconPath: '/assets/images/icone-carro.png',
+      cardPath: '/assets/images/card-carro.png',
+      maskPath: '/assets/images/silhueta-carro.png',
       claimed: Math.random() < 0.25,
       revealed: Math.random() < 0.5,
       price: group === 'daily' ? 0 : +((Math.random()*250).toFixed(2))

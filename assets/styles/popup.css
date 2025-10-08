@@ -1,8 +1,8 @@
 /* Estilo base interno */
-#popup { border: 0; padding: 0; }
+#popup { border: 0; padding: 15px; }
 #popup::backdrop { background: rgba(0,0,0,.5); }
 .popup-panel { background: #fff; max-width: 520px; width: min(92vw, 520px); margin: 0; }
-.popup-close { position: absolute; top: .75rem; right: .75rem; }
+.popup-close { position: absolute; top: .75rem; right: .75rem; background-color: rgba(0, 0, 0, 0); border: none; font-size: 2rem;}
 
 /* Fallback (quando não há <dialog>) */
 .popup-fb-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; }
