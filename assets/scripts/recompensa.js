@@ -41,7 +41,7 @@ btnSelecionarDiario.addEventListener('click', () => {
 btnSelecionarOferta.addEventListener('click', () => {
     let selecionado = btnSelecionarOferta.classList.contains('btn-autoescola');
     if (selecionado) return; //Impede de executar a animação e a troca quando já estiver selecionado
-    teleportSwap(recompensaSwiper, 'right', selecionarOferta);
+    teleportSwap(recompensaSwiper, 'left', selecionarOferta);
 });
 
 cardSlotA.addEventListener('click', () => { revelandoSlot(cardSlotA) });
@@ -56,7 +56,13 @@ cardSlotA.querySelector("button").addEventListener('click', () => {popupConfirma
 cardSlotB.querySelector("button").addEventListener('click', () => {popupConfirmarCompra(Slot.B)});
 cardSlotC.querySelector("button").addEventListener('click', () => {popupConfirmarCompra(Slot.C)});
 
+// Recompensa diária selecionada ao carregar
 selecionarDiario();
+// Atualiza o timer de reset ao carregar
+atualizarContagemRegressiva();
+// Atualiza o timer de reset a cada segundo
+setInterval(atualizarContagemRegressiva, 1000);
+
 
 function selecionarDiario() {
 
@@ -247,8 +253,3 @@ function atualizarContagemRegressiva() {
 
     resetTime.textContent = tempoFormatado;
 }
-
-// Atualiza a cada segundo
-setInterval(atualizarContagemRegressiva, 1000);
-// Atualiza imediatamente ao carregar
-atualizarContagemRegressiva();

@@ -57,11 +57,6 @@ export class RewardService {
     for (const s of Object.values(Slot)) {
       if (!result.has(s)) result.set(s, this._lockedPlaceholder(s));
     }
-    // B e E nunca bloqueados
-    for (const s of [Slot.B, Slot.E]) {
-      const cur = result.get(s);
-      result.set(s, { ...cur, locked: false, title: cur.title === 'Bloqueado' ? 'Indisponível' : cur.title, price: 0 });
-    }
     return [...result.values()];
   }
 
