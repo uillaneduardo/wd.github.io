@@ -134,7 +134,6 @@
   80%  { transform: translate3d(1px, 1px, 0) rotate(1deg); background-color:var(--cor-revelando-b);}
   100% { transform: translate3d(0,0,0) rotate(0deg); background-color:var(--cor-revelando-c);}
 }
-
 #resgate-recompensa p{
     margin: 5px;
     color: grey;

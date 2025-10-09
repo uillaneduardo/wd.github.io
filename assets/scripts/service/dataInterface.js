@@ -26,6 +26,25 @@ const oferta_B = {
 const oferta_C = {};
 
 const dados_slot = { [Pool.Diario]: [diario_A, diario_B, diario_C], [Pool.Oferta]: [oferta_A, oferta_B, oferta_C] };
+const dados_colecao = {
+    [Pool.Diario]: [
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'E', comprado: false }
+    ], [Pool.Oferta]: []
+
+}
 
 //Assinatura pública
 export const Server =
@@ -60,7 +79,7 @@ export const Server =
  */
 
 /**
- * @param {number} pool
+ * @param {Server.Pool} pool
  * @param {number} slot
  * @returns {Readonly<Server.SlotInterface>}
  */
@@ -123,6 +142,53 @@ function buscarSlot(pool, slot) {
 
     });
 }
-function buscarColecao() { }
+
+/**
+ * @typedef {Objcet} Server.ColecaoInterface
+ * @property {(indice: number, relativo?: string) => string} qualCaminhoIcone
+ * @property {(indice: number) => string} qualTitulo
+ * @property {(indice: number) => ('C'|'R'|'E'|'L'|'')} qualRaridade
+ * @property {(indice: number) => boolean} foiComprado
+ */
+
+/**
+ * 
+ * @param {Server.Pool} pool 
+ * @returns {Readonly<Server.ColecaoInterface>}
+ */
+function buscarColecao(pool) {
+    //Interface da Coleção
+    return Object.freeze({
+        //Leitura
+        tamanho() { return dados_colecao[pool]?.length ?? 0; },
+        qualCaminhoIcone(indice, relativo = './') { return relativo + (dados_colecao[pool]?.[indice]?.caminhoIcone ?? ''); },
+        qualTitulo(indice) { return dados_colecao[pool]?.[indice]?.titulo ?? ''; },
+        qualRaridade(indice) { return dados_colecao[pool]?.[indice]?.raridade ?? ''; },
+        pegarRaridadeFormatada(indice) {
+            const raridade = this.qualRaridade(indice);
+            switch (raridade) {
+                case 'C': return 'Comum';
+                case 'R': return 'Raro';
+                case 'E': return 'Épico';
+                case 'L': return 'Limitado';
+            }
+        },
+        foiComprado(indice) { return dados_colecao[pool]?.[indice]?.comprado ?? false; },
+        qualProbabilidade(indice) {
+            const raridade = this.qualRaridade(indice);
+            const raridades = { C: 0.60, R: 0.30, E: 0.09, L: 0.01 };
+
+            // conta quantos itens há de cada tipo
+            const contagem = { C: 0, R: 0, E: 0, L: 0 };
+            for (const item of dados_colecao[pool] ?? []) {
+                contagem[item.raridade] = (contagem[item.raridade] ?? 0) + 1;
+            }
+
+            const valor = (raridades[raridade] ?? 0) / (contagem[raridade] || 1);
+            const truncado = Math.trunc(valor * 10000) / 100;
+            return truncado.toFixed(2).replace('.', ',') + '%';
+        }
+    })
+}
 function buscarProgresso() { }
 function buscarInventario() { }

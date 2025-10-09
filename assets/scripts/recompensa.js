@@ -2,13 +2,18 @@ import { Server } from './service/dataInterface.js';
 // @ts-check
 
 const root = document.documentElement;
-const resetTime = document.getElementById("reset-time");
-const cardSlotA = document.getElementById("slot-a");
-const cardSlotB = document.getElementById("slot-b");
-const cardSlotC = document.getElementById("slot-c");
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");
 let btnSelecionado = Server.Pool.Diario;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// ÁREA RECOMPENSA //////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const cardSlotA = document.getElementById("slot-a");
+const cardSlotB = document.getElementById("slot-b");
+const cardSlotC = document.getElementById("slot-c");
 
 const recompensaSwiper = new Swiper('#area-recompensa', {
     direction: 'horizontal',
@@ -49,10 +54,6 @@ cardSlotC.querySelector("button").addEventListener('click', () => { popupConfirm
 
 // Recompensa diária selecionada ao carregar
 selecionarDiario();
-// Atualiza o timer de reset ao carregar
-atualizarContagemRegressiva();
-// Atualiza o timer de reset a cada segundo
-setInterval(atualizarContagemRegressiva, 1000);
 
 
 function selecionarDiario() {
@@ -223,6 +224,69 @@ function teleportSwap(swiper, dir = 'left', midAction = () => { }) {
             el.classList.remove('teleport-in'); // limpa estado
         }, { once: true });
     }, { once: true });
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// RESGATE RECOMPENSA //////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const btnColecao = document.getElementById("btn-colecao");
+const resetTime = document.getElementById("reset-time");
+
+btnColecao.addEventListener('click', mostrarColecao);
+
+// Atualiza o timer de reset ao carregar
+atualizarContagemRegressiva();
+// Atualiza o timer de reset a cada segundo
+setInterval(atualizarContagemRegressiva, 1000);
+
+
+
+function mostrarColecao() {
+    //
+    const colecao = Server.colecao(btnSelecionado);
+
+    const popupTitulo = btnSelecionado === Server.Pool.Diario ? 'Coleção Diária' : 'Coleção Especial';
+    const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
+    let popupConteudo;
+    let itensHTML = '';
+
+    for (let i = 0; i < colecao.tamanho(); i++) {
+
+        const icone = colecao.qualCaminhoIcone(i, '../assets/');
+        const nome = colecao.qualTitulo(i);
+        const probabilidade = colecao.qualProbabilidade(i);
+        const raridade = colecao.pegarRaridadeFormatada(i);
+        const riscar = colecao.foiComprado(i) ? 'text-decoration: line-through;' : '';
+        const coletar = colecao.foiComprado(i) ? '' : 'background-color: grey';
+
+        itensHTML += `
+            <li class="style-autoescola popup-list" style="${coletar}">
+                <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
+                <p style="${riscar}">${nome} | ${raridade} | ${probabilidade}</p>
+            </li>`;
+
+    }
+
+    if (colecao.tamanho() > 0) {
+        popupConteudo =
+            `<ul class="lista-itens">
+            ${itensHTML}
+        </ul>`;
+
+    } else {
+        //Se a lista não existir, exibir uma mensagem
+        popupConteudo = 
+        `<p>
+            Faaaala, motorista, tudo bem? Por enquanto nossa lojinha com ofertas especiais está na oficina mecânica. <br>
+            Mas eu gostaria de aproveitar para te convidar a visitar nossa campanha de financiamento do modo Liberdade! <br>
+            Aproveita porque quem participar da campanha vai ganhar 3x mais moedas para gastar aqui na loja. o/
+        </p>`;
+    }
+
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
 }
 
 function atualizarContagemRegressiva() {

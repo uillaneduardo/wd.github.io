@@ -1,5 +1,5 @@
 /* Estilo base interno */
-#popup { border: 0; padding: 15px; }
+#popup { border: 0; padding: 15px; max-height: 80vh;}
 #popup::backdrop { background: rgba(0,0,0,.5); }
 .popup-panel { background: #fff; max-width: 520px; width: min(92vw, 520px); margin: 0; }
 .popup-close { position: absolute; top: .75rem; right: .75rem; background-color: rgba(0, 0, 0, 0); border: none; font-size: 2rem;}
@@ -10,6 +10,14 @@
 .popup-fb[aria-hidden="false"],
 .popup-fb-backdrop[aria-hidden="false"] { display: flex; }
 .popup-fb .popup-panel { position: relative; padding: 1.25rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.popup-list{
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    margin-bottom: 10px;
+    gap: 10px;
+    align-items: center;
+}
 
 /* Travar scroll do body quando aberto (fallback) */
 .body-lock { overflow: hidden; }
