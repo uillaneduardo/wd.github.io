@@ -145,11 +145,14 @@
 #progresso-resumido{
     margin-top: 0;
     margin-bottom: 50px;
+    cursor: pointer;
 }
 #progresso-resumido-barra{
     background-color: black;
+    border: 5px solid black;
+    padding: 0px;
     border-radius: 5px;
-    padding: 5px;
+    overflow: hidden;
 }
 #progresso-resumido-barra-fill{
     background-color: var(--cor-liberdade);

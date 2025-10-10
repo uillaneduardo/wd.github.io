@@ -46,7 +46,7 @@ const dados_colecao = {
 
 }
 const dados_progresso = {
-    xp: 350,
+    xp: 70,
     conquistas: [
         { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista A', descricao: 'Primeira Conquista!', xp: 10, clamado: false },
         { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista B', descricao: 'Segunda Conquista!', xp: 50, clamado: false },
@@ -200,18 +200,22 @@ function buscarColecao(pool) {
         }
     })
 }
+
+
+
+
 function buscarProgresso() {
     return Object.freeze({
         //Leitura
         quantidadeXP() { return dados_progresso?.xp ?? 0; },
-        tamanhoConquistas() { return dados_progresso?.conquistas?.length ?? 0; },
-        conquistaCaminhoIcone(indice) { return dados_progresso?.conquistas[indice]?.caminhoIcone ?? 'images/icones/progresso.png'; },
+        conquistaTamanho() { return dados_progresso?.conquistas?.length ?? 0; },
+        conquistaCaminhoIcone(indice, relativo) { return relativo + (dados_progresso?.conquistas[indice]?.caminhoIcone ?? ''); },
         conquistaTitulo(indice) { return dados_progresso?.conquistas[indice]?.titulo ?? 'Error'; },
         conquistaDescricao(indice) { return dados_progresso?.conquistas[indice]?.descricao ?? 'Não encontrado' },
         conquistaRequisitoXP(indice) { return dados_progresso?.conquistas[indice]?.xp ?? '0'; },
         conquistaClamada(indice) { return dados_progresso?.conquistas[indice]?.clamado ?? false; },
         conquistasResumidas() {
-            const n = this.tamanhoConquistas();
+            const n = this.conquistaTamanho();
             if (n <= 3) return dados_progresso.conquistas?.slice(0, n);
 
             const xp = this.quantidadeXP();

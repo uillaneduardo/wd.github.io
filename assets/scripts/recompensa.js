@@ -278,8 +278,8 @@ function mostrarColecao() {
 
     } else {
         //Se a lista não existir, exibir uma mensagem
-        popupConteudo = 
-        `<p>
+        popupConteudo =
+            `<p>
             Faaaala, motorista, tudo bem? Por enquanto nossa lojinha com ofertas especiais está na oficina mecânica. <br>
             Mas eu gostaria de aproveitar para te convidar a visitar nossa campanha de financiamento do modo Liberdade! <br>
             Aproveita porque quem participar da campanha vai ganhar 3x mais moedas para gastar aqui na loja. o/
@@ -325,18 +325,67 @@ function atualizarContagemRegressiva() {
 /////////////////////////////////////////// CONQUISTAS ///////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const progressoResumido = document.getElementById('progresso-resumido');
 const barraProgressoFill = document.getElementById('progresso-resumido-barra-fill');
 const alvosProgresso = document.getElementById('progresso-b');
+
+progressoResumido.addEventListener('click', mostrarProgresso);
+
 atualizarProgresso();
 
-function atualizarProgresso(){
+function atualizarProgresso() {
     const progresso = Server.progresso().conquistasResumidas();
-    const barraXp = (Server.progresso().quantidadeXP() / progresso[2].xp) * 100;
+    const xp = Server.progresso().quantidadeXP();
+    const barraXp = (xp / progresso[2].xp) * 100;
     const conquistaAlvo = (progresso[1].xp / progresso[2].xp) * 100;
 
     barraProgressoFill.style.width = `${barraXp}%`;
     alvosProgresso.style.left = `${conquistaAlvo}%`;
-    barraProgressoFill.querySelector('span').textContent = Server.progresso().quantidadeXP() + ' xp';
+
+    barraProgressoFill.querySelector('span').textContent = xp > 0 ? xp + 'xp' : xp;
+}
+
+function mostrarProgresso() {
+    const progresso = Server.progresso();
+
+    const popupTitulo = "Progresso das Conquistas";
+    const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
+    let popupConteudo;
+    let itensHTML = '';
+
+    for (let i = 0; i < progresso.conquistaTamanho(); i++) {
+
+        const icone = progresso.conquistaCaminhoIcone(i, '../assets/');
+        const nome = progresso.conquistaTitulo(i);
+        const descricao = progresso.conquistaDescricao(i);
+        const conquistaXp = progresso.conquistaRequisitoXP(i);
+        const xp = Math.min(progresso.quantidadeXP(), conquistaXp);
+        const barraWidth = ((xp / conquistaXp) * 100) + '%';
+
+        const barraConquistaStyle = `
+            background: linear-gradient(90deg,
+            var(--cor-autoescola) 0%,
+            var(--cor-autoescola) ${barraWidth},
+            grey ${barraWidth},
+            grey 100%);
+        `;
 
 
+        itensHTML += `
+            <li class="style-autoescola popup-list" style="${barraConquistaStyle}">
+                <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
+                <span>${nome}</span>
+                <p>${descricao}</p>
+                <span>${xp} / ${conquistaXp}xp</span>
+            </li>`;
+
+    }
+
+
+    popupConteudo =
+        `<ul class="lista-itens">
+            ${itensHTML}
+        </ul>`;
+
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
 }
