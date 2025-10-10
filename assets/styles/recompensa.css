@@ -146,3 +146,43 @@
     margin-top: 0;
     margin-bottom: 50px;
 }
+#progresso-resumido-barra{
+    background-color: black;
+    border-radius: 5px;
+    padding: 5px;
+}
+#progresso-resumido-barra-fill{
+    background-color: var(--cor-liberdade);
+    width: 50%;
+    padding: 5px;
+    text-align: right;
+}
+
+#progresso-resumido-icones{
+    position: relative;
+    height: 35px;
+}
+
+#progresso-a,
+#progresso-b,
+#progresso-c{
+    position:absolute;
+    height: 35px;
+    aspect-ratio: 1/1;
+}
+
+#progresso-a{
+    transform: translate(-50%, 0%);
+    left: 0%;
+    bottom: 0%;
+}
+#progresso-b{
+    transform: translate(-50%, 0%);
+    left: 50%;
+    bottom: 0%;
+}
+#progresso-c{
+    transform: translate(-50%, 0%);
+    left: 100%;
+    bottom: 0%;
+}

@@ -320,3 +320,23 @@ function atualizarContagemRegressiva() {
 
     resetTime.textContent = tempoFormatado;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// CONQUISTAS ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const barraProgressoFill = document.getElementById('progresso-resumido-barra-fill');
+const alvosProgresso = document.getElementById('progresso-b');
+atualizarProgresso();
+
+function atualizarProgresso(){
+    const progresso = Server.progresso().conquistasResumidas();
+    const barraXp = (Server.progresso().quantidadeXP() / progresso[2].xp) * 100;
+    const conquistaAlvo = (progresso[1].xp / progresso[2].xp) * 100;
+
+    barraProgressoFill.style.width = `${barraXp}%`;
+    alvosProgresso.style.left = `${conquistaAlvo}%`;
+    barraProgressoFill.querySelector('span').textContent = Server.progresso().quantidadeXP() + ' xp';
+
+
+}

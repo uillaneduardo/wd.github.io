@@ -8,7 +8,7 @@ const diario_A = {};
 const diario_B = {
     titulo: 'EMIS Persona', raridade: 'E', custo: 0,
     descricao: 'Carro clássico inspirado no Opala SS e no Maverick',
-    bloqueado: false, revelado: false, comprado: false,
+    bloqueado: false, revelado: false, clamado: false,
     caminhoIcone: 'images/icone-carro.png',
     caminhoCarta: 'images/card-carro.png',
     caminhoMascara: 'images/silhueta-carro.png'
@@ -18,7 +18,7 @@ const oferta_A = {};
 const oferta_B = {
     titulo: 'EMIS Sparta', raridade: 'L', custo: 250,
     descricao: 'Carro secular inspirado nos primeiros carros da Ford',
-    bloqueado: false, revelado: false, comprado: false,
+    bloqueado: false, revelado: false, clamado: false,
     caminhoIcone: 'images/icone-carro.png',
     caminhoCarta: 'images/card-carro.png',
     caminhoMascara: 'images/silhueta-carro.png'
@@ -28,22 +28,32 @@ const oferta_C = {};
 const dados_slot = { [Pool.Diario]: [diario_A, diario_B, diario_C], [Pool.Oferta]: [oferta_A, oferta_B, oferta_C] };
 const dados_colecao = {
     [Pool.Diario]: [
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: true },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', comprado: false },
-        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'E', comprado: false }
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'C', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', clamado: true },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'R', clamado: false },
+        { caminhoIcone: 'images/icone-carro.png', titulo: 'EMIS Persona', raridade: 'E', clamado: false }
     ], [Pool.Oferta]: []
 
+}
+const dados_progresso = {
+    xp: 350,
+    conquistas: [
+        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista A', descricao: 'Primeira Conquista!', xp: 10, clamado: false },
+        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista B', descricao: 'Segunda Conquista!', xp: 50, clamado: false },
+        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista C', descricao: 'Terceira Conquista!', xp: 100, clamado: false },
+        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista D', descricao: 'Quarta Conquista!', xp: 170, clamado: false },
+        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista E', descricao: 'Quinta Conquista!', xp: 400, clamado: false }
+    ]
 }
 
 //Assinatura pública
@@ -92,7 +102,7 @@ function buscarSlot(pool, slot) {
 
         foiBloqueado() { return dados_slot[pool]?.[slot]?.bloqueado ?? true; },
         foiRevelado() { return dados_slot[pool]?.[slot]?.revelado ?? false; },
-        foiComprado() { return dados_slot[pool]?.[slot]?.comprado ?? false; },
+        foiComprado() { return dados_slot[pool]?.[slot]?.clamado ?? false; },
 
         qualCaminhoIcone(relativo = './') {
             return relativo + (dados_slot[pool]?.[slot]?.caminhoIcone ?? 'images/icone-cadeado.png');
@@ -138,7 +148,7 @@ function buscarSlot(pool, slot) {
 
         // Escrita
         revelar() { dados_slot[pool][slot].revelado = true; return true; },
-        comprar() { dados_slot[pool][slot].comprado = true; return true; },
+        comprar() { dados_slot[pool][slot].clamado = true; return true; },
 
     });
 }
@@ -173,7 +183,7 @@ function buscarColecao(pool) {
                 case 'L': return 'Limitado';
             }
         },
-        foiComprado(indice) { return dados_colecao[pool]?.[indice]?.comprado ?? false; },
+        foiComprado(indice) { return dados_colecao[pool]?.[indice]?.clamado ?? false; },
         qualProbabilidade(indice) {
             const raridade = this.qualRaridade(indice);
             const raridades = { C: 0.60, R: 0.30, E: 0.09, L: 0.01 };
@@ -190,5 +200,54 @@ function buscarColecao(pool) {
         }
     })
 }
-function buscarProgresso() { }
+function buscarProgresso() {
+    return Object.freeze({
+        //Leitura
+        quantidadeXP() { return dados_progresso?.xp ?? 0; },
+        tamanhoConquistas() { return dados_progresso?.conquistas?.length ?? 0; },
+        conquistaCaminhoIcone(indice) { return dados_progresso?.conquistas[indice]?.caminhoIcone ?? 'images/icones/progresso.png'; },
+        conquistaTitulo(indice) { return dados_progresso?.conquistas[indice]?.titulo ?? 'Error'; },
+        conquistaDescricao(indice) { return dados_progresso?.conquistas[indice]?.descricao ?? 'Não encontrado' },
+        conquistaRequisitoXP(indice) { return dados_progresso?.conquistas[indice]?.xp ?? '0'; },
+        conquistaClamada(indice) { return dados_progresso?.conquistas[indice]?.clamado ?? false; },
+        conquistasResumidas() {
+            const n = this.tamanhoConquistas();
+            if (n <= 3) return dados_progresso.conquistas?.slice(0, n);
+
+            const xp = this.quantidadeXP();
+
+            // Alvo = primeira conquista cujo requisito é MAIOR que o XP atual
+            // (se for igual, já está conquistada; o alvo é a próxima)
+            let alvo = -1;
+            for (let i = 0; i < n; i++) {
+                if (xp < this.conquistaRequisitoXP(i)) {
+                    alvo = i;
+                    break;
+                }
+            }
+
+            // Se todas já foram conquistadas, pegue as 3 últimas
+            if (alvo === -1) {
+                const start = n - 3;
+                return dados_progresso?.conquistas?.slice(start, n);
+            }
+
+            // Monte janela de 3 itens em torno do alvo
+            // - se alvo = 0 → [0,1,2]
+            // - se alvo = n-1 → [n-3,n-2,n-1]
+            // - caso geral → [alvo-1, alvo, alvo+1]
+            let start;
+            if (alvo === 0) {
+                start = 0;
+            } else if (alvo === n - 1) {
+                start = n - 3;
+            } else {
+                start = alvo - 1;
+            }
+
+            return dados_progresso?.conquistas?.slice(start, start + 3);
+        }
+
+    })
+}
 function buscarInventario() { }
