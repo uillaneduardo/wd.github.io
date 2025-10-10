@@ -302,7 +302,7 @@ html {
                 calc(var(--px5) * 1%) calc(var(--py5) * 1%),
                 calc(var(--px6) * 1%) calc(var(--py6) * 1%));
     }
-    p, td{
+    p, td, span{
         font-size: clamp(0.80rem, 3vw, 1.5rem);
     }
     #launch-event h3 {

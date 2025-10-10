@@ -327,7 +327,6 @@ function atualizarContagemRegressiva() {
 
 const progressoResumido = document.getElementById('progresso-resumido');
 const barraProgressoFill = document.getElementById('progresso-resumido-barra-fill');
-const alvosProgresso = document.getElementById('progresso-b');
 
 progressoResumido.addEventListener('click', mostrarProgresso);
 
@@ -339,8 +338,16 @@ function atualizarProgresso() {
     const barraXp = (xp / progresso[2].xp) * 100;
     const conquistaAlvo = (progresso[1].xp / progresso[2].xp) * 100;
 
+    const imgA = document.getElementById('progresso-a');
+    const imgB = document.getElementById('progresso-b');
+    const imgC = document.getElementById('progresso-c');
+
     barraProgressoFill.style.width = `${barraXp}%`;
-    alvosProgresso.style.left = `${conquistaAlvo}%`;
+    imgA.src = "../assets/" + progresso[0].caminhoIcone;
+    imgB.src = "../assets/" + progresso[1].caminhoIcone;
+    imgC.src = "../assets/" + progresso[2].caminhoIcone;
+
+    imgB.style.left = `${conquistaAlvo}%`;
 
     barraProgressoFill.querySelector('span').textContent = xp > 0 ? xp + 'xp' : xp;
 }
@@ -372,10 +379,9 @@ function mostrarProgresso() {
 
 
         itensHTML += `
-            <li class="style-autoescola popup-list" style="${barraConquistaStyle}">
+            <li class="style-autoescola popup-list balao" data-balao="${descricao}" style="${barraConquistaStyle}">
                 <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
                 <span>${nome}</span>
-                <p>${descricao}</p>
                 <span>${xp} / ${conquistaXp}xp</span>
             </li>`;
 
