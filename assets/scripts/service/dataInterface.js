@@ -55,6 +55,13 @@ const dados_progresso = {
         { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista E', descricao: 'Quinta Conquista!', xp: 400, clamado: false }
     ]
 }
+const dados_inventario = [
+    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item A', descricao: 'Um item aleatório para testar o inventário'},
+    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item B', descricao: 'Um item aleatório para testar o inventário'},
+    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item C', descricao: 'Um item aleatório para testar o inventário'},
+    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item D', descricao: 'Um item aleatório para testar o inventário'},
+    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item E', descricao: 'Um item aleatório para testar o inventário'}
+]
 
 //Assinatura pública
 export const Server =
@@ -254,4 +261,13 @@ function buscarProgresso() {
 
     })
 }
-function buscarInventario() { }
+function buscarInventario() {
+    return Object.freeze({
+        tamanho(){return dados_inventario.length;},
+        caminhoIcone(indice, relativo = './'){return relativo + (dados_inventario[indice]?.caminhoIcone ?? '');},
+        qualTitulo(indice){return dados_inventario[indice]?.titulo ?? 'Error';},
+        qualDescricao(indice){return dados_inventario[indice]?.descricao ?? 'Ocorreu um problema';},
+
+        qualUrlIcone(indice, relativo = './'){return `url("${this.caminhoIcone(indice, relativo)}")`;}
+    })
+}

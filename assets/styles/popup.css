@@ -66,20 +66,25 @@
 .balao::after {
     /*Se o item não tiver posição relative ou absoluta vai afetar onde o balão irá aparecer*/
     position: absolute;
+    display: inline-block;
     z-index: 10;
 
     transform: translateX(-50%);
     left: 50%;
     bottom: 100%;
 
+    min-width: 50%;
+    width: max-content;
     max-width: 120%;
     content: attr(data-balao);
 
     background-color: var(--cor-predominante);
     color: var(--cor-contrastante);
-
+    font-size: 0.90rem;
+    
     border: 2px solid var(--cor-predominante);
     box-shadow: 4px 4px 25px var(--cor-predominante);
+    border-radius: 6px;
     padding: 5px;
 
     pointer-events: none;

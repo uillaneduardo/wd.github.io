@@ -395,3 +395,41 @@ function mostrarProgresso() {
 
     Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// INVENTÁRIO ///////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const inventarioItens = document.getElementById('inventario-itens');
+atualizarInventario();
+
+function atualizarInventario(){
+    const inventario = Server.inventario();
+    const classes = 'body-autoescola balao style-rebelde-r';
+    let itensHTML = '';
+
+    for(let i = 0; i < inventario.tamanho(); i++){
+        
+        const nome = inventario.qualTitulo(i);
+        const url = inventario.qualUrlIcone(i, "../assets/");
+        const descricao = nome + ' - ' + inventario.qualDescricao(i);
+        const style = `
+            position: relative;
+            width: 30%;
+            max-width: 100px;
+            aspect-ratio: 1/1;
+
+            background-image: ${url};
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        `;
+        
+
+        itensHTML += `
+            <div style="${style}" class="${classes}" data-balao="${descricao}"></div>
+        `
+    }
+
+    inventarioItens.innerHTML = itensHTML;
+}
