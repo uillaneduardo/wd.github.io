@@ -120,9 +120,9 @@ function buscarSlot(pool, slot) {
         qualCaminhoMascara(relativo = './') {
             return relativo + (dados_slot[pool]?.[slot]?.caminhoMascara ?? 'images/silhueta-cadeado.png');
         },
-        qualUrlIcone(relativo = './') { return `url("${this.qualCaminhoIcone(relativo)}")` },
-        qualUrlCarta(relativo = './') { return `url("${this.qualCaminhoCarta(relativo)}")` },
-        qualUrlMascara(relativo = './') { return `url("${this.qualCaminhoMascara(relativo)}")` },
+        qualUrlIcone(relativo = './') { return `url('${this.qualCaminhoIcone(relativo)}')` },
+        qualUrlCarta(relativo = './') { return `url('${this.qualCaminhoCarta(relativo)}')` },
+        qualUrlMascara(relativo = './') { return `url('${this.qualCaminhoMascara(relativo)}')` },
 
         qualRaridade() { return dados_slot[pool]?.[slot]?.raridade ?? ''; },
         pegarRaridadeFormatada() {
@@ -268,6 +268,6 @@ function buscarInventario() {
         qualTitulo(indice){return dados_inventario[indice]?.titulo ?? 'Error';},
         qualDescricao(indice){return dados_inventario[indice]?.descricao ?? 'Ocorreu um problema';},
 
-        qualUrlIcone(indice, relativo = './'){return `url("${this.caminhoIcone(indice, relativo)}")`;}
+        qualUrlIcone(indice, relativo = './'){return `url('${this.caminhoIcone(indice, relativo)}')`;}
     })
 }

@@ -280,10 +280,10 @@ function mostrarColecao() {
         //Se a lista não existir, exibir uma mensagem
         popupConteudo =
             `<p>
-            Faaaala, motorista, tudo bem? Por enquanto nossa lojinha com ofertas especiais está na oficina mecânica. <br>
-            Mas eu gostaria de aproveitar para te convidar a visitar nossa campanha de financiamento do modo Liberdade! <br>
+            Faaaala, motorista, tudo bem? Por enquanto nossa lojinha com ofertas especiais está na oficina mecânica. <br><br>
+            Mas eu gostaria de aproveitar para te convidar a visitar nossa campanha de financiamento do modo Liberdade!
             Aproveita porque quem participar da campanha vai ganhar 3x mais moedas para gastar aqui na loja. o/
-        </p>`;
+            </p>`;
     }
 
     Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
@@ -401,6 +401,8 @@ function mostrarProgresso() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const inventarioItens = document.getElementById('inventario-itens');
+addEventListener('resize', atualizarInventario);
+
 atualizarInventario();
 
 function atualizarInventario(){
@@ -413,12 +415,8 @@ function atualizarInventario(){
         const nome = inventario.qualTitulo(i);
         const url = inventario.qualUrlIcone(i, "../assets/");
         const descricao = nome + ' - ' + inventario.qualDescricao(i);
-        const style = `
-            position: relative;
-            width: 30%;
-            max-width: 100px;
-            aspect-ratio: 1/1;
-
+        const extraStyle = 
+        `
             background-image: ${url};
             background-repeat: no-repeat;
             background-position: center;
@@ -426,10 +424,29 @@ function atualizarInventario(){
         `;
         
 
-        itensHTML += `
-            <div style="${style}" class="${classes}" data-balao="${descricao}"></div>
-        `
+        itensHTML += `<div style="${extraStyle}" class="${classes}" data-balao="${descricao}"></div>`;
     }
 
-    inventarioItens.innerHTML = itensHTML;
+    inventarioItens.innerHTML = completarSlots(itensHTML, inventario.tamanho());
+}
+
+
+function completarSlots(itensHTML = '', itens = inventarioItens.children.length, minCols = 3, minRows = 3) {
+  const grid = inventarioItens;
+
+  // nº de colunas da grid no tamanho atual
+  const colsAtuais = (getComputedStyle(grid).gridTemplateColumns || '')
+    .split(' ')
+    .filter(Boolean).length || 1;
+
+  const colunas = Math.max(colsAtuais, minCols);
+  const linhas = Math.max(minRows, Math.ceil(itens / colunas));
+
+  const totalDesejado = colunas * linhas;
+  let faltam = totalDesejado - itens;
+
+  while (faltam-- > 0) {
+    itensHTML += `<div class="body-autoescola balao style-rebelde-r" data-balao="espaço para item"></div>`;
+  }
+  return itensHTML;
 }

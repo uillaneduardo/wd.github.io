@@ -3,6 +3,7 @@
     border: 0;
     padding: 15px;
     max-height: 80vh;
+    max-width: min(75vw, 520px);
 }
 
 #popup::backdrop {
@@ -10,9 +11,8 @@
 }
 
 .popup-panel {
-    background: #fff;
+    background: white;
     max-width: 520px;
-    width: min(92vw, 520px);
     margin: 0;
 }
 
