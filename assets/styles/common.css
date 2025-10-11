@@ -13,7 +13,6 @@
     position: fixed;
     z-index: 100;
     top: 10px;
-    left: 10px;
     right: 10px;
 }
 
@@ -29,6 +28,8 @@ button{
     cursor: pointer;
 }
 
+
+
 /**Styles**/
 .style-sombra-adrenalina{
     box-shadow: 10px 10px 0 var(--cor-adrenalina);
@@ -43,7 +44,7 @@ button{
 .btn-sombra-adrenalina{
     box-shadow: 6px 6px 0 var(--cor-adrenalina);
 }
-.btn-autoescola, .btn-liberdade, .btn-desabilitado{
+.btn-autoescola, .btn-liberdade, .btn-adrenalina, .btn-dark, .btn-desabilitado{
     border-radius: 5px;
     border: 2px solid var(--cor-predominante);
     padding: 10px;
@@ -67,6 +68,12 @@ button{
 }
 .btn-liberdade{
     background-color: var(--cor-liberdade);
+}
+.btn-adrenalina{
+    background-color: var(--cor-adrenalina);
+}
+.btn-dark{
+    background-color: var(--cor-predominante);
 }
 .btn-desabilitado{
     background-color: grey;

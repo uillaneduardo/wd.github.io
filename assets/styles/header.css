@@ -26,6 +26,24 @@
   font-size: 1.25rem;
 }
 
+.aba-menu{
+    display: none;
+    flex-direction: column;
+    width: fit-content;
+    justify-self: right;
+    padding: 10px;
+}
+.aba-menu > *{
+  padding: 5px;
+  width: initial;
+}
+
+.menu-suspenso:hover .aba-menu,
+.menu-suspenso:focus-within .aba-menu {
+  display: flex;
+}
+
+
 h1,
 h2,
 h3 {

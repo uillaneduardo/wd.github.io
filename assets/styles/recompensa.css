@@ -252,17 +252,6 @@
 }
 
 #inventario-itens {
-    /*--gap: 10px;
-    --width: 600px;
-    --max: ((var(--width) / 100 + 1) * var(--gap)) + var(--width);
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
-    align-items: center;
-    justify-content: center;
-    max-width: var(--max);*/
-
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(auto-fill, min(30%, 100px));
