@@ -349,7 +349,7 @@ function atualizarProgresso() {
 
     imgB.style.left = `${conquistaAlvo}%`;
 
-    barraProgressoFill.querySelector('span').textContent = xp > 0 ? xp + 'xp' : xp;
+    barraProgressoFill.querySelector('span').textContent = xp > 0 ? xp : '';
 }
 
 function mostrarProgresso() {
@@ -382,7 +382,7 @@ function mostrarProgresso() {
             <li class="style-autoescola popup-list balao" data-balao="${descricao}" style="${barraConquistaStyle}">
                 <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
                 <span>${nome}</span>
-                <span>${xp} / ${conquistaXp}xp</span>
+                <span class = "bi bi-award-fill">${xp} / ${conquistaXp}</span>
             </li>`;
 
     }
@@ -472,7 +472,7 @@ function mostrarRanking(){
             <li class="style-autoescola popup-list balao" data-balao="${nivel}">
                 <span>${rank}</span>
                 <span>${nome}</span>
-                <span>${xp}xp</span>
+                <span class="bi bi-award-fill">${xp}</span>
             </li>`;
 
     }
@@ -488,6 +488,9 @@ function mostrarRanking(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////// PERFIL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+const perfilNome = document.getElementById('perfil-nome');
+const perfilMoeda = document.getElementById('perfil-moeda');
+const perfilXp = document.getElementById('perfil-xp');
 
 const btnConquistas = document.getElementById('btn-conquistas');
 const btnRanking = document.getElementById('btn-ranking');
