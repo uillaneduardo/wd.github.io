@@ -61,6 +61,7 @@
     margin-bottom: 10px;
     gap: 10px;
     align-items: center;
+    justify-content: space-around;
 }
 
 .balao::after {

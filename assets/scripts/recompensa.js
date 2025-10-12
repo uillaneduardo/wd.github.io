@@ -450,3 +450,49 @@ function completarSlots(itensHTML = '', itens = inventarioItens.children.length,
   }
   return itensHTML;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// RANKING ////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function mostrarRanking(){
+    const ranking = Server.ranking().pessoal();
+    const popupTitulo = "Ranking de Apoiadores";
+    const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
+    let itensHTML = '';
+
+    for(let i = 0; i < ranking.length; i++){
+        //
+        const rank = ranking[i].rank;
+        const nome = ranking[i].nome;
+        const nivel = ranking[i].nivel;
+        const xp = ranking[i].xp;
+
+        itensHTML += `
+            <li class="style-autoescola popup-list balao" data-balao="${nivel}">
+                <span>${rank}</span>
+                <span>${nome}</span>
+                <span>${xp}xp</span>
+            </li>`;
+
+    }
+
+    const popupConteudo =
+        `<ul>
+            ${itensHTML}
+        </ul>`;
+
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// PERFIL /////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const btnConquistas = document.getElementById('btn-conquistas');
+const btnRanking = document.getElementById('btn-ranking');
+const btnRegistros = document.getElementById('btn-registros');
+const btnDesconectar = document.getElementById('btn-desconectar');
+
+btnConquistas.addEventListener('click', mostrarProgresso);
+btnRanking.addEventListener('click', mostrarRanking);

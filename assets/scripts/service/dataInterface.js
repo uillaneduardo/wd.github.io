@@ -62,7 +62,34 @@ const dados_inventario = [
     {caminhoIcone: 'images/icones/inventario.png', titulo:'Item D', descricao: 'Um item aleatório para testar o inventário'},
     {caminhoIcone: 'images/icones/inventario.png', titulo:'Item E', descricao: 'Um item aleatório para testar o inventário'}
 ]
+const dados_top10 = [
+    {rank: '1', nome: 'Primeiro', nivel: 'Magnata', xp: 2490},
+    {rank: '2', nome: 'Segundo', nivel: 'Magnata', xp: 2110},
+    {rank: '3', nome: 'Terceiro', nivel: 'Astro', xp: 1845},
+    {rank: '4', nome: 'Quarto', nivel: 'Astro', xp: 1550},
+    {rank: '5', nome: 'Quinto', nivel: 'Astro', xp: 1510},
+    {rank: '6', nome: 'Sexto', nivel: 'Astro', xp: 1480},
+    {rank: '7', nome: 'Sétimo', nivel: 'Astro', xp: 1410},
+    {rank: '8', nome: 'Oitavo', nivel: 'Astro', xp: 1385},
+    {rank: '9', nome: 'Nono', nivel: 'Astro', xp: 1380},
+    {rank: '10', nome: 'Décimo', nivel: 'Astro', xp: 1270},
+    {rank: '2830', nome: 'você', nivel: 'Habilitado', xp: 70}
 
+];
+const dados_ranking = [
+    {rank: '2835', nome: 'Bryan', nivel: 'Habilitado', xp: 80},
+    {rank: '2834', nome: 'Matheus', nivel: 'Habilitado', xp: 77},
+    {rank: '2833', nome: 'Enzo', nivel: 'Habilitado', xp: 73},
+    {rank: '2832', nome: 'Fernando', nivel: 'Habilitado', xp: 73},
+    {rank: '2831', nome: 'Gilmar', nivel: 'Habilitado', xp: 72},
+    {rank: '2830', nome: 'Você', nivel: 'Habilitado', xp: 70},
+    {rank: '2829', nome: 'Eitor', nivel: 'Habilitado', xp: 67},
+    {rank: '2828', nome: 'Otávio', nivel: 'Habilitado', xp: 67},
+    {rank: '2827', nome: 'Mariana', nivel: 'Habilitado', xp: 63},
+    {rank: '2826', nome: 'Júlio', nivel: 'Habilitado', xp: 62},
+    {rank: '2825', nome: 'Vanessa', nivel: 'Habilitado', xp: 60}
+
+];
 //Assinatura pública
 export const Server =
 {
@@ -70,7 +97,8 @@ export const Server =
     card: buscarSlot,
     colecao: buscarColecao,
     progresso: buscarProgresso,
-    inventario: buscarInventario
+    inventario: buscarInventario,
+    ranking: buscarRanking
 };
 
 /**
@@ -159,20 +187,6 @@ function buscarSlot(pool, slot) {
 
     });
 }
-
-/**
- * @typedef {Objcet} Server.ColecaoInterface
- * @property {(indice: number, relativo?: string) => string} qualCaminhoIcone
- * @property {(indice: number) => string} qualTitulo
- * @property {(indice: number) => ('C'|'R'|'E'|'L'|'')} qualRaridade
- * @property {(indice: number) => boolean} foiComprado
- */
-
-/**
- * 
- * @param {Server.Pool} pool 
- * @returns {Readonly<Server.ColecaoInterface>}
- */
 function buscarColecao(pool) {
     //Interface da Coleção
     return Object.freeze({
@@ -207,10 +221,6 @@ function buscarColecao(pool) {
         }
     })
 }
-
-
-
-
 function buscarProgresso() {
     return Object.freeze({
         //Leitura
@@ -269,5 +279,11 @@ function buscarInventario() {
         qualDescricao(indice){return dados_inventario[indice]?.descricao ?? 'Ocorreu um problema';},
 
         qualUrlIcone(indice, relativo = './'){return `url('${this.caminhoIcone(indice, relativo)}')`;}
+    })
+}
+function buscarRanking(){
+    return Object.freeze({
+        top10(){return dados_top10;},
+        pessoal(){return dados_ranking;}
     })
 }
