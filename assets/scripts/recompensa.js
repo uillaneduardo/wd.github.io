@@ -335,8 +335,13 @@ atualizarProgresso();
 function atualizarProgresso() {
     const progresso = Server.progresso().conquistasResumidas();
     const xp = Server.progresso().quantidadeXP();
-    const barraXp = (xp / progresso[2].xp) * 100;
-    const conquistaAlvo = (progresso[1].xp / progresso[2].xp) * 100;
+
+    const xpAlvoAnterior = progresso[0].xp;
+    const xpAlvoAtual = progresso[1].xp;
+    const xpAlvoProximo = progresso[2].xp;
+
+    const barraXp = ((xp - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
+    const conquistaAlvo = ((xpAlvoAtual - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
 
     const imgA = document.getElementById('progresso-a');
     const imgB = document.getElementById('progresso-b');
@@ -349,7 +354,7 @@ function atualizarProgresso() {
 
     imgB.style.left = `${conquistaAlvo}%`;
 
-    barraProgressoFill.querySelector('span').textContent = xp > 0 ? xp : '';
+    barraProgressoFill.querySelector('span').textContent = barraXp > 5 ? xp : '';
 }
 
 function mostrarProgresso() {
@@ -467,9 +472,10 @@ function mostrarRanking(){
         const nome = ranking[i].nome;
         const nivel = ranking[i].nivel;
         const xp = ranking[i].xp;
+        const styleClasse = ranking[i].id === Server.perfil().qualID() ? "style-adrenalina" : "style-autoescola";
 
         itensHTML += `
-            <li class="style-autoescola popup-list balao" data-balao="${nivel}">
+            <li class="${styleClasse} popup-list balao" data-balao="${nivel}">
                 <span>${rank}</span>
                 <span>${nome}</span>
                 <span class="bi bi-award-fill">${xp}</span>
@@ -489,6 +495,7 @@ function mostrarRanking(){
 ///////////////////////////////////////////// PERFIL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 const perfilNome = document.getElementById('perfil-nome');
+const perfilNivel = document.getElementById('perfil-nivel');
 const perfilMoeda = document.getElementById('perfil-moeda');
 const perfilXp = document.getElementById('perfil-xp');
 
@@ -499,3 +506,14 @@ const btnDesconectar = document.getElementById('btn-desconectar');
 
 btnConquistas.addEventListener('click', mostrarProgresso);
 btnRanking.addEventListener('click', mostrarRanking);
+
+atualizarPerfil();
+
+function atualizarPerfil(){
+    const perfil = Server.perfil();
+
+    perfilNome.textContent = perfil.qualNome();
+    perfilNivel.textContent = 'Nível: ' + perfil.qualNivel();
+    perfilMoeda.textContent = ' ' + perfil.quantasMoedas();
+    perfilXp.textContent = ' ' + perfil.quantoXp();
+}

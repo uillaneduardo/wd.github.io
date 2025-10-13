@@ -1,6 +1,6 @@
 //Enum Slot
 const Slot = Object.freeze({ A: 0, B: 1, C: 2 });
-const Pool = Object.freeze({ Diario: 0, Oferta: 1 });
+const Pool = Object.freeze({ Diario: 'diario', Oferta: 'oferta' });
 
 //Origem dos dados
 
@@ -45,55 +45,67 @@ const dados_colecao = {
     ], [Pool.Oferta]: []
 
 }
-const dados_progresso = {
-    xp: 70,
-    conquistas: [
-        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista A', descricao: 'Primeira Conquista!', xp: 10, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista B', descricao: 'Segunda Conquista!', xp: 50, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista C', descricao: 'Terceira Conquista!', xp: 100, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista D', descricao: 'Quarta Conquista!', xp: 170, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista E', descricao: 'Quinta Conquista!', xp: 400, clamado: false }
-    ]
-}
+const dados_progresso = [
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Recém Habilitado', descricao: 'Primeira Conquista!', xp: 1, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista B', descricao: 'Segunda Conquista!', xp: 25, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista C', descricao: 'Terceira Conquista!', xp: 50, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista D', descricao: 'Quarta Conquista!', xp: 75, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Habilitado', descricao: 'Quinta Conquista!', xp: 100, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista F', descricao: 'Sexta Conquista!', xp: 150, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista G', descricao: 'Sétima Conquista!', xp: 200, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista H', descricao: 'Oitava Conquista!', xp: 250, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Beta PPD', descricao: 'Nona Conquista!', xp: 300, clamado: false },
+    { caminhoIcone: 'images/icones/progresso.png', titulo: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
+]
 const dados_inventario = [
-    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item A', descricao: 'Um item aleatório para testar o inventário'},
-    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item B', descricao: 'Um item aleatório para testar o inventário'},
-    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item C', descricao: 'Um item aleatório para testar o inventário'},
-    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item D', descricao: 'Um item aleatório para testar o inventário'},
-    {caminhoIcone: 'images/icones/inventario.png', titulo:'Item E', descricao: 'Um item aleatório para testar o inventário'}
+    { caminhoIcone: 'images/icones/inventario.png', titulo: 'Item A', descricao: 'Um item aleatório para testar o inventário' },
+    { caminhoIcone: 'images/icones/inventario.png', titulo: 'Item B', descricao: 'Um item aleatório para testar o inventário' },
+    { caminhoIcone: 'images/icones/inventario.png', titulo: 'Item C', descricao: 'Um item aleatório para testar o inventário' },
+    { caminhoIcone: 'images/icones/inventario.png', titulo: 'Item D', descricao: 'Um item aleatório para testar o inventário' },
+    { caminhoIcone: 'images/icones/inventario.png', titulo: 'Item E', descricao: 'Um item aleatório para testar o inventário' }
 ]
 const dados_top10 = [
-    {rank: '1', nome: 'Primeiro', nivel: 'Magnata', xp: 2490},
-    {rank: '2', nome: 'Segundo', nivel: 'Magnata', xp: 2110},
-    {rank: '3', nome: 'Terceiro', nivel: 'Astro', xp: 1845},
-    {rank: '4', nome: 'Quarto', nivel: 'Astro', xp: 1550},
-    {rank: '5', nome: 'Quinto', nivel: 'Astro', xp: 1510},
-    {rank: '6', nome: 'Sexto', nivel: 'Astro', xp: 1480},
-    {rank: '7', nome: 'Sétimo', nivel: 'Astro', xp: 1410},
-    {rank: '8', nome: 'Oitavo', nivel: 'Astro', xp: 1385},
-    {rank: '9', nome: 'Nono', nivel: 'Astro', xp: 1380},
-    {rank: '10', nome: 'Décimo', nivel: 'Astro', xp: 1270},
-    {rank: '2830', nome: 'você', nivel: 'Habilitado', xp: 70}
+    { id: '', rank: '1', nome: 'Primeiro', nivel: 'Magnata', xp: 2490 },
+    { id: '', rank: '2', nome: 'Segundo', nivel: 'Magnata', xp: 2110 },
+    { id: '', rank: '3', nome: 'Terceiro', nivel: 'Astro', xp: 1845 },
+    { id: '', rank: '4', nome: 'Quarto', nivel: 'Astro', xp: 1550 },
+    { id: '', rank: '5', nome: 'Quinto', nivel: 'Astro', xp: 1510 },
+    { id: '', rank: '6', nome: 'Sexto', nivel: 'Astro', xp: 1480 },
+    { id: '', rank: '7', nome: 'Sétimo', nivel: 'Astro', xp: 1410 },
+    { id: '', rank: '8', nome: 'Oitavo', nivel: 'Astro', xp: 1385 },
+    { id: '', rank: '9', nome: 'Nono', nivel: 'Astro', xp: 1380 },
+    { id: '', rank: '10', nome: 'Décimo', nivel: 'Astro', xp: 1270 },
+    { id: 'akledas', rank: '2830', nome: 'você', nivel: 'Habilitado', xp: 70 }
 
 ];
 const dados_ranking = [
-    {rank: '2835', nome: 'Bryan', nivel: 'Habilitado', xp: 80},
-    {rank: '2834', nome: 'Matheus', nivel: 'Habilitado', xp: 77},
-    {rank: '2833', nome: 'Enzo', nivel: 'Habilitado', xp: 73},
-    {rank: '2832', nome: 'Fernando', nivel: 'Habilitado', xp: 73},
-    {rank: '2831', nome: 'Gilmar', nivel: 'Habilitado', xp: 72},
-    {rank: '2830', nome: 'Você', nivel: 'Habilitado', xp: 70},
-    {rank: '2829', nome: 'Eitor', nivel: 'Habilitado', xp: 67},
-    {rank: '2828', nome: 'Otávio', nivel: 'Habilitado', xp: 67},
-    {rank: '2827', nome: 'Mariana', nivel: 'Habilitado', xp: 63},
-    {rank: '2826', nome: 'Júlio', nivel: 'Habilitado', xp: 62},
-    {rank: '2825', nome: 'Vanessa', nivel: 'Habilitado', xp: 60}
+    { id: '', rank: '2835', nome: 'Bryan', nivel: 'Habilitado', xp: 80 },
+    { id: '', rank: '2834', nome: 'Matheus', nivel: 'Habilitado', xp: 77 },
+    { id: '', rank: '2833', nome: 'Enzo', nivel: 'Habilitado', xp: 73 },
+    { id: '', rank: '2832', nome: 'Fernando', nivel: 'Habilitado', xp: 73 },
+    { id: '', rank: '2831', nome: 'Jadeilson', nivel: 'Habilitado', xp: 72 },
+    { id: 'akledas', rank: '2830', nome: 'Gilmar Santos', nivel: 'Habilitado', xp: 70 },
+    { id: '', rank: '2829', nome: 'Eitor', nivel: 'Habilitado', xp: 67 },
+    { id: '', rank: '2828', nome: 'Otávio', nivel: 'Habilitado', xp: 67 },
+    { id: '', rank: '2827', nome: 'Mariana', nivel: 'Habilitado', xp: 63 },
+    { id: '', rank: '2826', nome: 'Júlio', nivel: 'Habilitado', xp: 62 },
+    { id: '', rank: '2825', nome: 'Vanessa', nivel: 'Habilitado', xp: 60 }
 
 ];
+const dados_perfil = {
+    id: "akledas",
+    nome: "Gilmar Santos",
+    nivel: "habilitado",
+    moedas: 550,
+    xp: 110
+}
+
+
 //Assinatura pública
 export const Server =
 {
     Slot, Pool,
+    perfil: buscarPerfil,
     card: buscarSlot,
     colecao: buscarColecao,
     progresso: buscarProgresso,
@@ -224,16 +236,16 @@ function buscarColecao(pool) {
 function buscarProgresso() {
     return Object.freeze({
         //Leitura
-        quantidadeXP() { return dados_progresso?.xp ?? 0; },
-        conquistaTamanho() { return dados_progresso?.conquistas?.length ?? 0; },
-        conquistaCaminhoIcone(indice, relativo) { return relativo + (dados_progresso?.conquistas[indice]?.caminhoIcone ?? ''); },
-        conquistaTitulo(indice) { return dados_progresso?.conquistas[indice]?.titulo ?? 'Error'; },
-        conquistaDescricao(indice) { return dados_progresso?.conquistas[indice]?.descricao ?? 'Não encontrado' },
-        conquistaRequisitoXP(indice) { return dados_progresso?.conquistas[indice]?.xp ?? '0'; },
-        conquistaClamada(indice) { return dados_progresso?.conquistas[indice]?.clamado ?? false; },
+        quantidadeXP() { return dados_perfil?.xp ?? 0; },
+        conquistaTamanho() { return dados_progresso?.length ?? 0; },
+        conquistaCaminhoIcone(indice, relativo) { return relativo + (dados_progresso[indice]?.caminhoIcone ?? ''); },
+        conquistaTitulo(indice) { return dados_progresso[indice]?.titulo ?? 'Error'; },
+        conquistaDescricao(indice) { return dados_progresso[indice]?.descricao ?? 'Não encontrado' },
+        conquistaRequisitoXP(indice) { return dados_progresso[indice]?.xp ?? '0'; },
+        conquistaClamada(indice) { return dados_progresso[indice]?.clamado ?? false; },
         conquistasResumidas() {
             const n = this.conquistaTamanho();
-            if (n <= 3) return dados_progresso.conquistas?.slice(0, n);
+            if (n <= 3) return dados_progresso?.slice(0, n);
 
             const xp = this.quantidadeXP();
 
@@ -250,7 +262,7 @@ function buscarProgresso() {
             // Se todas já foram conquistadas, pegue as 3 últimas
             if (alvo === -1) {
                 const start = n - 3;
-                return dados_progresso?.conquistas?.slice(start, n);
+                return dados_progresso?.slice(start, n);
             }
 
             // Monte janela de 3 itens em torno do alvo
@@ -266,24 +278,34 @@ function buscarProgresso() {
                 start = alvo - 1;
             }
 
-            return dados_progresso?.conquistas?.slice(start, start + 3);
+            return dados_progresso?.slice(start, start + 3);
         }
 
     })
 }
 function buscarInventario() {
     return Object.freeze({
-        tamanho(){return dados_inventario.length;},
-        caminhoIcone(indice, relativo = './'){return relativo + (dados_inventario[indice]?.caminhoIcone ?? '');},
-        qualTitulo(indice){return dados_inventario[indice]?.titulo ?? 'Error';},
-        qualDescricao(indice){return dados_inventario[indice]?.descricao ?? 'Ocorreu um problema';},
+        tamanho() { return dados_inventario.length; },
+        caminhoIcone(indice, relativo = './') { return relativo + (dados_inventario[indice]?.caminhoIcone ?? ''); },
+        qualTitulo(indice) { return dados_inventario[indice]?.titulo ?? 'Error'; },
+        qualDescricao(indice) { return dados_inventario[indice]?.descricao ?? 'Ocorreu um problema'; },
 
-        qualUrlIcone(indice, relativo = './'){return `url('${this.caminhoIcone(indice, relativo)}')`;}
+        qualUrlIcone(indice, relativo = './') { return `url('${this.caminhoIcone(indice, relativo)}')`; }
     })
 }
-function buscarRanking(){
+function buscarRanking() {
     return Object.freeze({
-        top10(){return dados_top10;},
-        pessoal(){return dados_ranking;}
+        top10() { return dados_top10; },
+        pessoal() { return dados_ranking; }
+    })
+}
+function buscarPerfil(){
+    return Object.freeze({
+        qualID(){return dados_perfil?.id ?? '';},
+        qualNome(){return dados_perfil?.nome ?? 'Não encontrado';},
+        qualNivel(){return dados_perfil?.nivel ?? 'Recém Habilitado';},
+        quantasMoedas(){return dados_perfil?.moedas ?? 0.0;},
+        quantoXp(){return dados_perfil?.xp ?? 0;}
+
     })
 }
