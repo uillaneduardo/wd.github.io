@@ -1,6 +1,6 @@
 import { Server } from './service/dataInterface.js';
 // @ts-check
-
+Server.conectar('/api/evento/liberdade');
 const root = document.documentElement;
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");
@@ -96,13 +96,13 @@ function aoSelecionar() {
     cardSlotB.style.setProperty('--cor-raridade', slotB.qualCorRaridade());
     cardSlotC.style.setProperty('--cor-raridade', slotC.qualCorRaridade());
 
-    cardSlotA.querySelector("h3").textContent = slotA.qualTitulo();
+    cardSlotA.querySelector("h3").textContent = slotA.qualNome();
     cardSlotA.querySelector("button").textContent = slotA.pegarCustoFormatado();
 
-    cardSlotB.querySelector("h3").textContent = slotB.qualTitulo();
+    cardSlotB.querySelector("h3").textContent = slotB.qualNome();
     cardSlotB.querySelector("button").textContent = slotB.pegarCustoFormatado();
 
-    cardSlotC.querySelector("h3").textContent = slotC.qualTitulo();
+    cardSlotC.querySelector("h3").textContent = slotC.qualNome();
     cardSlotC.querySelector("button").textContent = slotC.pegarCustoFormatado();
 
     gerenciarCardClasses(cardSlotA, slotA);
@@ -157,7 +157,7 @@ function popupConfirmarCompra(slot) {
 
     const cardRaridade = cardObject.pegarRaridadeFormatada();
     const cardRaridadeCor = cardObject.qualCorRaridade();
-    const cardTitle = `${cardObject.qualTitulo()} 
+    const cardTitle = `${cardObject.qualNome()} 
                         <i style="color: ${cardRaridadeCor}; font-size: 0.90rem; background-color: black;">
                             [${cardRaridade}]
                         </i>`;
@@ -256,7 +256,7 @@ function mostrarColecao() {
     for (let i = 0; i < colecao.tamanho(); i++) {
 
         const icone = colecao.qualCaminhoIcone(i, '../assets/');
-        const nome = colecao.qualTitulo(i);
+        const nome = colecao.qualNome(i);
         const probabilidade = colecao.qualProbabilidade(i);
         const raridade = colecao.pegarRaridadeFormatada(i);
         const riscar = colecao.foiComprado(i) ? 'text-decoration: line-through;' : '';
@@ -368,7 +368,7 @@ function mostrarProgresso() {
     for (let i = 0; i < progresso.conquistaTamanho(); i++) {
 
         const icone = progresso.conquistaCaminhoIcone(i, '../assets/');
-        const nome = progresso.conquistaTitulo(i);
+        const nome = progresso.conquistaNome(i);
         const descricao = progresso.conquistaDescricao(i);
         const conquistaXp = progresso.conquistaRequisitoXP(i);
         const xp = Math.min(progresso.quantidadeXP(), conquistaXp);
@@ -417,7 +417,7 @@ function atualizarInventario(){
 
     for(let i = 0; i < inventario.tamanho(); i++){
         
-        const nome = inventario.qualTitulo(i);
+        const nome = inventario.qualNome(i);
         const url = inventario.qualUrlIcone(i, "../assets/");
         const descricao = nome + ' - ' + inventario.qualDescricao(i);
         const extraStyle = 
