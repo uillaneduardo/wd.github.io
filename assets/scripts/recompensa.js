@@ -1,6 +1,6 @@
 // @ts-checks
 import {Server} from './service/dataInterface.js';
-Server.conectar();
+await Server.conectar();
 const root = document.documentElement;
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");

@@ -158,43 +158,47 @@ function solicitarLogin(){
 
 }
 
-async function buscarDadosPerfil(){
-    const dadosUsuario = await fazerRequisicao('/user/me');
-    //const xp = await fazerRequisicao('/user/xp');
-    //const moedas = await fazerRequisicao('/user/tickets');
+async function buscarDadosPerfil() {
+  const dadosUsuario = await fazerRequisicao('/user/me');
+  if (!dadosUsuario) return;
 
-    if(!dadosUsuario) return;
-    
-    dados_perfil = {
-        id: dadosUsuario.id,
-        caminhoImagem: dadosUsuario.picture_url,
-        nome: dadosUsuario.nome,
-        nivel: 'Testando',
-        moedas: 0,
-        xp: 0
-    }
+  dados_perfil = {
+    id: dadosUsuario.id,
+    caminhoImagem: dadosUsuario.picture_url,
+    nome: dadosUsuario.nome,
+    nivel: 'Testando',
+    moedas: 0,
+    xp: 0
+  };
 }
 
-async function fazerRequisicao(rota, metodo = 'GET', corpo = null){
-    const resposta = await fetch(caminhoDataAPI + rota,
-        {
-            method: metodo,
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: corpo ? JSON.stringify(corpo) : null
-        });
+async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
+  const headers = { Accept: 'application/json' };
+  if (corpo && metodo !== 'GET') headers['Content-Type'] = 'application/json';
 
-    if(resposta.status === 200){
-        //conexão bem sucedida, retornando dados
-        return await resposta.json();
-    }
+  try {
+    const resp = await fetch(caminhoDataAPI + rota, {
+      method: metodo,
+      credentials: 'include',
+      headers,
+      ...(corpo ? { body: JSON.stringify(corpo) } : {})
+    });
 
-    if(resposta.status === 401){
-        //não autenticado
-        solicitarLogin();
-        return null;
+    if (resp.status === 401) {
+      solicitarLogin();
+      return null;
     }
+    if (resp.status === 204) return null;
+
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+
+    return await resp.json();
+  } catch (err) {
+    console.error('Erro na requisição', err);
+    return null;
+  }
 }
+
 
 
 //Assinatura pública
