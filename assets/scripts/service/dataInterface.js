@@ -163,6 +163,8 @@ async function buscarDadosPerfil(){
     //const xp = await fazerRequisicao('/user/xp');
     //const moedas = await fazerRequisicao('/user/tickets');
 
+    if(!dadosUsuario) return;
+    
     dados_perfil = {
         id: dadosUsuario.id,
         caminhoImagem: dadosUsuario.picture_url,
@@ -329,7 +331,7 @@ function criarProgresso() {
         conquistaCaminhoIcone(indice, relativo) { return relativo + (dados_conquistas[indice]?.caminhoIcone ?? ''); },
         conquistaNome(indice) { return dados_conquistas[indice]?.nome ?? 'Error'; },
         conquistaDescricao(indice) { return dados_conquistas[indice]?.descricao ?? 'Não encontrado' },
-        conquistaRequisitoXP(indice) { return dados_conquistas[indice]?.xp ?? '0'; },
+        conquistaRequisitoXP(indice) { return dados_conquistas[indice]?.xp ?? 0; },
         conquistaClamada(indice) { return dados_conquistas[indice]?.clamado ?? false; },
         conquistasResumidas() {
             const n = this.conquistaTamanho();
