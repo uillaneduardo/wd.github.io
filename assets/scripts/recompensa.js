@@ -1,6 +1,6 @@
-import { Server } from './service/dataInterface.js';
-// @ts-check
-Server.conectar('/api/evento/liberdade');
+// @ts-checks
+import {Server} from './service/dataInterface.js';
+await Server.conectar();
 const root = document.documentElement;
 const btnSelecionarDiario = document.getElementById("btn-recompensa-diaria");
 const btnSelecionarOferta = document.getElementById("btn-oferta-especial");
@@ -80,9 +80,9 @@ function selecionarOferta() {
 }
 
 function aoSelecionar() {
-    const slotA = Server.card(btnSelecionado, Server.Slot.A);
-    const slotB = Server.card(btnSelecionado, Server.Slot.B);
-    const slotC = Server.card(btnSelecionado, Server.Slot.C);
+    const slotA = Server?.card(btnSelecionado, Server.Slot.A);
+    const slotB = Server?.card(btnSelecionado, Server.Slot.B);
+    const slotC = Server?.card(btnSelecionado, Server.Slot.C);
 
     cardSlotA.style.setProperty('--slot-card', slotA.qualUrlCarta('../'));
     cardSlotB.style.setProperty('--slot-card', slotB.qualUrlCarta('../'));
@@ -110,12 +110,6 @@ function aoSelecionar() {
     gerenciarCardClasses(cardSlotC, slotC);
 }
 
-/**
- * 
- * @param {Element} cardElement 
- * @param {Server.SlotInterface} cardObject
- * @returns 
- */
 function gerenciarCardClasses(cardElement, cardObject) {
     if (cardObject.foiBloqueado()) {
         cardElement.classList.remove(...['slot-raridade', 'revelando-card']);
@@ -142,13 +136,13 @@ function aoRevelarSlot(cardElement, slot) {
     cardElement.classList.remove('aguardando-revelar');
     cardElement.classList.remove('revelando-card');
     cardElement.classList.add('slot-raridade');
-    Server.card(btnSelecionado, slot).revelar();
+    Server?.card(btnSelecionado, slot).revelar();
 
 }
 
 function popupConfirmarCompra(slot) {
 
-    const cardObject = Server.card(btnSelecionado, slot);
+    const cardObject = Server?.card(btnSelecionado, slot);
 
     if (cardObject.foiComprado() || cardObject.foiBloqueado()) return;
 
@@ -246,7 +240,7 @@ setInterval(atualizarContagemRegressiva, 1000);
 
 function mostrarColecao() {
     //
-    const colecao = Server.colecao(btnSelecionado);
+    const colecao = Server?.colecao(btnSelecionado);
 
     const popupTitulo = btnSelecionado === Server.Pool.Diario ? 'Coleção Diária' : 'Coleção Especial';
     const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
@@ -333,8 +327,8 @@ progressoResumido.addEventListener('click', mostrarProgresso);
 atualizarProgresso();
 
 function atualizarProgresso() {
-    const progresso = Server.progresso().conquistasResumidas();
-    const xp = Server.progresso().quantidadeXP();
+    const progresso = Server?.progresso().conquistasResumidas();
+    const xp = Server?.progresso().quantidadeXP();
 
     const xpAlvoAnterior = progresso[0].xp;
     const xpAlvoAtual = progresso[1].xp;
@@ -358,7 +352,7 @@ function atualizarProgresso() {
 }
 
 function mostrarProgresso() {
-    const progresso = Server.progresso();
+    const progresso = Server?.progresso();
 
     const popupTitulo = "Progresso das Conquistas";
     const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
@@ -411,7 +405,7 @@ addEventListener('resize', atualizarInventario);
 atualizarInventario();
 
 function atualizarInventario(){
-    const inventario = Server.inventario();
+    const inventario = Server?.inventario();
     const classes = 'body-autoescola balao style-rebelde-r';
     let itensHTML = '';
 
@@ -461,7 +455,7 @@ function completarSlots(itensHTML = '', itens = inventarioItens.children.length,
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function mostrarRanking(){
-    const ranking = Server.ranking().pessoal();
+    const ranking = Server?.ranking().pessoal();
     const popupTitulo = "Ranking de Apoiadores";
     const popupClasses = ['style-liberdade', 'style-rebelde-l', 'style-sombra-adrenalina'];
     let itensHTML = '';
@@ -472,7 +466,7 @@ function mostrarRanking(){
         const nome = ranking[i].nome;
         const nivel = ranking[i].nivel;
         const xp = ranking[i].xp;
-        const styleClasse = ranking[i].id === Server.perfil().qualID() ? "style-adrenalina" : "style-autoescola";
+        const styleClasse = ranking[i].id === Server?.perfil().qualID() ? "style-adrenalina" : "style-autoescola";
 
         itensHTML += `
             <li class="${styleClasse} popup-list balao" data-balao="${nivel}">
@@ -510,8 +504,8 @@ btnRanking.addEventListener('click', mostrarRanking);
 atualizarPerfil();
 
 function atualizarPerfil(){
-    const perfil = Server.perfil();
-
+    const perfil = Server?.perfil();
+    if (!perfil) return;
     perfilNome.textContent = perfil.qualNome();
     perfilNivel.textContent = 'Nível: ' + perfil.qualNivel();
     perfilMoeda.textContent = ' ' + perfil.quantasMoedas();

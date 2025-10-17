@@ -3,10 +3,11 @@ const Slot = Object.freeze({ A: 0, B: 1, C: 2 });
 const Pool = Object.freeze({ Diario: 'diario', Oferta: 'oferta' });
 
 //Outros
-const arquivoEmCache = "wd-recpes";
+const dadoEmCache = 'wd-recpes';
+const caminhoDataAPI = 'https://api.wheeldone.playmarques.com';
 
 //Origem dos dados
-const dados = {
+let dados = {
     perfil: {
         id: "akledas",
         nome: "Gilmar Santos",
@@ -102,7 +103,14 @@ const dados = {
     }
 }
 
-let dados_perfil = {};
+let dados_perfil =  {
+        id: " ",
+        caminhoImagem: " ",
+        nome: " ",
+        nivel: " ",
+        moedas: 0,
+        xp: 0
+    };
 let dados_slot = {};
 let dados_colecao = {};
 let dados_conquistas = [];
@@ -110,67 +118,117 @@ let dados_inventario = [];
 let dados_ranking_top10 = [];
 let dados_ranking_pessoal = [];
 
-//Funções Internas
-function salvarCache(dados){
-    localStorage.setItem(arquivoEmCache, JSON.stringify(dados));
-}
-function carregarCache(){
-    const cache = localStorage.getItem(arquivoEmCache);
 
-    if(!cache) {
-        console.log(`Arquivo ${arquivoEmCache} não encontrado armazenado no cache!`);
+//Funções Internas
+function salvarCache(nome, dados) {
+    localStorage.setItem(nome, JSON.stringify(dados));
+}
+function carregarCache(nome) {
+    const cache = localStorage.getItem(nome);
+
+    if (!cache) {
+        console.log(`Arquivo ${nome} não encontrado armazenado no cache!`);
         return null;
     }
 
-    try{
+    try {
         return JSON.parse(cache);
     } catch {
         console.log("Erro ao tentar passar o cache para JSON");
         return null;
     }
 }
-function distribuirDados(dados){
-    dados_perfil = dados.perfil;
-    dados_slot = dados.slots;
-    dados_colecao = dados.colecao;
-    dados_conquistas = dados.conquistas;
-    dados_inventario = dados.inventario;
-    dados_ranking_pessoal = dados.ranking.pessoal;
-    dados_ranking_top10 = dados.ranking.top10;
+function solicitarLogin(){
+    const popupClasses = ['style-dark', 'style-sombra-adrenalina', 'style-rebelde-l'];
+    const buttonClasses = 'bi bi-google btn-autoescola btn-sombra-adrenalina style-rebelde-r';
+    const popupTitulo = 'Junte-se a nós!';
+    const paragrafo = 'Faça login para participar do evento. Se você é beta, entre com o mesmo email que tem o acesso ao beta.';
+    const imagemCaminho = '../assets/images/elen-login.png';
+    const imagemBalaoDescricao = 'Não se preocupe, vai dar tudo certo. Quando você entrar, eu irei colocar seu nome aqui na lista.';
+    const authStartUrl = `window.location.assign('${caminhoDataAPI}/auth/google/start')`;
+    const popupConteudo = `
+        <p>${paragrafo}</p>
+        <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <button class="${buttonClasses}" onclick="${authStartUrl}"> Entrar com o google</button>
+            <img src="${imagemCaminho}" alt="Elen com uma prancheta" data-balao="${imagemBalaoDescricao}" class="balao"/>
+        </div>
+    `;
+
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
+
 }
 
-async function buscarDados(caminhoAPI){
-    let dadosAPI = carregarCache();
+async function buscarDadosPerfil(){
+    const dadosUsuario = await fazerRequisicao('/user/me');
+    //const xp = await fazerRequisicao('/user/xp');
+    //const moedas = await fazerRequisicao('/user/tickets');
 
-    if(!dadosAPI){
-        /*
-        const resposta = await fetch(caminhoAPI));
-        dadosAPI = await resposta.json();
-        */
-       dadosAPI = dados;
-       salvarCache(dadosAPI);
+    dados_perfil = {
+        id: dadosUsuario.id,
+        caminhoImagem: dadosUsuario.picture_url,
+        nome: dadosUsuario.nome,
+        nivel: 'Testando',
+        moedas: 0,
+        xp: 0
+    }
+}
+
+async function fazerRequisicao(rota, metodo = 'GET', corpo = null){
+    const resposta = await fetch(caminhoDataAPI + rota,
+        {
+            method: metodo,
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: corpo ? JSON.stringify(corpo) : null
+        });
+
+    if(resposta.status === 200){
+        //conexão bem sucedida, retornando dados
+        return await resposta.json();
     }
 
-    distribuirDados(dados);
+    if(resposta.status === 401){
+        //não autenticado
+        solicitarLogin();
+        return null;
+    }
 }
 
+
 //Assinatura pública
-export const Server =
-{
+export const Server = {
     Slot, Pool,
     conectar: buscarDados,
-    perfil: buscarPerfil,
-    card: buscarSlot,
-    colecao: buscarColecao,
-    progresso: buscarProgresso,
-    inventario: buscarInventario,
-    ranking: buscarRanking
+    desconectar: excluirDados,
+    perfil: criarPerfil,
+    card: criarSlot,
+    colecao: criarColecao,
+    progresso: criarProgresso,
+    inventario: criarInventario,
+    ranking: criarRanking
 };
 
-function buscarSlot(pool, slot) {
+async function buscarDados() {
+    await buscarDadosPerfil();
+}
+async function excluirDados(){
+    fazerRequisicao('/auth/logout', 'POST');
+}
+function criarPerfil() {
+    return Object.freeze({
+        qualID() { return dados_perfil?.id ?? ''; },
+        qualUrlImagem() { return dados_perfil?.caminhoImagem ?? ''; },
+        qualNome() { return dados_perfil?.nome ?? 'Não encontrado'; },
+        qualNivel() { return dados_perfil?.nivel ?? 'Recém Habilitado'; },
+        quantasMoedas() { return dados_perfil?.moedas ?? 0.0; },
+        quantoXp() { return dados_perfil?.xp ?? 0; }
+
+    })
+}
+function criarSlot(pool, slot) {
     //Interface do Slot
     return Object.freeze({
-        // Leitura
+        // Leitura Dados
         qualNome() { return dados_slot[pool]?.[slot]?.nome ?? 'Slot Bloqueado'; },
         qualDescricao() { return dados_slot[pool]?.[slot]?.descricao ?? 'Este slot está bloqueado'; },
 
@@ -187,11 +245,14 @@ function buscarSlot(pool, slot) {
         qualCaminhoMascara(relativo = './') {
             return relativo + (dados_slot[pool]?.[slot]?.caminhoMascara ?? 'images/silhueta-cadeado.png');
         },
+
+        qualRaridade() { return dados_slot[pool]?.[slot]?.raridade ?? ''; },
+        qualCusto() { return dados_slot[pool]?.[slot]?.custo ?? 0; },
+
+        // Formatação dos dados
         qualUrlIcone(relativo = './') { return `url('${this.qualCaminhoIcone(relativo)}')` },
         qualUrlCarta(relativo = './') { return `url('${this.qualCaminhoCarta(relativo)}')` },
         qualUrlMascara(relativo = './') { return `url('${this.qualCaminhoMascara(relativo)}')` },
-
-        qualRaridade() { return dados_slot[pool]?.[slot]?.raridade ?? ''; },
         pegarRaridadeFormatada() {
             if (this.foiBloqueado()) return '';
             const raridade = this.qualRaridade();
@@ -212,7 +273,7 @@ function buscarSlot(pool, slot) {
                 case 'L': return 'var(--cor-limitada)';
             }
         },
-        qualCusto() { return dados_slot[pool]?.[slot]?.custo ?? 0; },
+
         pegarCustoFormatado() {
             if (this.foiComprado()) return 'Obtido'
             if (this.qualCusto() > 0) return this.qualCusto();
@@ -226,7 +287,7 @@ function buscarSlot(pool, slot) {
 
     });
 }
-function buscarColecao(pool) {
+function criarColecao(pool) {
     //Interface da Coleção
     return Object.freeze({
         //Leitura
@@ -260,7 +321,7 @@ function buscarColecao(pool) {
         }
     })
 }
-function buscarProgresso() {
+function criarProgresso() {
     return Object.freeze({
         //Leitura
         quantidadeXP() { return dados_perfil?.xp ?? 0; },
@@ -310,7 +371,7 @@ function buscarProgresso() {
 
     })
 }
-function buscarInventario() {
+function criarInventario() {
     return Object.freeze({
         tamanho() { return dados_inventario.length; },
         caminhoIcone(indice, relativo = './') { return relativo + (dados_inventario[indice]?.caminhoIcone ?? ''); },
@@ -320,19 +381,9 @@ function buscarInventario() {
         qualUrlIcone(indice, relativo = './') { return `url('${this.caminhoIcone(indice, relativo)}')`; }
     })
 }
-function buscarRanking() {
+function criarRanking() {
     return Object.freeze({
         top10() { return dados_ranking_top10; },
         pessoal() { return dados_ranking_pessoal; }
-    })
-}
-function buscarPerfil() {
-    return Object.freeze({
-        qualID() { return dados_perfil?.id ?? ''; },
-        qualNome() { return dados_perfil?.nome ?? 'Não encontrado'; },
-        qualNivel() { return dados_perfil?.nivel ?? 'Recém Habilitado'; },
-        quantasMoedas() { return dados_perfil?.moedas ?? 0.0; },
-        quantoXp() { return dados_perfil?.xp ?? 0; }
-
     })
 }
