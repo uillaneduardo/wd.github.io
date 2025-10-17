@@ -156,7 +156,7 @@ function popupConfirmarCompra(slot) {
                             [${cardRaridade}]
                         </i>`;
     const cardDescription = cardObject.qualDescricao();
-    const cardIcone = cardObject.qualCaminhoIcone('../assets/');
+    const cardIcone = cardObject.qualCaminhoIcone('./assets/');
     const cardPrice = cardObject.pegarCustoFormatado();
 
     const contentInflate =
@@ -249,7 +249,7 @@ function mostrarColecao() {
 
     for (let i = 0; i < colecao.tamanho(); i++) {
 
-        const icone = colecao.qualCaminhoIcone(i, '../assets/');
+        const icone = colecao.qualCaminhoIcone(i, './assets/');
         const nome = colecao.qualNome(i);
         const probabilidade = colecao.qualProbabilidade(i);
         const raridade = colecao.pegarRaridadeFormatada(i);
@@ -342,9 +342,9 @@ function atualizarProgresso() {
     const imgC = document.getElementById('progresso-c');
 
     barraProgressoFill.style.width = `${barraXp}%`;
-    imgA.src = "../assets/" + progresso[0].caminhoIcone;
-    imgB.src = "../assets/" + progresso[1].caminhoIcone;
-    imgC.src = "../assets/" + progresso[2].caminhoIcone;
+    imgA.src = "./assets/" + progresso[0].caminhoIcone;
+    imgB.src = "./assets/" + progresso[1].caminhoIcone;
+    imgC.src = "./assets/" + progresso[2].caminhoIcone;
 
     imgB.style.left = `${conquistaAlvo}%`;
 
@@ -361,7 +361,7 @@ function mostrarProgresso() {
 
     for (let i = 0; i < progresso.conquistaTamanho(); i++) {
 
-        const icone = progresso.conquistaCaminhoIcone(i, '../assets/');
+        const icone = progresso.conquistaCaminhoIcone(i, './assets/');
         const nome = progresso.conquistaNome(i);
         const descricao = progresso.conquistaDescricao(i);
         const conquistaXp = progresso.conquistaRequisitoXP(i);
@@ -412,7 +412,7 @@ function atualizarInventario(){
     for(let i = 0; i < inventario.tamanho(); i++){
         
         const nome = inventario.qualNome(i);
-        const url = inventario.qualUrlIcone(i, "../assets/");
+        const url = inventario.qualUrlIcone(i, "./assets/");
         const descricao = nome + ' - ' + inventario.qualDescricao(i);
         const extraStyle = 
         `

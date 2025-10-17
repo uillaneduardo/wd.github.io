@@ -177,24 +177,28 @@ async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
   if (corpo && metodo !== 'GET') headers['Content-Type'] = 'application/json';
 
   try {
-    const resp = await fetch(caminhoDataAPI + rota, {
+    const resposta = await fetch(caminhoDataAPI + rota, {
       method: metodo,
       credentials: 'include',
       headers,
       ...(corpo ? { body: JSON.stringify(corpo) } : {})
     });
 
-    if (resp.status === 401) {
+    if (resposta.status === 401) {
       solicitarLogin();
       return null;
     }
-    if (resp.status === 204) return null;
+    if (resposta.status === 204) return null;
 
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    if (!resposta.ok){
+        solicitarLogin();
+        throw new Error(`HTTP ${resposta.status}`);
+    }
 
-    return await resp.json();
+    return await resposta.json();
   } catch (err) {
     console.error('Erro na requisição', err);
+    solicitarLogin();
     return null;
   }
 }
