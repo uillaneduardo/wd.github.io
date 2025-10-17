@@ -330,9 +330,9 @@ function atualizarProgresso() {
     const progresso = Server?.progresso().conquistasResumidas();
     const xp = Server?.progresso().quantidadeXP();
 
-    const xpAlvoAnterior = progresso[0].xp;
-    const xpAlvoAtual = progresso[1].xp;
-    const xpAlvoProximo = progresso[2].xp;
+    const xpAlvoAnterior = progresso[0]?.xp ?? 0;
+    const xpAlvoAtual = progresso[1]?.xp ?? 1;
+    const xpAlvoProximo = progresso[2]?.xp ?? 2;
 
     const barraXp = ((xp - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
     const conquistaAlvo = ((xpAlvoAtual - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
@@ -342,9 +342,9 @@ function atualizarProgresso() {
     const imgC = document.getElementById('progresso-c');
 
     barraProgressoFill.style.width = `${barraXp}%`;
-    imgA.src = "./assets/" + progresso[0].caminhoIcone;
-    imgB.src = "./assets/" + progresso[1].caminhoIcone;
-    imgC.src = "./assets/" + progresso[2].caminhoIcone;
+    imgA.src = "./assets/" + progresso[0]?.caminhoIcone ?? '';
+    imgB.src = "./assets/" + progresso[1]?.caminhoIcone ?? '';
+    imgC.src = "./assets/" + progresso[2]?.caminhoIcone ?? '';
 
     imgB.style.left = `${conquistaAlvo}%`;
 
