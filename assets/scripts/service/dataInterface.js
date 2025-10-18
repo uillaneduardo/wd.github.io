@@ -160,15 +160,17 @@ function solicitarLogin(){
 
 async function buscarDadosPerfil() {
   const dadosUsuario = await fazerRequisicao('/user/me');
-  if (!dadosUsuario) return;
+  const moedas = await fazerRequisicao('/tickets/balance');
+  const xp = await fazerRequisicao('/user/xp');
+  const nivel = await fazerRequisicao('/user/level');
 
   dados_perfil = {
-    id: dadosUsuario.id,
-    caminhoImagem: dadosUsuario.picture_url,
-    nome: dadosUsuario.nome,
-    nivel: 'Testando',
-    moedas: 0,
-    xp: 0
+    id: dadosUsuario?.id ?? '',
+    caminhoImagem: dadosUsuario?.picture_url ?? '',
+    nome: dadosUsuario?.name ?? 'Usuário não encontrado',
+    nivel: nivel ?? 'Não encontrado',
+    moedas: moedas ?? 0,
+    xp: xp ?? 0
   };
 }
 
@@ -222,7 +224,7 @@ async function buscarDados() {
     await buscarDadosPerfil();
 }
 async function excluirDados(){
-    fazerRequisicao('/auth/logout', 'POST');
+    fazerRequisicao('/auth/logout/all', 'POST');
 }
 function criarPerfil() {
     return Object.freeze({
