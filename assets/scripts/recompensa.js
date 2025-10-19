@@ -88,10 +88,6 @@ function aoSelecionar() {
     cardSlotB.style.setProperty('--slot-card', slotB.qualUrlCarta('../'));
     cardSlotC.style.setProperty('--slot-card', slotC.qualUrlCarta('../'));
 
-    cardSlotA.style.setProperty('--slot-silhueta', slotA.qualUrlMascara('../'));
-    cardSlotB.style.setProperty('--slot-silhueta', slotB.qualUrlMascara('../'));
-    cardSlotC.style.setProperty('--slot-silhueta', slotC.qualUrlMascara('../'));
-
     cardSlotA.style.setProperty('--cor-raridade', slotA.qualCorRaridade());
     cardSlotB.style.setProperty('--cor-raridade', slotB.qualCorRaridade());
     cardSlotC.style.setProperty('--cor-raridade', slotC.qualCorRaridade());
@@ -112,30 +108,30 @@ function aoSelecionar() {
 
 function gerenciarCardClasses(cardElement, cardObject) {
     if (cardObject.foiBloqueado()) {
-        cardElement.classList.remove(...['slot-raridade', 'revelando-card']);
+        cardElement.classList.remove(...['slot-revelado', 'slot-mascarado']);
     } else {
         if (cardObject.foiRevelado()) {
-            cardElement.classList.add('slot-raridade');
-            cardElement.classList.remove('revelando-card');
+            cardElement.classList.add('slot-revelado');
+            cardElement.classList.remove('slot-mascarado');
         } else {
-            cardElement.classList.add('revelando-card');
-            cardElement.classList.remove('slot-raridade');
+            cardElement.classList.add('slot-mascarado');
+            cardElement.classList.remove('slot-revelado');
         }
     }
-    cardElement.classList.remove('aguardando-revelar');
+    cardElement.classList.remove('slot-revelando');
 }
 
 function revelandoSlot(cardSlot) {
-    if (cardSlot.classList.contains('revelando-card')) {
-        cardSlot.classList.add('aguardando-revelar');
+    if (cardSlot.classList.contains('slot-mascarado')) {
+        cardSlot.classList.add('slot-revelando');
     }
 }
 
 
 function aoRevelarSlot(cardElement, slot) {
-    cardElement.classList.remove('aguardando-revelar');
-    cardElement.classList.remove('revelando-card');
-    cardElement.classList.add('slot-raridade');
+    cardElement.classList.remove('slot-revelando');
+    cardElement.classList.remove('slot-mascarado');
+    cardElement.classList.add('slot-revelado');
     Server?.card(btnSelecionado, slot).revelar();
 
 }
@@ -257,9 +253,9 @@ function mostrarColecao() {
         const coletar = colecao.foiComprado(i) ? '' : 'background-color: grey';
 
         itensHTML += `
-            <li class="style-autoescola popup-list" style="${coletar}">
+            <li class="style-autoescola popup-list balao" data-balao="${probabilidade}" style="${coletar}">
                 <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
-                <p style="${riscar}">${nome} | ${raridade} | ${probabilidade}</p>
+                <p style="${riscar}">${nome} | ${raridade}</p>
             </li>`;
 
     }
@@ -327,14 +323,14 @@ progressoResumido.addEventListener('click', mostrarProgresso);
 atualizarProgresso();
 
 function atualizarProgresso() {
-    const progresso = Server?.progresso().conquistasResumidas();
-    const xp = Server?.progresso().quantidadeXP();
+    const progresso = Server?.progresso()?.conquistasResumidas();
+    const xp = Server?.progresso()?.quantidadeXP();
 
     const xpAlvoAnterior = progresso[0]?.xp ?? 0;
     const xpAlvoAtual = progresso[1]?.xp ?? 1;
     const xpAlvoProximo = progresso[2]?.xp ?? 2;
 
-    const barraXp = ((xp - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
+    const barraXp = (Math.max(0,(xp - xpAlvoAnterior)) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
     const conquistaAlvo = ((xpAlvoAtual - xpAlvoAnterior) / (xpAlvoProximo - xpAlvoAnterior)) * 100;
 
     const imgA = document.getElementById('progresso-a');
@@ -342,13 +338,13 @@ function atualizarProgresso() {
     const imgC = document.getElementById('progresso-c');
 
     barraProgressoFill.style.width = `${barraXp}%`;
-    imgA.src = "./assets/" + progresso[0]?.caminhoIcone ?? '';
-    imgB.src = "./assets/" + progresso[1]?.caminhoIcone ?? '';
-    imgC.src = "./assets/" + progresso[2]?.caminhoIcone ?? '';
+    imgA.src = "./assets/" + progresso[0]?.caminhoIcone;
+    imgB.src = "./assets/" + progresso[1]?.caminhoIcone;
+    imgC.src = "./assets/" + progresso[2]?.caminhoIcone;
 
     imgB.style.left = `${conquistaAlvo}%`;
 
-    barraProgressoFill.querySelector('span').textContent = barraXp > 5 ? xp : '';
+    barraProgressoFill.querySelector('span').textContent = barraXp > 5 ? ' ' + xp : '';
 }
 
 function mostrarProgresso() {
@@ -445,7 +441,7 @@ function completarSlots(itensHTML = '', itens = inventarioItens.children.length,
   let faltam = totalDesejado - itens;
 
   while (faltam-- > 0) {
-    itensHTML += `<div class="body-autoescola balao style-rebelde-r" data-balao="espaço para item"></div>`;
+    itensHTML += `<div class="body-autoescola balao style-rebelde-r" data-balao="- espaço para item"></div>`;
   }
   return itensHTML;
 }

@@ -1,7 +1,5 @@
 :root {
     --slot-card: url("../images/silhueta-cadeado.png");
-    --slot-silhueta: url("../images/silhueta-cadeado.png");
-
     --teleport-x: -120%;
     --cor-raridade: var(--cor-adrenalina);
     --cor-revelando-a: rgba(0, 0, 0, 0);
@@ -72,7 +70,7 @@
 
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    background-image: var(--slot-silhueta);
+    background-image: var(--slot-card);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -97,36 +95,34 @@
     pointer-events: none;
 }
 
-.aguardando-revelar::after,
-.revelando-card:hover::after,
-.slot-raridade::after {
+.slot-revelando::after,
+.slot-revelado::after {
     border-color: var(--cor-raridade);
 }
 
-.aguardando-revelar,
-.slot-raridade:hover,
-.revelando-card:hover {
+.slot-revelando,
+.slot-revelado:hover,
+.slot-mascarado:hover {
     box-shadow: 0 0 28px var(--cor-raridade);
     filter: drop-shadow(0 0 18px var(--cor-raridade));
     transition: filter .2s ease;
 }
 
-.slot-raridade {
-    background-image: var(--slot-card);
-}
 
-.slot-raridade>* {
+.slot-revelado>* {
     opacity: 1;
     pointer-events: initial;
 }
 
-.revelando-card {
+.slot-mascarado {
     cursor: pointer;
-    background-image: var(--slot-silhueta);
+    background: var(--cor-raridade);
+    -webkit-mask: var(--slot-card) center/contain no-repeat;
+    mask: var(--slot-card) center/contain no-repeat;*/
 }
 
 
-.aguardando-revelar {
+.slot-revelando {
     animation: aguardar-revelar .18s linear 10;
 }
 
