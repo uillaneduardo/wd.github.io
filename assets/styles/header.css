@@ -7,6 +7,12 @@
   display: inline;
   border-radius: 999px;
   padding: 5px;
+  vertical-align: middle;
+}
+
+.header-round-button {
+  min-height: 40px;
+  aspect-ratio: 1/1;
 }
 
 .header-button{
@@ -52,6 +58,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  font-size: 1.25rem;
 }
 
 h1,
