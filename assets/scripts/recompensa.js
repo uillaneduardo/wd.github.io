@@ -484,6 +484,7 @@ function mostrarRanking(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////// PERFIL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+const btnPerfil = document.getElementById('btn-profile');
 const perfilNome = document.getElementById('perfil-nome');
 const perfilNivel = document.getElementById('perfil-nivel');
 const perfilMoeda = document.getElementById('perfil-moeda');
@@ -507,4 +508,13 @@ function atualizarPerfil(){
     perfilNivel.textContent = 'Nível: ' + perfil.qualNivel();
     perfilMoeda.textContent = ' ' + perfil.quantasMoedas();
     perfilXp.textContent = ' ' + perfil.quantoXp();
+
+    const imgPerfil = perfil.qualUrlImagem();
+    if(imgPerfil.includes('nulo') || imgPerfil.includes('undefined')){
+        btnPerfil.removeProperty('background-image');
+        btnPerfil.classList.add('bi');
+    } else {
+        btnPerfil.style.setProperty('background-image', imgPerfil);
+        btnPerfil.classList.remove('bi');
+    }
 }

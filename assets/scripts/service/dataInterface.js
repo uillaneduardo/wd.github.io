@@ -11,6 +11,7 @@ const caminhoDataAPI = 'https://api.wheeldone.playmarques.com';
 const dados = {
     perfil: {
         id: "akledas",
+        caminhoImagem: 'nulo',
         nome: "usuário não encontrado",
         nivel: "?",
         moedas: 0,
@@ -182,6 +183,7 @@ async function buscarDadosPerfil() {
   const nivel = await fazerRequisicao('/user/level');
 
   dados.perfil.id = dadosUsuario?.id ?? dados.perfil.id;
+  dados.perfil.caminhoImagem = dadosUsuario?.picture_url ?? dados.perfil.caminhoImagem;
   dados.perfil.nome = dadosUsuario?.name ?? dados.perfil.nome;
   dados.perfil.nivel = nivel?.level ?? dados.perfil.nivel;
   dados.perfil.moedas = moedas?.balance ?? dados.perfil.moedas;
@@ -242,7 +244,7 @@ async function excluirDados(){
 function criarPerfil() {
     return Object.freeze({
         qualID() { return dados?.perfil?.id;},
-        qualUrlImagem() { return dados?.perfil?.caminhoImagem;},
+        qualUrlImagem() { return `url('${dados?.perfil?.caminhoImagem}')`;},
         qualNome() { return dados?.perfil?.nome; },
         qualNivel() { return dados?.perfil?.nivel; },
         quantasMoedas() { return dados?.perfil?.moedas; },

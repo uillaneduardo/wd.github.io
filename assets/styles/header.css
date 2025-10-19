@@ -48,6 +48,11 @@
 #btn-home{
   padding: 5px;
 }
+#btn-profile {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 h1,
 h2,
