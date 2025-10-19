@@ -49,7 +49,7 @@
   padding: 5px;
 }
 #btn-profile {
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
