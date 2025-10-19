@@ -10,6 +10,10 @@
     background: rgba(0, 0, 0, .5);
 }
 
+#popup-title{
+    width: 80%;
+}
+
 .popup-panel {
     background: white;
     max-width: 520px;
@@ -18,11 +22,9 @@
 
 .popup-close {
     position: absolute;
-    top: .75rem;
+    top: .35rem;
     right: .75rem;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    font-size: 2rem;
+    padding: 5px 10px;
 }
 
 /* Fallback (quando não há <dialog>) */

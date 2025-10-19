@@ -11,7 +11,7 @@ const caminhoDataAPI = 'https://api.wheeldone.playmarques.com';
 const dados = {
     perfil: {
         id: "akledas",
-        nome: "?",
+        nome: "usuário não encontrado",
         nivel: "?",
         moedas: 0,
         xp: 0
@@ -171,7 +171,7 @@ function solicitarLogin(){
         </div>
     `;
 
-    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses, allowClosing: false});
 
 }
 

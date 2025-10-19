@@ -172,7 +172,7 @@ function popupConfirmarCompra(slot) {
         </div>`
         ;
 
-    Popup.show({ title: '', content: contentInflate, classes: popupClasses });
+    Popup.show({ title: '', content: contentInflate, classes: popupClasses});
 
 }
 
@@ -255,7 +255,7 @@ function mostrarColecao() {
         itensHTML += `
             <li class="style-autoescola popup-list balao" data-balao="${probabilidade}" style="${coletar}">
                 <img style="width:35px; height:35px;" src="${icone}" alt="${nome}" />
-                <p style="${riscar}">${nome} | ${raridade}</p>
+                <p style="${riscar}; min-width: min(200px, 50vw);">${nome} | ${raridade}</p>
             </li>`;
 
     }
@@ -276,7 +276,7 @@ function mostrarColecao() {
             </p>`;
     }
 
-    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses });
+    Popup.show({ title: popupTitulo, content: popupConteudo, classes: popupClasses});
 }
 
 function atualizarContagemRegressiva() {
@@ -496,6 +496,7 @@ const btnDesconectar = document.getElementById('btn-desconectar');
 
 btnConquistas.addEventListener('click', mostrarProgresso);
 btnRanking.addEventListener('click', mostrarRanking);
+btnDesconectar.addEventListener('click', () => { Server?.desconectar(); location.reload(); });
 
 atualizarPerfil();
 

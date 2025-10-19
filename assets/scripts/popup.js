@@ -3,6 +3,7 @@
   const titleEl = document.getElementById('popup-title');
   const contentEl = document.getElementById('popup-content');
   const closeBtn = document.getElementById('popup-close');
+  let closeAllowed = true;
 
   // ---------- FOCUS TRAP util ----------
   const focusableSel = [
@@ -72,6 +73,7 @@
   }
 
   function closeFallback() {
+    if(!closeAllowed) return;
     fbBackdrop.setAttribute('aria-hidden', 'true');
     fbShell.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('body-lock');
@@ -79,9 +81,11 @@
   }
 
   // ---------- API pública unificada ----------
-  function showPopup({ title = '', content = '', classes = [] } = {}) {
+  function showPopup({ title = '', content = '', classes = [], allowClosing = true } = {}) {
+    closeAllowed = allowClosing;
     titleEl.textContent = title;
     contentEl.innerHTML = content;
+    closeBtn.style.display = allowClosing ? '' : 'none';
 
     // Limpa/aplica classes visuais na casca
     (hasDialog ? popupEl : fbShell).className = hasDialog ? '' : 'popup-fb';
@@ -100,6 +104,7 @@
   }
 
   function closePopup() {
+    if (!closeAllowed) return;
     if (hasDialog) {
       popupEl.close();
       popupEl.removeEventListener('keydown', onKeydownTrap);
