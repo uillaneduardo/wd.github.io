@@ -512,9 +512,9 @@ function atualizarPerfil(){
     const imgPerfil = perfil.qualUrlImagem();
     if(imgPerfil.includes('nulo') || imgPerfil.includes('undefined')){
         btnPerfil.removeProperty('background-image');
-        btnPerfil.classList.add('bi bi-person-fill');
+        btnPerfil.classList.add('bi', 'bi-person-fill');
     } else {
         btnPerfil.style.setProperty('background-image', imgPerfil);
-        btnPerfil.classList.remove('bi');
+        btnPerfil.classList.remove('bi', 'bi-person-fill');
     }
 }
