@@ -21,54 +21,54 @@ const dados = {
         [Pool.Diario]: [
             {
                 /*Slot Bloqueado*/
-                nome: 'Slot Bloqueado', raridade: '', custo: 15,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: true, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-cadeado.png',
-                caminhoCarta: 'images/silhueta-cadeado.png',
+                id: "sd_01", name: 'Slot Bloqueado', rarity: '', price: 15,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             },
             {
                 /*Slot Bloqueado*/
-                nome: 'Teste Slot', raridade: 'L', custo: 0,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: false, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-carro.png',
-                caminhoCarta: 'images/card-carro.png',
+                id: "sd_02", name: 'Slot Bloqueado', rarity: '', price: 0,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             },
             {
                 /*Slot Bloqueado*/
-                nome: 'Slot Bloqueado', raridade: '', custo: 15,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: true, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-cadeado.png',
-                caminhoCarta: 'images/silhueta-cadeado.png',
+                id: "sd_03", name: 'Slot Bloqueado', rarity: '', price: 15,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             }
         ],
 
         [Pool.Oferta]: [
             {
                 /*Slot Bloqueado*/
-                nome: 'Slot Bloqueado', raridade: '', custo: 10,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: true, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-cadeado.png',
-                caminhoCarta: 'images/silhueta-cadeado.png',
+                id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             },
             {
                 /*Slot Bloqueado*/
-                nome: 'Slot Bloqueado', raridade: '', custo: 0,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: true, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-cadeado.png',
-                caminhoCarta: 'images/silhueta-cadeado.png',
+                id: "ss_02", name: 'Slot Bloqueado', rarity: '', price: 0,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             },
             {
                 /*Slot Bloqueado*/
-                nome: 'Slot Bloqueado', raridade: '', custo: 10,
-                descricao: 'Slot bloqueado temporariamente',
-                bloqueado: true, revelado: false, clamado: false,
-                caminhoIcone: 'images/icone-cadeado.png',
-                caminhoCarta: 'images/silhueta-cadeado.png',
+                id: "ss_03", name: 'Slot Bloqueado', rarity: '', price: 10,
+                description: 'Slot bloqueado temporariamente',
+                blocked: true, revealed: false, claimed: false,
+                iconPath: 'images/icone-cadeado.png',
+                cardPath: 'images/silhueta-cadeado.png'
             }
         ]
     },
@@ -190,6 +190,13 @@ async function buscarDadosPerfil() {
   dados.perfil.xp = xp?.xp ?? dados.perfil.xp;
 
 }
+async function buscarDadosSlots(){
+    const recompensaDiaria = await fazerRequisicao('/event/current?pool=daily_rewards');
+    const ofertaLoja = await fazerRequisicao('/event/current?pool=special_offer');
+
+    dados.slots[Pool.Diario] = recompensaDiaria?.slots ?? dados.slots[Pool.Diario];
+    dados.slots[Pool.Oferta] = ofertaLoja?.slots ?? dados.slots[Pool.Oferta];
+}
 
 async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
   const headers = { Accept: 'application/json' };
@@ -256,19 +263,18 @@ function criarSlot(pool, slot) {
     //Interface do Slot
     return Object.freeze({
         // Leitura Dados
-        qualNome() { return dados?.slots[pool]?.[slot]?.nome; },
-        qualDescricao() { return dados?.slots[pool]?.[slot]?.descricao; },
+        qualNome() { return dados?.slots[pool]?.[slot]?.name; },
+        qualDescricao() { return dados?.slots[pool]?.[slot]?.description; },
 
-        foiBloqueado() { return dados?.slots[pool]?.[slot]?.bloqueado; },
-        foiRevelado() { return dados?.slots[pool]?.[slot]?.revelado; },
-        foiComprado() { return dados?.slots[pool]?.[slot]?.clamado; },
+        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked; },
+        foiRevelado() { return dados?.slots[pool]?.[slot]?.revealed; },
+        foiComprado() { return dados?.slots[pool]?.[slot]?.claimed; },
 
-        qualCaminhoIcone(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.caminhoIcone);},
-        qualCaminhoCarta(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.caminhoCarta);},
-        qualCaminhoMascara(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.caminhoMascara);},
+        qualCaminhoIcone(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.iconPath);},
+        qualCaminhoCarta(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.cardPath);},
 
-        qualRaridade() { return dados?.slots[pool]?.[slot]?.raridade; },
-        qualCusto() { return dados?.slots[pool]?.[slot]?.custo; },
+        qualRaridade() { return dados?.slots[pool]?.[slot]?.rarity; },
+        qualCusto() { return dados?.slots[pool]?.[slot]?.price; },
 
         // Formatação dos dados
         qualUrlIcone(relativo = './') { return `url('${this.qualCaminhoIcone(relativo)}')` },
@@ -303,8 +309,8 @@ function criarSlot(pool, slot) {
 
 
         // Escrita
-        revelar() { dados.slots[pool][slot].revelado = true; return true; },
-        comprar() { dados.slots[pool][slot].clamado = true; return true; },
+        revelar() { dados.slots[pool][slot].revealed = true; return true; },
+        comprar() { dados.slots[pool][slot].claimed = true; return true; },
 
     });
 }
