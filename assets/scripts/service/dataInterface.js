@@ -177,10 +177,10 @@ function solicitarLogin(){
 }
 
 async function buscarDadosPerfil() {
-  const dadosUsuario = await fazerRequisicao('/user/me');
-  const moedas = await fazerRequisicao('/tickets/balance');
-  const xp = await fazerRequisicao('/user/xp');
-  const nivel = await fazerRequisicao('/user/level');
+  const dadosUsuario = (await fazerRequisicao('/user/me'))?.data;
+  const moedas = (await fazerRequisicao('/tickets/balance'))?.data;
+  const xp = (await fazerRequisicao('/user/xp'))?.data;
+  const nivel = (await fazerRequisicao('/user/level'))?.data;
 
   dados.perfil.id = dadosUsuario?.id ?? dados.perfil.id;
   dados.perfil.caminhoImagem = dadosUsuario?.picture_url ?? dados.perfil.caminhoImagem;
@@ -191,11 +191,17 @@ async function buscarDadosPerfil() {
 
 }
 async function buscarDadosSlots(){
-    const recompensaDiaria = await fazerRequisicao('/event/current?pool=daily_rewards');
-    const ofertaLoja = await fazerRequisicao('/event/current?pool=special_offer');
+    const recompensaDiaria = (await fazerRequisicao('/event/current?pool=daily_rewards'))?.data;
+    const ofertaLoja = (await fazerRequisicao('/event/current?pool=special_offer'))?.data;
 
     dados.slots[Pool.Diario] = recompensaDiaria?.slots ?? dados.slots[Pool.Diario];
     dados.slots[Pool.Oferta] = ofertaLoja?.slots ?? dados.slots[Pool.Oferta];
+}
+async function buscarDadosColecao(){
+    const colecaoDiaria = (await fazerRequisicao('/event/collection?pool=daily_rewards'))?.data;
+    const colecaoLoja = (await fazerRequisicao('/event/collection?pool=special_offer'))?.data;
+    dados.colecao[Pool.Diario] = colecaoDiaria?.items ?? dados.colecao[Pool.Diario];
+    dados.colecao[Pool.Oferta] = colecaoLoja?.items ?? dados.colecao[Pool.Oferta];
 }
 
 async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
@@ -203,6 +209,7 @@ async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
   if (corpo && metodo !== 'GET') headers['Content-Type'] = 'application/json';
 
   try {
+
     const resposta = await fetch(caminhoDataAPI + rota, {
       method: metodo,
       credentials: 'include',
@@ -214,13 +221,21 @@ async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
       solicitarLogin();
       return null;
     }
+
     if (resposta.status === 204) return null;
+
 
     if (!resposta.ok){
         throw new Error(`HTTP ${resposta.status}`);
     }
 
-    return await resposta.json();
+    const contentType = resposta?.headers?.get('content-type') ?? '';
+    if (contentType.includes('application/json')) {
+      const json = await resposta.text();
+      if (json.trim()) return { ok: true, data: JSON.parse(json) };
+      else return { ok: true, data: null };
+    } else return { ok: true, data: null };
+
   } catch (err) {
     console.error('Erro na requisição', err);
     return null;
@@ -244,6 +259,8 @@ export const Server = {
 
 async function buscarDados() {
     await buscarDadosPerfil();
+    await buscarDadosSlots();
+    await buscarDadosColecao();
 }
 async function excluirDados(){
     fazerRequisicao('/auth/logout/all', 'POST');
@@ -309,8 +326,28 @@ function criarSlot(pool, slot) {
 
 
         // Escrita
-        revelar() { dados.slots[pool][slot].revealed = true; return true; },
-        comprar() { dados.slots[pool][slot].claimed = true; return true; },
+        async revelar() {
+            const id = dados.slots[pool][slot].id;
+            const resposta = await fazerRequisicao('/event/reveal', 'POST', {slotId: id} );
+
+            if(resposta?.ok){
+                dados.slots[pool][slot].revealed = true;
+                return true;
+            } else {
+                return false;
+            }
+        },
+        async comprar() {
+            const id = dados.slots[pool][slot].id;
+            const resposta = await fazerRequisicao('/event/claim', 'POST', {slotId: id} );
+
+            if(resposta?.ok){
+                dados.slots[pool][slot].claimed = true;
+                return true;
+            } else {
+                return false;
+            }
+        },
 
     });
 }
