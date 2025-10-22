@@ -1,0 +1,262 @@
+:root {
+    --slot-card: url("../images/silhueta-cadeado.png");
+    --teleport-x: -120%;
+    --cor-raridade: var(--cor-adrenalina);
+    --cor-revelando-a: rgba(0, 0, 0, 0);
+    --cor-revelando-b: rgba(0, 0, 0, 0);
+    --cor-revelando-c: var(--cor-raridade);
+}
+
+
+
+#recompensa {
+    margin-top: 5vh;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+#area-recompensa {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+
+.swiper,
+.swiper-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-wrapper {
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-rows: 10% 10% 60% 10% 10%;
+    justify-items: center;
+    align-items: center;
+}
+
+.card-grid-1 {
+    grid-row: 1;
+}
+
+.card-grid-2 {
+    grid-row: 2;
+}
+
+.card-grid-3 {
+    grid-row: 3;
+}
+
+.card-grid-4 {
+    grid-row: 4;
+}
+
+.card-grid-5 {
+    grid-row: 5;
+}
+
+.swiper-slide {
+    position: relative;
+    overflow: hidden;
+
+
+    width: 60%;
+    max-width: 240px;
+    aspect-ratio: 9/16;
+    margin: auto 10px;
+
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background-image: var(--slot-card);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.swiper-slide h3 {
+    width: 78%;
+    text-align: center;
+}
+
+.swiper-slide>* {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.swiper-slide::after {
+    position: absolute;
+    content: "";
+    inset: 12px;
+    border: 5px solid var(--cor-predominante);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.slot-revelando::after,
+.slot-revelado::after {
+    border-color: var(--cor-raridade);
+}
+
+.slot-revelando,
+.slot-revelado:hover,
+.slot-mascarado:hover {
+    box-shadow: 0 0 28px var(--cor-raridade);
+    filter: drop-shadow(0 0 18px var(--cor-raridade));
+    transition: filter .2s ease;
+}
+
+
+.slot-revelado>* {
+    opacity: 1;
+    pointer-events: initial;
+}
+
+.slot-mascarado {
+    cursor: pointer;
+    background: var(--cor-raridade);
+    -webkit-mask: var(--slot-card) center/contain no-repeat;
+    mask: var(--slot-card) center/contain no-repeat;*/
+}
+
+
+.slot-revelando {
+    animation: aguardar-revelar .18s linear 10;
+}
+
+/* sai da tela */
+.teleport-out {
+    animation: teleport-out .22s ease forwards;
+    will-change: transform, opacity;
+}
+
+/* volta para o centro */
+.teleport-in {
+    animation: teleport-in .22s ease forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes teleport-out {
+    to {
+        transform: translateX(var(--teleport-x));
+        opacity: 0;
+    }
+}
+
+@keyframes teleport-in {
+    from {
+        transform: translateX(var(--teleport-x));
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes aguardar-revelar {
+    0% {
+        transform: translate3d(0, 0, 0)
+    }
+
+    20% {
+        transform: translate3d(-2px, 1px, 0) rotate(-1deg)
+    }
+
+    40% {
+        transform: translate3d(2px, -1px, 0) rotate(1deg)
+    }
+
+    60% {
+        transform: translate3d(-2px, 0, 0) rotate(-1deg);
+        background-color: var(--cor-revelando-a);
+    }
+
+    80% {
+        transform: translate3d(1px, 1px, 0) rotate(1deg);
+        background-color: var(--cor-revelando-b);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        background-color: var(--cor-revelando-c);
+    }
+}
+
+#resgate-recompensa p {
+    margin: 5px;
+    color: grey;
+}
+
+#reset-time {
+    color: var(--cor-autoescola);
+}
+
+#progresso-resumido {
+    margin-top: 0;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+#progresso-resumido-barra {
+    background-color: black;
+    border: 5px solid black;
+    padding: 0px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#progresso-resumido-barra-fill {
+    background-color: var(--cor-liberdade);
+    width: 50%;
+    padding: 5px;
+    text-align: right;
+}
+
+#progresso-resumido-icones {
+    position: relative;
+    height: 35px;
+}
+
+#progresso-a,
+#progresso-b,
+#progresso-c {
+    position: absolute;
+    height: 35px;
+    aspect-ratio: 1/1;
+}
+
+#progresso-a {
+    transform: translate(-50%, 0%);
+    left: 0%;
+    bottom: 0%;
+}
+
+#progresso-b {
+    transform: translate(-50%, 0%);
+    left: 50%;
+    bottom: 0%;
+}
+
+#progresso-c {
+    transform: translate(-50%, 0%);
+    left: 100%;
+    bottom: 0%;
+}
+
+#inventario-itens {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, min(30%, 100px));
+}
+
+#inventario-itens>* {
+    position: relative;
+    max-width: 100px;
+    aspect-ratio: 1/1;
+}

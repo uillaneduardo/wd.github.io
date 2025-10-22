@@ -1,0 +1,126 @@
+/* Estilo base interno */
+#popup {
+    border: 0;
+    padding: 15px;
+    max-height: 80vh;
+    max-width: min(75vw, 520px);
+}
+
+#popup::backdrop {
+    background: rgba(0, 0, 0, .5);
+}
+
+#popup-title{
+    width: 80%;
+}
+
+.popup-panel {
+    background: white;
+    max-width: 520px;
+    margin: 0;
+}
+
+.popup-close {
+    position: absolute;
+    top: .35rem;
+    right: .75rem;
+    padding: 5px 10px;
+}
+
+/* Fallback (quando não há <dialog>) */
+.popup-fb-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    display: none;
+}
+
+.popup-fb {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-fb[aria-hidden="false"],
+.popup-fb-backdrop[aria-hidden="false"] {
+    display: flex;
+}
+
+.popup-fb .popup-panel {
+    position: relative;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.popup-list {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    padding: 5px;
+    margin-bottom: 10px;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.balao::after {
+    /*Se o item não tiver posição relative ou absoluta vai afetar onde o balão irá aparecer*/
+    position: absolute;
+    display: inline-block;
+    z-index: 10;
+
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 100%;
+
+    min-width: 50%;
+    width: max-content;
+    max-width: 120%;
+    content: attr(data-balao);
+
+    background-color: var(--cor-predominante);
+    color: var(--cor-contrastante);
+    font-size: 0.90rem;
+    
+    border: 2px solid var(--cor-predominante);
+    box-shadow: 4px 4px 25px var(--cor-predominante);
+    border-radius: 6px;
+    padding: 5px;
+
+    pointer-events: none;
+    opacity: 0;
+}
+
+.balao[data-balao]::before {
+    
+    position: absolute;
+    z-index: 9;
+
+    content: '';
+    transform: translateX(-50%) translateY(4px) rotate(45deg);
+    left: 50%;
+    bottom: 100%;
+
+    width: 15px;
+    height: 15px;
+    background-color: var(--cor-predominante);
+    
+
+    pointer-events: none;
+    opacity: 0;
+}
+
+.balao:hover::after,
+.balao[data-balao]:hover::before{
+    opacity: 1;
+}
+
+
+
+/* Travar scroll do body quando aberto (fallback) */
+.body-lock {
+    overflow: hidden;
+}

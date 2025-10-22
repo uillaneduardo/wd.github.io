@@ -1,0 +1,94 @@
+.header-user {
+  text-align: right;
+  z-index: 9;
+}
+
+.header-button, .header-round-button {
+  display: inline;
+  border-radius: 999px;
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.header-round-button {
+  min-height: 40px;
+  aspect-ratio: 1/1;
+}
+
+.header-button{
+  padding-right: 25px;
+  padding-left: 25px;
+  text-decoration: none;
+}
+.header-button *{
+  font-family: var(--font-title);
+  font-weight: 400;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 12px;
+}
+
+.header-round-button * {
+  font-size: 1.25rem;
+}
+
+.aba-menu{
+    display: none;
+    flex-direction: column;
+    width: fit-content;
+    justify-self: right;
+    padding: 10px;
+    margin-top: 10px;
+}
+.aba-menu > *{
+  padding: 5px;
+  width: initial;
+}
+
+.menu-suspenso:hover .aba-menu,
+.menu-suspenso:focus-within .aba-menu {
+  display: flex;
+}
+
+
+#btn-home{
+  padding: 5px;
+}
+#btn-profile {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 1.25rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+}
+
+@media (orientation: landscape) {
+  
+  .header-title {
+    font-size: clamp(1rem, 10vh, 3rem);
+    text-wrap: nowrap;
+  }
+}
+
+@media (orientation: portrait) {
+
+  .header-title {
+    position: fixed;
+    z-index: -1;
+
+    left: 8px;
+    top: calc((var(--py6))*1%);
+    transform: translate(0, -50%) rotate(var(--ptape-angle));
+    transform-origin: left bottom;
+
+    margin: 0;
+    text-align: left;
+    white-space: nowrap;
+    width: var(--hyp-p3p6);
+  }
+}

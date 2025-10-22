@@ -1,528 +1,359 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Wheel Done — Driver Simulator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel Done</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 
-<style>
-  :root{
-    --brand-yellow:#ffc107;
-    --brand-black:#000000;
-    --brand-white:#ffffff;
-    --neutral-gray:#e5e5e5;
-  }
-  html,body{height:100%}
-  body{
-    margin:0;
-    background:#000 url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop") center/cover no-repeat fixed;
-    color:#111;
-    overflow-x:hidden;
-  }
-
-  /* ======= HOME ======= */
-  #homeScreen{min-height:100dvh; position:relative;}
-  .header-home{position:relative; padding:2rem 1rem 1.25rem; text-align:center; color:#fff;}
-
-  /* Ícone usuário (mantém círculo) */
-  .user-icon{
-    position:fixed; top:1rem; right:1rem; z-index:20;
-    width:44px; height:44px; border-radius:50%;
-    border:2px solid #fff; background:#000; color:#fff;
-    display:flex; align-items:center; justify-content:center;
-  }
-
-  /* HERO — maior contraste (card sólido, sem transparência) */
-  .hero-text{
-    display:inline-block;
-    /* background:#fff; */
-    color:#000;
-    /* border:2px solid #000; */
-    /* border-radius:12px; /* menos arredondado */
-    padding:.75rem 1rem;
-    text-align:center;
-    margin:0 auto 1rem;
-    /* box-shadow:0 6px 0 #000; */
-  }
-  .hero-text .main-title{ font-weight:800; letter-spacing:.5px; line-height:1.1; }
-  .hero-text .subtitle{ display:block; font-weight:600; margin-top:.15rem; }
-
-  /* SEÇÃO VÍDEO — levemente menor e menos arredondada */
-  .video-section{
-    background:#ffffff;
-    border-radius:10px; /* antes 16px */
-    padding:.75rem; /* antes 1rem */
-    border:2px solid #000;
-  }
-  .video-title{ color:#000; margin-top:.25rem; font-weight:700; }
-  .video-description{ color:#333; }
-
-  /* player + overlay de clique */
-  #highlightVideo .col-12.col-lg-7{ position:relative; }
-  .video-preview{
-    width:100%;
-    aspect-ratio:16/9; /* garante proporção e reduz altura visual */
-    border-radius:8px; /* antes 12px */
-    background:#000;
-    border:2px solid #000;
-  }
-  .preview-tapzone{
-    position:absolute; inset:0; border:0; padding:0; margin:0; background:transparent; cursor:pointer;
-  }
-
-  /* carrossel */
-  .thumb-list{
-    display:flex; gap:.6rem; overflow-x:auto; padding:.6rem .25rem;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-  }
-  .thumb-item{
-    width:150px; height:90px; object-fit:cover; border-radius:8px; /* antes 10px */
-    scroll-snap-align:center; cursor:pointer; flex:0 0 auto;
-    border:2px solid #000;
-  }
-
-  /* BOTÕES DE DOWNLOAD — maiores (mantém cores/ícones) */
-  .download-buttons{ display:flex; gap:.8rem; justify-content:center; }
-  .playstore-btn, .appstore-btn{
-    font-weight:800;
-    padding:.9rem 1.25rem; /* maior */
-    font-size:1.05rem;     /* maior */
-    border-radius:12px;    /* menos arredondado */
-    border:2px solid #000;
-    box-shadow:0 4px 0 #000;
-  }
-
-  /* Espaço extra no mobile entre downloads e Join & Claim */
-  main.container{ padding-bottom:7.5rem; } /* geral */
-  @media (max-width: 576px){
-    main.container{ padding-bottom:10.5rem; } /* mais espaço no mobile */
-  }
-
-  /* JOIN & CLAIM — menor e menos arredondado */
-  .join-claim-section{
-    position:fixed; left:0; right:0; bottom:0; z-index:15;
-    display:flex; flex-direction:column; align-items:center; gap:.35rem;
-    padding:.5rem .75rem .75rem;
-  }
-  .next-spin-text{ color:#fff; font-size:.9rem; }
-  .fixed-bottom-btn{
-    display:inline-flex; align-items:center; gap:.5rem; justify-content:center;
-    width:min(520px, 92vw); /* antes 680px */
-    background:var(--brand-yellow);
-    color:#000; border:2px solid #000; font-weight:800;
-    padding:.7rem 1rem;    /* menor */
-    border-radius:18px;    /* antes pílula total */
-    box-shadow:0 6px 0 #000;
-  }
-
-  /* ======= FEED ======= */
-  #feedScreen{ display:none; position:fixed; inset:0; background:#000; z-index:30; }
-  .feed-container{ position:relative; width:100%; height:100%; overflow:hidden; background:#000; }
-  #feedVideo.feed-video{ width:100%; height:100%; will-change:transform; }
-  .feed-actions{
-    position:absolute; right:12px; top:50%; transform:translateY(-50%);
-    display:flex; flex-direction:column; align-items:center; gap:.6rem; color:#fff;
-  }
-  .feed-actions button{
-    background:#000; border:2px solid #fff; color:#fff;
-    width:50px; height:50px; border-radius:10px; display:grid; place-items:center; font-size:1.25rem;
-    transition:transform .15s ease;
-  }
-  .feed-actions button:active{ transform:scale(.96); }
-  .feed-actions .count{ font-size:.9rem; }
-  #backBtn{
-    position:absolute; top:12px; left:12px; z-index:5;
-    background:#000; color:#fff; border:2px solid #fff; border-radius:18px; padding:.35rem .7rem;
-  }
-  .progress-bar-container{ position:absolute; left:0; right:0; bottom:0; height:6px; background:#222; }
-  .progress-bar-fill{ height:100%; width:0%; background:var(--brand-yellow); transition:width .18s linear; }
-
-  .feed-tapzone{ position:absolute; inset:0; }
-
-  /* ======= POPUP LOGIN (PARCIAL, CENTRALIZADO, SEM TRANSPARÊNCIA) ======= */
-  .popup-login{
-    position:fixed; inset:auto; display:none; z-index:40;
-    left:50%; top:50%; transform:translate(-50%, -50%);
-    width:min(92vw, 520px); max-height:min(86vh, 720px);
-    background:#ffffff; color:#000; border:3px solid #000; border-radius:14px; /* antes 20px */
-    overflow:hidden;
-    box-shadow: 0 10px 0 #000; /* sombra sólida (sem transparência) */
-  }
-  .popup-login .header{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1rem; border-bottom:3px solid #000; background:#fff;
-  }
-  .btn-close{
-    width:38px; height:38px; border-radius:10px; border:3px solid #000; /* menos arredondado */
-    background:#000; color:#fff; display:grid; place-items:center;
-  }
-  .popup-login .content{ padding:1rem; }
-  .reward-text{ color:#111; }
-  .reward-icons{ display:flex; gap:.75rem; font-size:1.35rem; margin:.5rem 0; color:#000; }
-  .next-reward-time{ color:#000; font-weight:800; }
-  .btn-login-google, .btn-login-apple{
-    width:100%; background:var(--brand-yellow); border:3px solid #000; color:#000; font-weight:800;
-    border-radius:12px; box-shadow:0 5px 0 #000;
-  }
-
-   /* ======= ADICIONA UMA ANIMAÇÃO ANTES DE CARREGAR O CONTEÚDO DA PÁGINA ======= */
-  #appLoader {
-    position: fixed;
-    inset: 0;
-    background: var(--brand-black);
-    color: var(--brand-yellow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 9999;
-  }
-  .loader-logo {
-    max-width: 160px;
-    margin-bottom: 1rem;
-  }
-  #appLoader .spinner-border {
-    width: 3rem;
-    height: 3rem;
-  }
-
-  /* ======= UTIL ======= */
-  .visually-hidden{ position:absolute !important; clip:rect(1px,1px,1px,1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; }
-</style>
+    <!--CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./assets/styles/common.css">
+    <link rel="stylesheet" href="./assets/styles/body.css">
+    <link rel="stylesheet" href="./assets/styles/header.css">
+    <link rel="stylesheet" href="./assets/styles/navigation.css">
+    <link rel="stylesheet" href="./assets/styles/videopage.css">
+    <link rel="stylesheet" href="./assets/styles/popup.css">
+    <!--JS-->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="./assets/scripts/data-fit-container.js"></script>
+    <script defer src="./assets/scripts/navigation.js"></script>
+    <script defer src="./assets/scripts/videopage.js"></script>
+    <script defer src="./assets/scripts/switcher-view.js"></script>
+    <script defer src="./assets/scripts/popup.js"></script>
+    <script defer src="./assets/scripts/home.js"></script>
 </head>
-<body>
-<!-- Tela de Carregamento -->
-<div id="appLoader">
-  <div class="loader-content">
-    <img src="logo.png" alt="Wheel Done" class="loader-logo">
-    <div class="spinner-border text-warning" role="status"></div>
-    <p>Carregando...</p>
-  </div>
-</div>
 
-<!-- =================== HOME =================== -->
-<div id="homeScreen">
-  <header class="header-home">
-    <h1 class="hero-text mb-2">
-      <span class="main-title h1 d-block">Wheel Done</span>
-      <small class="subtitle">Mobile car simulator with clutch and manual gear</small>
-    </h1>
-    <button id="userIcon" class="user-icon" aria-label="Login"><i class="bi bi-person"></i></button>
-  </header>
+<body class="scrollable body-liberdade">
+    <div class="inner-scroll-landscape scrollable">
+        <div id="background">
 
-  <main class="container">
-    <!-- Seção Video Destaque (um pouco menor) -->
-    <section id="highlightVideo" class="video-section mt-2">
-      <div class="row g-3 align-items-stretch">
-        <div class="col-12 col-lg-7">
-          <!-- Player YouTube + overlay de clique -->
-          <div id="previewVideo" class="video-preview"></div>
-          <button id="previewTap" class="preview-tapzone" aria-label="Abrir feed"><span class="visually-hidden">Abrir feed</span></button>
-        </div>
-        <div class="col-12 col-lg-5 d-flex flex-column">
-          <h4 class="video-title">Manual Mastery — Clutch &amp; Gear Control</h4>
-          <p class="video-description">
-            Sinta a embreagem, troque marchas no tempo perfeito e domine as ruas.
-            Essa seção mostra o vídeo em destaque; toque para abrir o feed vertical.
-          </p>
-          <!-- Carrossel de thumbs -->
-          <div id="videoCarousel" class="thumb-list mt-auto">
-            <img class="thumb-item" src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" data-ytid="dQw4w9WgXcQ" alt="thumb 1">
-            <img class="thumb-item" src="https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg" data-ytid="9bZkp7q19f0" alt="thumb 2">
-            <img class="thumb-item" src="https://img.youtube.com/vi/e-ORhEE9VVg/hqdefault.jpg" data-ytid="e-ORhEE9VVg" alt="thumb 3">
-            <img class="thumb-item" src="https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg" data-ytid="3JZ_D3ELwOQ" alt="thumb 4">
-          </div>
-        </div>
-      </div>
-    </section>
+            <!--------------------->
+            <!--------HEADER------->
+            <!--------------------->
+            <header>
 
-    <!-- Download Buttons (maiores) -->
-    <section id="downloadButtons" class="download-buttons my-4">
-      <a href="#" class="btn btn-dark playstore-btn"><i class="bi bi-google-play"></i> Play Store</a>
-      <a href="#" class="btn btn-secondary appstore-btn"><i class="bi bi-apple"></i> App Store</a>
-    </section>
-  </main>
+                <div class="header-user container-floating-top">
+                    <button id="btn-login" class="header-round-button style-dark-autoescola" aria-label="Login">
+                        <i class="bi bi-person-fill"></i></button>
+                </div>
 
-  <!-- Join & Claim fixo (menor) -->
-  <section id="joinAndClaim" class="join-claim-section">
-    <p id="nextSpinText" class="next-spin-text">next spin restart: <span id="nextSpinEta">20h57m</span></p>
-    <button id="joinClaimBtn" class="fixed-bottom-btn">
-      <i class="bi bi-gift-fill"></i> Join and Claim
-    </button>
-  </section>
-</div>
+                <h1 class="header-title clipped-header-landscape" data-text-fit-box="portrait"
+                    data-fit-container="self">Wheel Done</h1>
+            </header>
 
-<!-- =================== FEED =================== -->
-<div id="feedScreen" role="dialog" aria-modal="true">
-  <div id="feedContainer" class="feed-container">
-    <button id="backBtn" class="btn" aria-label="Voltar"><i class="bi bi-arrow-left"></i> Back</button>
+            <!--------------------->
+            <!--------MAIN--------->
+            <!--------------------->
+            <main>
 
-    <!-- contêiner do player YT no feed -->
-    <div id="feedVideo" class="feed-video"></div>
-    <div class="feed-tapzone" id="feedTap"></div>
+                <div class="wrapper-header">
+                    <div class="body-tape clipped-header-mask-landscape"></div>
+                </div>
 
-    <div class="feed-actions">
-      <button id="likeBtn" aria-label="Curtir"><i class="bi bi-heart-fill"></i></button>
-      <div id="likeCount" class="count">0</div>
-      <button id="shareBtn" class="mt-1" aria-label="Compartilhar"><i class="bi bi-share-fill"></i></button>
-      <div id="shareCount" class="count">0</div>
-    </div>
+                <nav>
 
-    <div class="progress-bar-container">
-      <div class="progress-bar-fill"></div>
-    </div>
-  </div>
-</div>
+                    <div id="navigation" aria-label="Menu de vídeos" class="container-p-autoescola container-l-side space-vertical-p">
 
-<!-- =================== POPUP LOGIN (PARCIAL) =================== -->
-<aside id="loginPopup" class="popup-login" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-  <div class="header">
-    <h5 id="loginTitle" class="m-0">Entre para receber recompensas</h5>
-    <button id="closeLoginPopup" class="btn-close" aria-label="Fechar"><i class="bi bi-x-lg"></i></button>
-  </div>
-  <div class="content">
-    <p id="rewardText" class="reward-text">
-      Recompensas diárias, giros extras e itens exclusivos. Faça login e resgate seus prêmios agora mesmo!
-    </p>
-    <div class="reward-icons" aria-hidden="true">
-      <i class="bi bi-gift-fill"></i>
-      <i class="bi bi-joystick"></i>
-      <i class="bi bi-lightning-charge-fill"></i>
-    </div>
-    <p id="nextRewardTime" class="next-reward-time">Próximo resgate em: 20h57m</p>
-    <div class="d-grid gap-2 mt-3">
-      <button id="loginGoogle" class="btn btn-login-google"><i class="bi bi-google"></i> Entrar com Google</button>
-      <button id="loginApple" class="btn btn-login-apple"><i class="bi bi-apple"></i> Entrar com Apple</button>
-    </div>
-    <div class="text-center mt-2" style="font-size:.9rem;">Ao continuar, você concorda com os Termos.</div>
-  </div>
-</aside>
+                        <!-- Navegação das páginas em formato de vídeo por slide-->
+                        <div id="navigation-player" class="switcher-view">
 
-<script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                            <div id="video-page" class="closed-ui" role="dialog" aria-modal="true">
 
-<script>
-    /* ===== Adiciona uma animação ao carregar a tela ===== */
-    window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('appLoader').style.display = 'none';
-    }, 1500); // tempo da animação antes de exibir a página
-  });
+                                <div class="container-floating-top">
+                                    <button id="btn-close-video" class="header-button style-dark-autoescola"
+                                        aria-label="voltar"><i class="bi bi-arrow-left-short me-2"></i><a>voltar</a></button>
+                                </div>
 
-  /* ===== Config ===== */
-  const PREVIEW_SECONDS = 6; // pré-visualização de 6s
-  let isLoggedIn = false;
-  const ytVideos = ["dQw4w9WgXcQ","9bZkp7q19f0","e-ORhEE9VVg","3JZ_D3ELwOQ"];
-  let currentIndex = 0;
+                                <iframe
+                                    src="https://www.youtube.com/embed/dSLyIuevwCI?enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                    id="video-page-frame" title="video-frame-page" loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen referrerpolicy="strict-origin-when-cross-origin">
+                                </iframe>
 
-  /* ===== ETA "next spin" fake ===== */
-  const nextSpinEtaEl = document.getElementById('nextSpinEta');
-  let etaMinutes = 20*60 + 57;
-  function updateEta(){
-    if(etaMinutes<0) return;
-    const h = Math.floor(etaMinutes/60);
-    const m = etaMinutes%60;
-    nextSpinEtaEl.textContent = `${String(h).padStart(2,'0')}h${String(m).padStart(2,'0')}m`;
-    etaMinutes--;
-  }
-  updateEta();
-  setInterval(updateEta, 60_000);
+                                <div id="player-first-exit" class="video-page-content"
+                                    style="background-color: rgba(0, 0, 0, 0.5);"></div>
+                                <div id="player-a" class="video-page-content" data-ytid-videopage="dSLyIuevwCI"
+                                    style="background-color: green;"></div>
+                                <div id="player-b" class="video-page-content" data-ytid-videopage="stLA0DCWEsA"
+                                    style="background-color: pink;"></div>
+                                <div id="player-c" class="video-page-content" data-ytid-videopage="t6Li1RaYfQ4"
+                                    style="background-color: yellow;"></div>
+                                <div id="player-d" class="video-page-content" data-ytid-videopage="mm0yhuURM5U"
+                                    style="background-color: blue;"></div>
+                                <div id="player-last-exit" class="video-page-content"
+                                    style="background-color: rgba(0, 0, 0, 0.5);"></div>
 
-  /* ===== YouTube Players ===== */
-  let previewPlayer, feedPlayer, previewStopTimer=null;
+                                <div id="vp-progress" class="vp-progress" role="slider" aria-valuemin="0"
+                                    aria-valuemax="100" aria-valuenow="0" aria-label="Progresso do vídeo">
 
-  window.onYouTubeIframeAPIReady = function(){
-    previewPlayer = new YT.Player('previewVideo', {
-      videoId: ytVideos[0],
-      playerVars: {
-        playsinline:1, controls:1, rel:0, modestbranding:1,
-        autoplay:1, mute:1
-      },
-      events: { 'onReady': onPreviewReady }
-    });
+                                    <div class="vp-progress__fill"></div>
 
-    feedPlayer = new YT.Player('feedVideo', {
-      videoId: ytVideos[currentIndex],
-      playerVars: { playsinline:1, controls:0, rel:0, modestbranding:1 },
-      events: { 'onReady': onFeedReady }
-    });
-  };
+                                </div>
 
-  function onPreviewReady(){
-    try{ previewPlayer.mute(); }catch(e){}
-    try{ previewPlayer.playVideo(); }catch(e){}
-    if (PREVIEW_SECONDS > 0) {
-      clearTimeout(previewStopTimer);
-      previewPlayer.seekTo(0, true);
-      previewStopTimer = setTimeout(()=>{ previewPlayer.pauseVideo(); }, PREVIEW_SECONDS*1000);
-    }
+                            </div>
 
-    // Thumbs trocam o vídeo
-    document.querySelectorAll('#videoCarousel .thumb-item').forEach(img=>{
-      img.addEventListener('click', ()=>{
-        const id = img.getAttribute('data-ytid');
-        previewPlayer.loadVideoById(id, 0, "hd1080");
-        if (PREVIEW_SECONDS > 0) {
-          clearTimeout(previewStopTimer);
-          previewPlayer.playVideo();
-          previewStopTimer = setTimeout(()=>{ previewPlayer.pauseVideo(); }, PREVIEW_SECONDS*1000);
-        }
-      });
-    });
+                            <div id="card-video">
+                                <!-- Player principal -->
+                                <iframe id="video-frame"
+                                    src="https://www.youtube.com/embed/dSLyIuevwCI?enablejsapi=1&playsinline=1&rel=0&modestbranding=1"
+                                    title="Rick Astley - Never Gonna Give You Up" loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen referrerpolicy="strict-origin-when-cross-origin">
+                                </iframe>
+                            </div>
 
-    // Overlay abre Feed com o mesmo vídeo
-    document.getElementById('previewTap').addEventListener('click', ()=>{
-      const vid = previewPlayer?.getVideoData()?.video_id || ytVideos[0];
-      openFeed(vid);
-    });
-  }
 
-  function onFeedReady(){
-    try{ feedPlayer.mute(); }catch(e){}
-    startFeedProgressLoop();
-  }
 
-  /* ===== Feed ===== */
-  const feedScreen = document.getElementById('feedScreen');
-  const backBtn = document.getElementById('backBtn');
+                            <footer id="video-menu" data-viewer="hide">
 
-  function openFeed(videoId){
-    feedScreen.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    const idx = ytVideos.indexOf(videoId);
-    currentIndex = idx >= 0 ? idx : 0;
-    feedPlayer.loadVideoById(ytVideos[currentIndex], 0, "hd1080");
-    try{ feedPlayer.playVideo(); }catch(e){}
-  }
-  function closeFeed(){
-    feedScreen.style.display = 'none';
-    document.body.style.overflow = '';
-    try{ feedPlayer.pauseVideo(); }catch(e){}
-  }
-  backBtn.addEventListener('click', closeFeed);
 
-  // Barra de progresso (indicador apenas)
-  const progressFill = document.querySelector('.progress-bar-fill');
-  let progressLoop = null;
-  function startFeedProgressLoop(){
-    clearInterval(progressLoop);
-    progressLoop = setInterval(()=>{
-      if(!feedPlayer || typeof feedPlayer.getDuration!=="function") return;
-      const dur = feedPlayer.getDuration() || 0;
-      const cur = feedPlayer.getCurrentTime? feedPlayer.getCurrentTime() : 0;
-      const p = dur ? (cur/dur)*100 : 0;
-      progressFill.style.width = p + '%';
-    }, 180);
-  }
+                                <!-- Carrossel de thumbnails -->
+                                <div class="swiper" id="video-thumbs-swiper" aria-label="Lista de vídeos">
+                                    <div class="swiper-wrapper">
 
-  // Pause/Play no toque central do feed
-  document.getElementById('feedTap').addEventListener('click', ()=>{
-    const s = feedPlayer.getPlayerState();
-    if(s === YT.PlayerState.PLAYING){ feedPlayer.pauseVideo(); }
-    else { feedPlayer.playVideo(); }
-  });
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="dSLyIuevwCI"
+                                                data-title="Você e eu, o jogo que a gente sempre quis!"
+                                                data-description="Wheel Done vai além de um jogo com embreagem e marcha manual para celular e eu vou te provar isso! Autoescola, cidade, trânsito, outros jogadores, missões, trabalho, empreendimentos, corridas e muito mais!"
+                                                aria-label="Reproduzir: Rick Astley - Never Gonna Give You Up">
+                                                <img src="https://img.youtube.com/vi/dSLyIuevwCI/hqdefault.jpg"
+                                                    alt="Miniatura: Rick Astley - Never Gonna Give You Up"
+                                                    loading="lazy">
+                                            </button>
+                                        </div>
 
-  // Ações com gate de login
-  const likeBtn = document.getElementById('likeBtn');
-  const shareBtn = document.getElementById('shareBtn');
-  const likeCount = document.getElementById('likeCount');
-  const shareCount = document.getElementById('shareCount');
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="stLA0DCWEsA"
+                                                data-title="Mark Ronson - Uptown Funk ft. Bruno Mars"
+                                                data-description="Lançada em 2014, Uptown Funk é uma colaboração explosiva entre o produtor Mark Ronson e o carismático Bruno Mars, que presta homenagem às batidas e grooves do funk e soul dos anos 70 e 80. A canção combina metais poderosos, linhas de baixo pulsantes e um refrão irresistível que convida qualquer um a dançar. Com um videoclipe cheio de estilo e energia, a música rapidamente se tornou um sucesso global, ocupando o topo das paradas por semanas e conquistando diversos prêmios, incluindo o Grammy de Gravação do Ano. Uptown Funk é um verdadeiro hino das pistas de dança modernas, que mantém viva a essência do funk clássico com um toque contemporâneo."
+                                                aria-label="Reproduzir: Mark Ronson - Uptown Funk ft. Bruno Mars">
+                                                <img src="https://img.youtube.com/vi/stLA0DCWEsA/hqdefault.jpg"
+                                                    alt="Miniatura: Uptown Funk" loading="lazy">
+                                            </button>
+                                        </div>
 
-  likeBtn.addEventListener('click', ()=>{
-    if(!isLoggedIn) return openLogin();
-    likeCount.textContent = (+likeCount.textContent + 1);
-  });
-  shareBtn.addEventListener('click', ()=>{
-    if(!isLoggedIn) return openLogin();
-    shareCount.textContent = (+shareCount.textContent + 1);
-  });
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="t6Li1RaYfQ4"
+                                                data-title="Luis Fonsi - Despacito ft. Daddy Yankee"
+                                                data-description="Despacito, lançada em 2017, é um marco na história da música latina e um dos vídeos mais assistidos da história do YouTube. A parceria entre Luis Fonsi e Daddy Yankee criou um reggaeton melódico que mistura romantismo e sensualidade, com uma produção impecável que conquistou públicos de todas as idades. A canção não apenas quebrou recordes de streaming e vendas, mas também ajudou a consolidar o reggaeton e a música em espanhol no mercado internacional como nunca antes. Seu refrão suave e envolvente, aliado a um videoclipe vibrante e colorido, transformou Despacito em um fenômeno cultural que ainda ressoa anos após seu lançamento."
+                                                aria-label="Reproduzir: Luis Fonsi - Despacito ft. Daddy Yankee">
+                                                <img src="https://img.youtube.com/vi/t6Li1RaYfQ4/hqdefault.jpg"
+                                                    alt="Miniatura: Despacito" loading="lazy">
+                                            </button>
+                                        </div>
 
-  // Swipe com animação mais fluida
-  const feedContainer = document.getElementById('feedContainer');
-  let startY = 0, currentY = 0, swiping = false;
+                                        <div class="swiper-slide">
+                                            <button type="button" data-ytid="mm0yhuURM5U"
+                                                data-title="Nirvana - Smells Like Teen Spirit"
+                                                data-description="Considerada a canção que definiu o movimento grunge dos anos 90, Smells Like Teen Spirit, lançada em 1991 pelo Nirvana, é muito mais do que um sucesso comercial. Escrita por Kurt Cobain, a faixa combina guitarras distorcidas, vocais intensos e uma energia crua que capturou a frustração e o espírito rebelde de toda uma geração. O videoclipe, ambientado em um ginásio escolar decadente, com estudantes se revoltando e destruindo tudo, ajudou a solidificar a música como um hino de contestação juvenil. Até hoje, a canção é lembrada como um ponto de virada na música alternativa, levando o grunge ao mainstream e influenciando bandas e artistas por décadas."
+                                                aria-label="Reproduzir: Nirvana - Smells Like Teen Spirit">
+                                                <img src="https://img.youtube.com/vi/mm0yhuURM5U/hqdefault.jpg"
+                                                    alt="Miniatura: Smells Like Teen Spirit" loading="lazy">
+                                            </button>
+                                        </div>
 
-  feedContainer.addEventListener('touchstart', (e)=>{
-    swiping = true;
-    startY = e.touches[0].clientY;
-    currentY = startY;
-    const el = document.getElementById('feedVideo');
-    el.style.transition = 'none';
-  }, {passive:true});
+                                    </div> <!--swiper-wrapper-->
+                                </div> <!--swiper-->
 
-  feedContainer.addEventListener('touchmove', (e)=>{
-    if(!swiping) return;
-    currentY = e.touches[0].clientY;
-    const dy = currentY - startY;
-    const el = document.getElementById('feedVideo');
-    el.style.transform = `translateY(${dy}px)`;
-  }, {passive:true});
+                            </footer>
 
-  feedContainer.addEventListener('touchend', ()=>{
-    if(!swiping) return;
-    swiping = false;
-    const dy = currentY - startY;
-    const el = document.getElementById('feedVideo');
-    const threshold = Math.min(120, window.innerHeight * 0.18);
-    el.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1)';
-    if(dy < -threshold && currentIndex < ytVideos.length-1){
-      // próximo
-      currentIndex++;
-      el.style.transform = 'translateY(-100%)';
-      setTimeout(()=>{
-        feedPlayer.loadVideoById(ytVideos[currentIndex], 0, "hd1080");
-        el.style.transform = 'translateY(0)';
-      }, 300);
-    } else if(dy > threshold && currentIndex > 0){
-      // anterior
-      currentIndex--;
-      el.style.transform = 'translateY(100%)';
-      setTimeout(()=>{
-        feedPlayer.loadVideoById(ytVideos[currentIndex], 0, "hd1080");
-        el.style.transform = 'translateY(0)';
-      }, 300);
-    } else {
-      el.style.transform = 'translateY(0)';
-    }
-  });
+                        </div> <!--navigation-player-->
 
-  /* ===== Popup Login (parcial) ===== */
-  const loginPopup = document.getElementById('loginPopup');
-  const closeLoginPopup = document.getElementById('closeLoginPopup');
-  const userIcon = document.getElementById('userIcon');
+                        <div id="navigation-description" class="hidden-portrait">
+                            <h2 id="video-title">Title</h2>
+                            <p id="video-description">Description.</p>
+                        </div> <!--navigation-description-->
 
-  function openLogin(){
-    loginPopup.style.display = 'block';
-  }
-  function closeLogin(){
-    loginPopup.style.display = 'none';
-  }
+                    </div>
 
-  userIcon.addEventListener('click', openLogin);
-  closeLoginPopup.addEventListener('click', closeLogin);
+                </nav>
 
-  document.getElementById('loginGoogle').addEventListener('click', ()=>{
-    isLoggedIn = true; closeLogin(); alert('Logado com Google (simulação)'); window.location.href = 'roleta.html';
-  });
-  document.getElementById('loginApple').addEventListener('click', ()=>{
-    isLoggedIn = true; closeLogin(); alert('Logado com Apple (simulação)'); window.location.href = 'roleta.html';
-  });
+                <section id="supporters-wall" class="switcher-view container-p-autoescola container-l-autoescola">
 
-  // Join & Claim: abre login se não autenticado
-  document.getElementById('joinClaimBtn').addEventListener('click', ()=>{
-    if(!isLoggedIn) return openLogin();
-    // alert('Prêmio resgatado! (simulação)');
-    window.location.href = 'roleta.html';
-    // Simula redirecionamento para roleta
-  });
+                    <header>
+                        <h2>Maiores Apoiadores</h2>
+                    </header>
 
-  // ESC fecha popup
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape' && loginPopup.style.display==='block') closeLogin();
-  });
-</script>
+                    <table class="table-autoescola">
+
+                        <colgroup>
+                            <col> <!-- Avatar -->
+                            <col> <!-- Nick -->
+                            <col> <!-- Título -->
+                            <col> <!-- Moedas -->
+                        </colgroup>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Rank</th>
+                                <th scope="col">Apelido</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Exp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1</td>
+                                <td>Primeiro</td>
+                                <td>Magnata</td>
+                                <td>20000</td>
+                            </tr>
+                            <tr>
+                                <td>#2</td>
+                                <td>Segundo</td>
+                                <td>Rei do Drifiting</td>
+                                <td>15000</td>
+                            </tr>
+                            <tr>
+                                <td>#3</td>
+                                <td>Terceiro</td>
+                                <td>Astro das Corridas</td>
+                                <td>10000</td>
+                            </tr>
+                            <tr>
+                                <td>#4</td>
+                                <td>Quarto</td>
+                                <td>Beta Estrela</td>
+                                <td>6000</td>
+                            </tr>
+                            <tr>
+                                <td>#5</td>
+                                <td>Quinto</td>
+                                <td>Beta Piloto</td>
+                                <td>3000</td>
+                            </tr>
+                            <tr>
+                                <td>#6</td>
+                                <td>Sexto</td>
+                                <td>Beta CNH</td>
+                                <td>1500</td>
+                            </tr>
+                            <tr>
+                                <td>#7</td>
+                                <td>Sétimo</td>
+                                <td>Beta PPD</td>
+                                <td>450</td>
+                            </tr>
+                            <tr>
+                                <td>#8</td>
+                                <td>Oitavo</td>
+                                <td>Mecânico</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <td>#9</td>
+                                <td>Nono</td>
+                                <td>Trocador de Pneu</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>#10</td>
+                                <td>Décimo</td>
+                                <td>Recém Habilitado</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>#2116</td>
+                                <td>Você</td>
+                                <td>Novato</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <footer id="launch-event" data-viewer="hide"
+                        class="container-p-floating-bottom style-p-dark-adrenalina">
+                        <h3>15 de Setembro: Evento de Lançamento!</h3>
+                    </footer>
+
+                </section>
+
+                <div class="wrapper-footer">
+                    <div class="clipped-footer-mask-landscape"></div>
+                </div>
+
+            </main>
+
+            <!--------------------->
+            <!--------ASIDE-------->
+            <!--------------------->
+            <aside>
+
+            </aside>
+
+            <!--------------------->
+            <!--------FOOTER------->
+            <!--------------------->
+            <footer class="switcher-view container-full-body body-dark page-footer">
+
+                <section id="legal" class="container" aria-label="legal">
+                    <p>Wheel Done é de propriedade do Studio PlayMarques</p>
+                    <p>
+                        <a href="https://play-marques.gitbook.io/wheel-done/privacy/pt-br" target="_blank">Política de
+                            Privacidade</a> |
+                        <a href="#" target="_blank">Termos de uso</a>
+                    </p>
+                </section>
+
+                <section aria-label="Social" class="container-p-side container-l-side">
+
+                    <a href="https://whatsapp.com/channel/0029Vaz6Zpq30LKFjYQbQ31m" target="_blank" class="social-link">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+
+                    <a href="https://discord.com/invite/GbnqMt7Y82" target="_blank" class="social-link">
+                        <i class="bi bi-discord"></i>
+                    </a>
+
+                    <a href="https://t.me/wheeldone" target="_blank" class="social-link">
+                        <i class="bi bi-telegram"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/wheeldone.play" target="_blank" class="social-link">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="https://tiktok.com/@wheeldone" target="_blank" class="social-link">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+
+                </section>
+
+                <div id="dw-ellen"></div>
+
+                <footer id="download" data-viewer="hide" aria-label="Download"
+                    class="container-p-side container-l-side">
+                    
+                    <a href="https://play.google.com/store/apps/details?id=com.playmarques.wheeldone"
+                    class="btn playstore-btn style-dark"><i class="bi bi-google-play"></i> Play Store</a>
+
+                    <a href="#" class="btn appstore-btn style-dark"><i class="bi bi-apple"></i> App Store</a>
+                </footer>
+
+            </footer>
+
+            <!--------------------->
+            <!--------POPUP-------->
+            <!--------------------->
+            <dialog id="popup" aria-labelledby="popup-title" aria-describedby="popup-content">
+                <button id="popup-close" class="popup-close" aria-label="Fechar">×</button>
+                <h2 id="popup-title"></h2>
+                <div id="popup-content"></div>
+            </dialog>
+
+        </div> <!--Background-->
+
+    </div> <!--Scrollable-->
+
 </body>
+
 </html>

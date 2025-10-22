@@ -1,0 +1,62 @@
+#video-page {
+  z-index: 10;
+  position: fixed;
+  box-sizing: border-box;
+  inset: 0;
+
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: rgba(0,0,0,0) rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#video-page-frame{
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.video-page-content{
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;   /* NÃO deixa passar do próximo snap */
+}
+
+.block-ui{
+  overflow: hidden;
+}
+.closed-ui{
+  display: none;
+}
+
+.vp-progress{
+  position: absolute;
+  z-index: 12;
+  left: 0; right: 0;
+  bottom: 8px;
+  height: 8px;
+  background: rgba(255,255,255,.25);
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;              /* evita scroll durante seek */
+  --vp-progress: 0;                /* 0..100 */
+}
+.vp-progress__fill{
+  height: 100%;
+  width: calc(var(--vp-progress) * 1%);
+  background:var(--cor-autoescola);
+  border-radius: 999px;
+  transform: translateZ(0);
+}
+.vp-progress.is-seeking .vp-progress__fill{
+  transition: none;                /* resposta imediata durante o drag */
+}

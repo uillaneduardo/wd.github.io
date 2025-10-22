@@ -1,0 +1,108 @@
+/*Player principal*/
+  #video-frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    display: block;
+    margin: auto;
+    border: 0;
+    border-radius: 10px;
+  }
+
+/* Swiper: faixa de thumbs logo abaixo do player */
+#video-thumbs-swiper {
+  margin-top: 10px;
+  padding: 10px;
+  z-index: 0;
+}
+
+/* Deixe o Swiper mostrar várias thumbs na horizontal */
+#video-thumbs-swiper .swiper-wrapper {
+  align-items: center;
+}
+
+/* Controla o tamanho das thumbs (slidesPerView:'auto' usa esta largura) */
+#video-thumbs-swiper .swiper-slide {
+  width: 28%;
+  max-width: 160px;
+  min-width: 100px;
+  aspect-ratio: 16/9;
+}
+
+#video-thumbs-swiper button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#video-thumbs-swiper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Estado ativo*/
+#video-thumbs-swiper button[aria-current="true"] img {
+  border: 3px solid var(--cor-adrenalina);
+  border-radius: 8px;
+}
+
+@media(orientation: landscape) {
+
+  #video-title{
+    margin-top: 0;
+  }
+  #video-description{
+    text-align: justify;
+  }
+  nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 90vw;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+
+@media(max-width: 900px) and (orientation: landscape) {
+
+  #navigation {
+    width: 80%;
+    aspect-ratio: 16/9;
+    box-sizing: border-box;
+  }
+
+  #navigation-description {
+    position: absolute !important;
+    /* tira do fluxo */
+    z-index: -5;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    /* impede scroll */
+    clip: rect(0, 0, 0, 0);
+    /* recorta */
+    white-space: nowrap;
+    /* evita quebra de linha */
+    border: 0;
+  }
+}
+
+@media(orientation: portrait){
+  #video-frame{
+    pointer-events: none;
+  }
+  #navigation{
+    margin-top: 0;
+  }
+}

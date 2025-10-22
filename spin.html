@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel Spin</title>
+
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <!--CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./assets/styles/common.css">
+    <link rel="stylesheet" href="./assets/styles/body.css">
+    <link rel="stylesheet" href="./assets/styles/header.css">
+    <link rel="stylesheet" href="./assets/styles/recompensa.css">
+    <link rel="stylesheet" href="./assets/styles/popup.css">
+    <!--JS-->
+    <script defer src="../assets/scripts/popup.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer type="module" src="./assets/scripts/recompensa.js"></script>
+    
+
+</head>
+
+<body class="body-dark">
+
+    <header class="header-user menu-suspenso container-floating-top">
+
+        <a id="btn-home" class="btn-dark style-dark-adrenalina" aria-label="início" href="index.html">Página Inicial</a>
+
+        <button id="btn-profile" class="header-round-button style-dark-adrenalina bi bi-person-fill" aria-label="Login"></button>
+
+        <nav class="aba-menu style-dark style-sombra-adrenalina">
+
+            <span id="perfil-nome" class="btn-dark" style="margin: 0;">Meu nome</span>
+            <span id="perfil-nivel" class="btn-dark" style="margin: 0; padding-top: 0; font-size: 0.75rem;">Nível:</span>
+
+            <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                <i id="perfil-moeda" class="bi bi-c-circle-fill btn-dark" style="margin: 0;"> 0</i>
+                <i id="perfil-xp" class="bi bi-award-fill btn-dark" style="margin: 0;"> 0</i>
+            </div>
+            <button id="btn-conquistas" class="btn-dark style-dark-adrenalina">Conquistas</button>
+            <button id="btn-ranking" class="btn-dark style-dark-adrenalina">Ranking</button>
+            <button id="btn-registros" class="btn-dark style-dark-adrenalina">Registros</button>
+            <button id="btn-desconectar" class="btn-dark style-dark-adrenalina">Desconectar</button>
+        </nav>
+
+    </header>
+
+    <main>
+        <div id="recompensa" class="container style-dark">
+
+            <div id="selecionar-recompensa" class="container-l-side container-p-side">
+
+                <button id="btn-recompensa-diaria" aria-label="recompensa diária"
+                    class="btn-liberdade btn-sombra-adrenalina style-rebelde-l">
+                    <i>Recompensa Diária</i>
+                </button>
+
+                <button id="btn-oferta-especial" aria-label="oferta especial"
+                    class="btn-autoescola btn-sombra-adrenalina style-rebelde-l" href="#">
+                    <i>Oferta Especial</i>
+                </button>
+
+            </div>
+
+            <div id="area-recompensa" class="swiper">
+                <div id="wrapper-recompensa" class="swiper-wrapper">
+                    <div id="slot-a" class="swiper-slide card-grid">
+                        <h3 class="card-grid-2">Nome do item</h3>
+                        <button class="card-grid-4 btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
+                    </div>
+                    <div id="slot-b" class="swiper-slide card-grid">
+                        <h3 class="card-grid-2">Nome do item</h3>
+                        <button class="card-grid-4 btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
+                    </div>
+                    <div id="slot-c" class="swiper-slide card-grid">
+                        <h3 class="card-grid-2">Nome do item</h3>
+                        <button class="card-grid-4 btn-autoescola btn-sombra-adrenalina style-rebelde-r">Obter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resgate-recompensa">
+                <p> Toque na carta para revelar a silhueta. Em <i id="reset-time">16:59:10s</i> elas serão trocadas</p>
+                <button id="btn-colecao" aria-label="prêmios"
+                    class="btn-autoescola btn-sombra-adrenalina style-rebelde-l" href="#">
+                    <i>Coleção</i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="progresso-resumido" class="container style-autoescola style-rebelde-r style-sombra-adrenalina">
+            <h3>Conquistas</h3>
+            <div id="progresso-resumido-icones" class="container">
+                <img id="progresso-a" src="../assets/images/icone-carro.png" alt="anterior">
+                <img id="progresso-b" src="../assets/images/icone-carro.png" alt="alvo">
+                <img id="progresso-c" src="../assets/images/icone-carro.png" alt="próximo">
+            </div>
+            <div id="progresso-resumido-barra" class="progresso-barra container">
+                <div id="progresso-resumido-barra-fill" class="progresso-background">
+                    <span class="bi bi-award-fill">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="inventario" class="container style-adrenalina">
+            <h3>Inventário</h3>
+            <div id="inventario-itens" class="container">
+
+            </div>
+        </div>
+    </main>
+
+    <!--------------------->
+    <!--------POPUP-------->
+    <!--------------------->
+    <dialog id="popup" aria-labelledby="popup-title" aria-describedby="popup-content">
+        <h2 id="popup-title"></h2>
+        <div id="popup-content"></div>
+        <button id="popup-close" class="popup-close btn-autoescola btn-sombra-adrenalina style-rebelde-r" aria-label="Fechar">x</button>
+    </dialog>
+
+</body>
+
+</html>
