@@ -17,61 +17,7 @@ const dados = {
         moedas: 0,
         xp: 0
     },
-    slots: {
-        [Pool.Diario]: [
-            {
-                /*Slot Bloqueado*/
-                id: "sd_01", name: 'Slot Bloqueado', rarity: '', price: 15,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            },
-            {
-                /*Slot Bloqueado*/
-                id: "sd_02", name: 'Slot Bloqueado', rarity: '', price: 0,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            },
-            {
-                /*Slot Bloqueado*/
-                id: "sd_03", name: 'Slot Bloqueado', rarity: '', price: 15,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            }
-        ],
-
-        [Pool.Oferta]: [
-            {
-                /*Slot Bloqueado*/
-                id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            },
-            {
-                /*Slot Bloqueado*/
-                id: "ss_02", name: 'Slot Bloqueado', rarity: '', price: 0,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            },
-            {
-                /*Slot Bloqueado*/
-                id: "ss_03", name: 'Slot Bloqueado', rarity: '', price: 10,
-                description: 'Slot bloqueado temporariamente',
-                blocked: true, revealed: false, claimed: false,
-                iconPath: 'images/icone-cadeado.png',
-                cardPath: 'images/silhueta-cadeado.png'
-            }
-        ]
-    },
+    slots: {[Pool.Diario]: [], [Pool.Oferta]: []},
     colecao: { //Coleção = lista de prêmios disponíveis na pool
         [Pool.Diario]: [
             { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
@@ -194,8 +140,34 @@ async function buscarDadosSlots(){
     const recompensaDiaria = (await fazerRequisicao('/event/current?pool=daily_rewards'))?.data;
     const ofertaLoja = (await fazerRequisicao('/event/current?pool=special_offer'))?.data;
 
-    dados.slots[Pool.Diario] = recompensaDiaria?.slots ?? dados.slots[Pool.Diario];
-    dados.slots[Pool.Oferta] = ofertaLoja?.slots ?? dados.slots[Pool.Oferta];
+    const diarioQtdSlots = recompensaDiaria?.slots?.length ?? 0;
+    const ofertaQtdSlots = ofertaLoja?.slots?.length ?? 0;
+
+    const slotDefault = {
+        /*Slot Bloqueado*/
+        id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
+        description: 'Slot bloqueado temporariamente',
+        blocked: true, revealed: false, claimed: false,
+        iconPath: 'images/icones/cadeado.png',
+        cardPath: 'images/silhueta-cadeado.png'
+    }
+
+    for(let i = 0; i < Math.max(3, diarioQtdSlots); i++){
+        dados.slots[Pool.Diario].push(recompensaDiaria?.slots?.[i] ?? slotDefault);
+    }
+    for(let i = 0; i < Math.max(3, ofertaQtdSlots); i++){
+        dados.slots[Pool.Oferta].push(ofertaLoja?.slots?.[i] ?? slotDefault);
+    }
+
+    //Trazer o primeiro slot para a segunda posição (índice 0 -> índice 1)
+    const primeiroDiario = dados.slots[Pool.Diario][0];
+    dados.slots[Pool.Diario][0] = dados.slots[Pool.Diario][1];
+    dados.slots[Pool.Diario][1] = primeiroDiario;
+
+    const primeiroOferta = dados.slots[Pool.Oferta][0];
+    dados.slots[Pool.Oferta][0] = dados.slots[Pool.Oferta][1];
+    dados.slots[Pool.Oferta][1] = primeiroOferta;
+    
 }
 async function buscarDadosColecao(){
     const colecaoDiaria = (await fazerRequisicao('/event/collection?pool=daily_rewards'))?.data;
@@ -283,7 +255,7 @@ function criarSlot(pool, slot) {
         qualNome() { return dados?.slots[pool]?.[slot]?.name; },
         qualDescricao() { return dados?.slots[pool]?.[slot]?.description; },
 
-        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked; },
+        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; },
         foiRevelado() { return dados?.slots[pool]?.[slot]?.revealed; },
         foiComprado() { return dados?.slots[pool]?.[slot]?.claimed; },
 
