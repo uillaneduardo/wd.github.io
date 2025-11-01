@@ -83,6 +83,14 @@ const dados = {
 }
 
 
+function normalizarItemInventario(item) {
+    if (!item) return null;
+    const caminhoIcone = item.caminhoIcone ?? item.iconPath ?? item.icon_path ?? item.icon ?? '';
+    const nome = item.nome ?? item.name ?? '';
+    const descricao = item.descricao ?? item.description ?? '';
+    return { caminhoIcone, nome, descricao };
+}
+
 //Funções Internas
 function salvarCache(nome, dados) {
     localStorage.setItem(nome, JSON.stringify(dados));
@@ -176,6 +184,19 @@ async function buscarDadosColecao(){
     dados.colecao[Pool.Oferta] = colecaoLoja?.items ?? dados.colecao[Pool.Oferta];
 }
 
+async function buscarDadosInventario(){
+    const inventarioResposta = (await fazerRequisicao('/inventory'))?.data;
+    const itensOrigemBruto = inventarioResposta?.items ?? inventarioResposta?.inventory ?? inventarioResposta;
+    const itensOrigem = Array.isArray(itensOrigemBruto) ? itensOrigemBruto : [];
+
+    if (!itensOrigem.length) return;
+
+    const itensNormalizados = itensOrigem.map(normalizarItemInventario).filter(Boolean);
+    if (!itensNormalizados.length) return;
+
+    dados.inventario = itensNormalizados;
+}
+
 async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
   const headers = { Accept: 'application/json' };
   if (corpo && metodo !== 'GET') headers['Content-Type'] = 'application/json';
@@ -233,6 +254,7 @@ async function buscarDados() {
     await buscarDadosPerfil();
     await buscarDadosSlots();
     await buscarDadosColecao();
+    await buscarDadosInventario();
 }
 async function excluirDados(){
     fazerRequisicao('/auth/logout/all', 'POST');
