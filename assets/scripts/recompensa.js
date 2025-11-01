@@ -160,7 +160,7 @@ function popupConfirmarCompra(slot) {
 
             <h3 style="text-align: center;">${cardTitle}</h3>
 
-            <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Ícone">
+            <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Icone">
 
             <p style="text-align: justify;">
                 ${cardDescription}<br>
@@ -174,6 +174,31 @@ function popupConfirmarCompra(slot) {
 
     Popup.show({ title: '', content: contentInflate, classes: popupClasses});
 
+    const popupContent = document.getElementById('popup-content');
+    const confirmarBtn = popupContent?.querySelector('button');
+    if (!confirmarBtn) return;
+
+    confirmarBtn.addEventListener('click', async () => {
+        if (confirmarBtn.disabled) return;
+
+        const textoOriginal = confirmarBtn.textContent;
+        confirmarBtn.disabled = true;
+        confirmarBtn.textContent = 'Processando...';
+
+        try {
+            const sucesso = await cardObject.comprar();
+            if (sucesso) {
+                Popup.close();
+                aoSelecionar();
+                return;
+            }
+        } catch (err) {
+            console.error('Nao foi possivel concluir a compra.', err);
+        }
+
+        confirmarBtn.disabled = false;
+        confirmarBtn.textContent = textoOriginal;
+    }, { once: true });
 }
 
 /**
