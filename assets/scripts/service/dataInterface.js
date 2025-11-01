@@ -20,34 +20,34 @@ const dados = {
     slots: {[Pool.Diario]: [], [Pool.Oferta]: []},
     colecao: { //Coleção = lista de prêmios disponíveis na pool
         [Pool.Diario]: [
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false }
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false }
         ],
         [Pool.Oferta]: [/*Loja sem pool registrada*/]
     },
     conquistas: [
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista A', descricao: 'Primeira Conquista!', xp: 1, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista B', descricao: 'Segunda Conquista!', xp: 25, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista C', descricao: 'Terceira Conquista!', xp: 50, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista D', descricao: 'Quarta Conquista!', xp: 75, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conqusita E', descricao: 'Quinta Conquista!', xp: 100, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista F', descricao: 'Sexta Conquista!', xp: 150, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista G', descricao: 'Sétima Conquista!', xp: 200, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista H', descricao: 'Oitava Conquista!', xp: 250, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista I', descricao: 'Nona Conquista!', xp: 300, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista A', descricao: 'Primeira Conquista!', xp: 1, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista B', descricao: 'Segunda Conquista!', xp: 25, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista C', descricao: 'Terceira Conquista!', xp: 50, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista D', descricao: 'Quarta Conquista!', xp: 75, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conqusita E', descricao: 'Quinta Conquista!', xp: 100, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista F', descricao: 'Sexta Conquista!', xp: 150, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista G', descricao: 'Sétima Conquista!', xp: 200, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista H', descricao: 'Oitava Conquista!', xp: 250, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista I', descricao: 'Nona Conquista!', xp: 300, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
     ],
     inventario: [
         { caminhoIcone: '', nome: '', descricao: 'espaço para item' },
@@ -115,7 +115,7 @@ function solicitarLogin(){
     const buttonClasses = 'bi bi-google btn-autoescola btn-sombra-adrenalina style-rebelde-r';
     const popupTitulo = 'Junte-se a nós!';
     const paragrafo = 'Faça login para participar do evento. Se você é beta, entre com o mesmo email que tem o acesso ao beta.';
-    const imagemCaminho = '../assets/images/elen-login.png';
+    const imagemCaminho = './assets/images/elen-login.png';
     const imagemBalaoDescricao = 'Não se preocupe, vai dar tudo certo. Quando você entrar, eu irei colocar seu nome aqui na lista.';
     const authStartUrl = `window.location.assign('${caminhoDataAPI}/auth/google/start')`;
     const popupConteudo = `
@@ -156,8 +156,8 @@ async function buscarDadosSlots(){
         id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
         description: 'Slot bloqueado temporariamente',
         blocked: true, revealed: false, claimed: false,
-        iconPath: 'images/icones/cadeado.png',
-        cardPath: 'images/silhueta-cadeado.png'
+        iconPath: 'assets/images/icones/cadeado.png',
+        cardPath: 'assets/images/silhueta-cadeado.png'
     }
 
     for(let i = 0; i < Math.max(3, diarioQtdSlots); i++){
@@ -386,7 +386,7 @@ function criarProgresso() {
         //Leitura
         quantidadeXP() { return dados?.perfil?.xp; },
         conquistaTamanho() { return dados?.conquistas?.length ?? 0; },
-        conquistaCaminhoIcone(indice, relativo) { return relativo + (dados?.conquistas[indice]?.caminhoIcone); },
+        conquistaCaminhoIcone(indice, relativo = './') { return relativo + (dados?.conquistas[indice]?.caminhoIcone); },
         conquistaNome(indice) { return dados?.conquistas[indice]?.nome; },
         conquistaDescricao(indice) { return dados?.conquistas[indice]?.descricao; },
         conquistaRequisitoXP(indice) { return dados?.conquistas[indice]?.xp; },
