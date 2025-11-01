@@ -133,7 +133,7 @@ function solicitarLogin(){
 async function buscarDadosPerfil() {
   const dadosUsuario = (await fazerRequisicao('/user/me'))?.data;
   const moedas = (await fazerRequisicao('/tickets/balance'))?.data;
-  const xp = (await fazerRequisicao('/user/xp'))?.data;
+  const xp = (await fazerRequisicao('/xp/balance'))?.data;
   const nivel = (await fazerRequisicao('/user/level'))?.data;
 
   dados.perfil.id = dadosUsuario?.id ?? dados.perfil.id;
@@ -141,7 +141,7 @@ async function buscarDadosPerfil() {
   dados.perfil.nome = dadosUsuario?.name ?? dados.perfil.nome;
   dados.perfil.nivel = nivel?.level ?? dados.perfil.nivel;
   dados.perfil.moedas = moedas?.balance ?? dados.perfil.moedas;
-  dados.perfil.xp = xp?.xp ?? dados.perfil.xp;
+  dados.perfil.xp = xp?.balance ?? xp?.xp ?? dados.perfil.xp;
 
 }
 async function buscarDadosSlots(){
@@ -155,16 +155,35 @@ async function buscarDadosSlots(){
         /*Slot Bloqueado*/
         id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
         description: 'Slot bloqueado temporariamente',
-        blocked: true, revealed: false, claimed: false,
+        blocked: true, revealed: false, claimed: false, convertedToXP: false,
         iconPath: 'assets/images/icones/cadeado.png',
         cardPath: 'assets/images/silhueta-cadeado.png'
     }
 
+    const normalizarSlot = (slotOrigem) => {
+        if (!slotOrigem) return null;
+        const normalizado = { ...slotOrigem };
+        const convertidoBruto =
+            normalizado?.convertedToXP ??
+            normalizado?.converted_to_xp ??
+            normalizado?.convertedToXp ??
+            normalizado?.converted_toXp;
+
+        if (typeof convertidoBruto === 'boolean') normalizado.convertedToXP = convertidoBruto;
+        else if (typeof convertidoBruto === 'string') {
+            normalizado.convertedToXP = convertidoBruto.trim().toLowerCase() === 'true';
+        } else normalizado.convertedToXP = false;
+
+        return normalizado;
+    }
+
     for(let i = 0; i < Math.max(3, diarioQtdSlots); i++){
-        dados.slots[Pool.Diario].push(recompensaDiaria?.slots?.[i] ?? slotDefault);
+        const slot = normalizarSlot(recompensaDiaria?.slots?.[i]);
+        dados.slots[Pool.Diario].push(slot ?? { ...slotDefault });
     }
     for(let i = 0; i < Math.max(3, ofertaQtdSlots); i++){
-        dados.slots[Pool.Oferta].push(ofertaLoja?.slots?.[i] ?? slotDefault);
+        const slot = normalizarSlot(ofertaLoja?.slots?.[i]);
+        dados.slots[Pool.Oferta].push(slot ?? { ...slotDefault });
     }
 
     //Trazer o primeiro slot para a segunda posição (índice 0 -> índice 1)
@@ -280,6 +299,7 @@ function criarSlot(pool, slot) {
         foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; },
         foiRevelado() { return dados?.slots[pool]?.[slot]?.revealed; },
         foiComprado() { return dados?.slots[pool]?.[slot]?.claimed; },
+        foiConvertidoParaXp() { return dados?.slots[pool]?.[slot]?.convertedToXP ?? false; },
 
         qualCaminhoIcone(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.iconPath);},
         qualCaminhoCarta(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.cardPath);},
@@ -313,7 +333,9 @@ function criarSlot(pool, slot) {
         },
 
         pegarCustoFormatado() {
-            if (this.foiComprado()) return 'Obtido'
+            if (this.foiComprado()) {
+                return this.foiConvertidoParaXp() ? 'Convertido para XP' : 'Obtido';
+            }
             if (this.qualCusto() > 0) return this.qualCusto();
             else return 'Grátis';
         },
@@ -337,6 +359,17 @@ function criarSlot(pool, slot) {
 
             if(resposta?.ok){
                 dados.slots[pool][slot].claimed = true;
+                const convertidoResposta =
+                    resposta?.data?.convertedToXP ??
+                    resposta?.data?.converted_to_xp ??
+                    resposta?.data?.convertedToXp ??
+                    resposta?.data?.converted_toXp;
+
+                if (typeof convertidoResposta === 'boolean') {
+                    dados.slots[pool][slot].convertedToXP = convertidoResposta;
+                } else if (typeof convertidoResposta === 'string') {
+                    dados.slots[pool][slot].convertedToXP = convertidoResposta.trim().toLowerCase() === 'true';
+                }
                 return true;
             } else {
                 return false;
