@@ -59,11 +59,11 @@ selecionarDiario();
 function selecionarDiario() {
 
     btnSelecionado = Server.Pool.Diario;
-    btnSelecionarDiario.classList.remove('btn-liberdade');
+    btnSelecionarDiario.classList.remove('btn-desabilitado');
     btnSelecionarDiario.classList.add('btn-autoescola');
 
-    btnSelecionarOferta.classList.remove('btn-autoescola');
-    btnSelecionarOferta.classList.add('btn-liberdade');
+    btnSelecionarOferta.classList.remove('btn-liberdade');
+    btnSelecionarOferta.classList.add('btn-desabilitado');
 
     aoSelecionar();
 }
@@ -71,10 +71,10 @@ function selecionarOferta() {
 
     btnSelecionado = Server.Pool.Oferta;
     btnSelecionarDiario.classList.remove('btn-autoescola');
-    btnSelecionarDiario.classList.add('btn-liberdade');
+    btnSelecionarDiario.classList.add('btn-desabilitado');
 
-    btnSelecionarOferta.classList.remove('btn-liberdade');
-    btnSelecionarOferta.classList.add('btn-autoescola');
+    btnSelecionarOferta.classList.remove('btn-desabilitado');
+    btnSelecionarOferta.classList.add('btn-liberdade');
 
     aoSelecionar();
 }
@@ -84,9 +84,9 @@ function aoSelecionar() {
     const slotB = Server?.card(btnSelecionado, Server.Slot.B);
     const slotC = Server?.card(btnSelecionado, Server.Slot.C);
 
-    cardSlotA.style.setProperty('--slot-card', slotA.qualUrlCarta('../'));
-    cardSlotB.style.setProperty('--slot-card', slotB.qualUrlCarta('../'));
-    cardSlotC.style.setProperty('--slot-card', slotC.qualUrlCarta('../'));
+    cardSlotA.style.setProperty('--slot-card', slotA.qualUrlCarta('../../'));
+    cardSlotB.style.setProperty('--slot-card', slotB.qualUrlCarta('../../'));
+    cardSlotC.style.setProperty('--slot-card', slotC.qualUrlCarta('../../'));
 
     cardSlotA.style.setProperty('--cor-raridade', slotA.qualCorRaridade());
     cardSlotB.style.setProperty('--cor-raridade', slotB.qualCorRaridade());
@@ -151,8 +151,11 @@ function popupConfirmarCompra(slot) {
                         <i style="color: ${cardRaridadeCor}; font-size: 0.90rem; background-color: black;">
                             [${cardRaridade}]
                         </i>`;
-    const cardDescription = cardObject.qualDescricao();
-    const cardIcone = cardObject.qualCaminhoIcone('./assets/');
+    const xp = cardObject.quantoXp();
+    const alertaItemDuplicado = `Atenção: você já possui este item. Caso prossiga, ele será convertido em ${xp*10} XP extra.`;
+    const corTextoAlerta = cardObject.foiConvertidoEmXp() ? 'color: red;' : '';
+    const cardDescription = cardObject.foiConvertidoEmXp() ? alertaItemDuplicado : cardObject.qualDescricao();
+    const cardIcone = cardObject.qualCaminhoIcone();
     const cardPrice = cardObject.pegarCustoFormatado();
 
     const contentInflate =
@@ -160,10 +163,11 @@ function popupConfirmarCompra(slot) {
 
             <h3 style="text-align: center;">${cardTitle}</h3>
 
-            <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Ícone">
+            <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Icone">
 
-            <p style="text-align: justify;">
+            <p style="text-align: justify; ${corTextoAlerta}">
                 ${cardDescription}<br>
+                XP: ${xp}<br>
                 Custo: ${cardPrice}
             </p>
 
@@ -174,6 +178,31 @@ function popupConfirmarCompra(slot) {
 
     Popup.show({ title: '', content: contentInflate, classes: popupClasses});
 
+    const popupContent = document.getElementById('popup-content');
+    const confirmarBtn = popupContent?.querySelector('button');
+    if (!confirmarBtn) return;
+
+    confirmarBtn.addEventListener('click', async () => {
+        if (confirmarBtn.disabled) return;
+
+        const textoOriginal = confirmarBtn.textContent;
+        confirmarBtn.disabled = true;
+        confirmarBtn.textContent = 'Processando...';
+
+        try {
+            const sucesso = await cardObject.comprar();
+            if (sucesso) {
+                Popup.close();
+                aoSelecionar();
+                return;
+            }
+        } catch (err) {
+            console.error('Nao foi possivel concluir a compra.', err);
+        }
+
+        confirmarBtn.disabled = false;
+        confirmarBtn.textContent = textoOriginal;
+    }, { once: true });
 }
 
 /**
@@ -245,7 +274,7 @@ function mostrarColecao() {
 
     for (let i = 0; i < colecao.tamanho(); i++) {
 
-        const icone = colecao.qualCaminhoIcone(i, './assets/');
+        const icone = colecao.qualCaminhoIcone(i);
         const nome = colecao.qualNome(i);
         const probabilidade = colecao.qualProbabilidade(i);
         const raridade = colecao.pegarRaridadeFormatada(i);
@@ -338,9 +367,9 @@ function atualizarProgresso() {
     const imgC = document.getElementById('progresso-c');
 
     barraProgressoFill.style.width = `${barraXp}%`;
-    imgA.src = "./assets/" + progresso[0]?.caminhoIcone;
-    imgB.src = "./assets/" + progresso[1]?.caminhoIcone;
-    imgC.src = "./assets/" + progresso[2]?.caminhoIcone;
+    imgA.src = "./" + progresso[0]?.caminhoIcone;
+    imgB.src = "./" + progresso[1]?.caminhoIcone;
+    imgC.src = "./" + progresso[2]?.caminhoIcone;
 
     imgB.style.left = `${conquistaAlvo}%`;
 
@@ -357,7 +386,7 @@ function mostrarProgresso() {
 
     for (let i = 0; i < progresso.conquistaTamanho(); i++) {
 
-        const icone = progresso.conquistaCaminhoIcone(i, './assets/');
+        const icone = progresso.conquistaCaminhoIcone(i);
         const nome = progresso.conquistaNome(i);
         const descricao = progresso.conquistaDescricao(i);
         const conquistaXp = progresso.conquistaRequisitoXP(i);
@@ -408,7 +437,7 @@ function atualizarInventario(){
     for(let i = 0; i < inventario.tamanho(); i++){
         
         const nome = inventario.qualNome(i);
-        const url = inventario.qualUrlIcone(i, "./assets/");
+        const url = inventario.qualUrlIcone(i);
         const descricao = nome + ' - ' + inventario.qualDescricao(i);
         const extraStyle = 
         `

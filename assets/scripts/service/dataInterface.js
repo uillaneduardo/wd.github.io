@@ -20,38 +20,36 @@ const dados = {
     slots: {[Pool.Diario]: [], [Pool.Oferta]: []},
     colecao: { //Coleção = lista de prêmios disponíveis na pool
         [Pool.Diario]: [
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
-            { caminhoIcone: 'images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false }
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false },
+            { caminhoIcone: 'assets/images/icones/vazio.png', nome: 'Vazio', raridade: '', qtd: -1, clamado: false }
         ],
         [Pool.Oferta]: [/*Loja sem pool registrada*/]
     },
     conquistas: [
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista A', descricao: 'Primeira Conquista!', xp: 1, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista B', descricao: 'Segunda Conquista!', xp: 25, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista C', descricao: 'Terceira Conquista!', xp: 50, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista D', descricao: 'Quarta Conquista!', xp: 75, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conqusita E', descricao: 'Quinta Conquista!', xp: 100, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista F', descricao: 'Sexta Conquista!', xp: 150, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista G', descricao: 'Sétima Conquista!', xp: 200, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista H', descricao: 'Oitava Conquista!', xp: 250, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista I', descricao: 'Nona Conquista!', xp: 300, clamado: false },
-        { caminhoIcone: 'images/icones/progresso.png', nome: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista A', descricao: 'Primeira Conquista!', xp: 1, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista B', descricao: 'Segunda Conquista!', xp: 25, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista C', descricao: 'Terceira Conquista!', xp: 50, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista D', descricao: 'Quarta Conquista!', xp: 75, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conqusita E', descricao: 'Quinta Conquista!', xp: 100, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista F', descricao: 'Sexta Conquista!', xp: 150, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista G', descricao: 'Sétima Conquista!', xp: 200, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista H', descricao: 'Oitava Conquista!', xp: 250, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista I', descricao: 'Nona Conquista!', xp: 300, clamado: false },
+        { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
     ],
-    inventario: [
-        { caminhoIcone: '', nome: '', descricao: 'espaço para item' },
-    ],
+    inventario: [],
     ranking: {
         pessoal: [
             { id: '?', rank: '?1', nome: '?', nivel: '?', xp: 0 },
@@ -82,7 +80,6 @@ const dados = {
     }
 }
 
-
 //Funções Internas
 function salvarCache(nome, dados) {
     localStorage.setItem(nome, JSON.stringify(dados));
@@ -107,7 +104,7 @@ function solicitarLogin(){
     const buttonClasses = 'bi bi-google btn-autoescola btn-sombra-adrenalina style-rebelde-r';
     const popupTitulo = 'Junte-se a nós!';
     const paragrafo = 'Faça login para participar do evento. Se você é beta, entre com o mesmo email que tem o acesso ao beta.';
-    const imagemCaminho = '../assets/images/elen-login.png';
+    const imagemCaminho = './assets/images/elen-login.png';
     const imagemBalaoDescricao = 'Não se preocupe, vai dar tudo certo. Quando você entrar, eu irei colocar seu nome aqui na lista.';
     const authStartUrl = `window.location.assign('${caminhoDataAPI}/auth/google/start')`;
     const popupConteudo = `
@@ -125,7 +122,7 @@ function solicitarLogin(){
 async function buscarDadosPerfil() {
   const dadosUsuario = (await fazerRequisicao('/user/me'))?.data;
   const moedas = (await fazerRequisicao('/tickets/balance'))?.data;
-  const xp = (await fazerRequisicao('/user/xp'))?.data;
+  const xp = (await fazerRequisicao('/xp/balance'))?.data;
   const nivel = (await fazerRequisicao('/user/level'))?.data;
 
   dados.perfil.id = dadosUsuario?.id ?? dados.perfil.id;
@@ -133,7 +130,7 @@ async function buscarDadosPerfil() {
   dados.perfil.nome = dadosUsuario?.name ?? dados.perfil.nome;
   dados.perfil.nivel = nivel?.level ?? dados.perfil.nivel;
   dados.perfil.moedas = moedas?.balance ?? dados.perfil.moedas;
-  dados.perfil.xp = xp?.xp ?? dados.perfil.xp;
+  dados.perfil.xp = xp?.balance ?? dados.perfil.xp;
 
 }
 async function buscarDadosSlots(){
@@ -145,11 +142,11 @@ async function buscarDadosSlots(){
 
     const slotDefault = {
         /*Slot Bloqueado*/
-        id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
+        id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10, xpReward: 0,
         description: 'Slot bloqueado temporariamente',
-        blocked: true, revealed: false, claimed: false,
-        iconPath: 'images/icones/cadeado.png',
-        cardPath: 'images/silhueta-cadeado.png'
+        blocked: true, revealed: false, claimed: false, convertedToXp: false,
+        iconPath: 'assets/images/icones/cadeado.png',
+        cardPath: 'assets/images/silhueta-cadeado.png'
     }
 
     for(let i = 0; i < Math.max(3, diarioQtdSlots); i++){
@@ -174,6 +171,11 @@ async function buscarDadosColecao(){
     const colecaoLoja = (await fazerRequisicao('/event/collection?pool=special_offer'))?.data;
     dados.colecao[Pool.Diario] = colecaoDiaria?.items ?? dados.colecao[Pool.Diario];
     dados.colecao[Pool.Oferta] = colecaoLoja?.items ?? dados.colecao[Pool.Oferta];
+}
+
+async function buscarDadosInventario(){
+    const resposta = (await fazerRequisicao('/inventory'))?.data;
+    dados.inventario = resposta?.items ?? dados.inventario;
 }
 
 async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
@@ -233,6 +235,7 @@ async function buscarDados() {
     await buscarDadosPerfil();
     await buscarDadosSlots();
     await buscarDadosColecao();
+    await buscarDadosInventario();
 }
 async function excluirDados(){
     fazerRequisicao('/auth/logout/all', 'POST');
@@ -255,15 +258,17 @@ function criarSlot(pool, slot) {
         qualNome() { return dados?.slots[pool]?.[slot]?.name; },
         qualDescricao() { return dados?.slots[pool]?.[slot]?.description; },
 
-        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; },
+        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; }, //Se vir algum dado, desbloquear slot
         foiRevelado() { return dados?.slots[pool]?.[slot]?.revealed; },
         foiComprado() { return dados?.slots[pool]?.[slot]?.claimed; },
+        foiConvertidoEmXp() { return dados?.slots[pool]?.[slot]?.convertedToXp; },
 
         qualCaminhoIcone(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.iconPath);},
         qualCaminhoCarta(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.cardPath);},
 
         qualRaridade() { return dados?.slots[pool]?.[slot]?.rarity; },
         qualCusto() { return dados?.slots[pool]?.[slot]?.price; },
+        quantoXp() { return dados?.slots[pool]?.[slot]?.xpReward ?? 0; },
 
         // Formatação dos dados
         qualUrlIcone(relativo = './') { return `url('${this.qualCaminhoIcone(relativo)}')` },
@@ -291,7 +296,7 @@ function criarSlot(pool, slot) {
         },
 
         pegarCustoFormatado() {
-            if (this.foiComprado()) return 'Obtido'
+            if (this.foiComprado()) return this.foiConvertidoEmXp ? 'Convertido em XP' : 'Obtido';
             if (this.qualCusto() > 0) return this.qualCusto();
             else return 'Grátis';
         },
@@ -315,6 +320,7 @@ function criarSlot(pool, slot) {
 
             if(resposta?.ok){
                 dados.slots[pool][slot].claimed = true;
+                await buscarDadosInventario();
                 return true;
             } else {
                 return false;
@@ -364,7 +370,7 @@ function criarProgresso() {
         //Leitura
         quantidadeXP() { return dados?.perfil?.xp; },
         conquistaTamanho() { return dados?.conquistas?.length ?? 0; },
-        conquistaCaminhoIcone(indice, relativo) { return relativo + (dados?.conquistas[indice]?.caminhoIcone); },
+        conquistaCaminhoIcone(indice, relativo = './') { return relativo + (dados?.conquistas[indice]?.caminhoIcone); },
         conquistaNome(indice) { return dados?.conquistas[indice]?.nome; },
         conquistaDescricao(indice) { return dados?.conquistas[indice]?.descricao; },
         conquistaRequisitoXP(indice) { return dados?.conquistas[indice]?.xp; },
@@ -413,9 +419,10 @@ function criarProgresso() {
 function criarInventario() {
     return Object.freeze({
         tamanho() { return dados?.inventario?.length ?? 0; },
-        caminhoIcone(indice, relativo = './') { return relativo + (dados?.inventario[indice]?.caminhoIcone); },
-        qualNome(indice) { return dados?.inventario[indice]?.nome; },
-        qualDescricao(indice) { return dados?.inventario[indice]?.descricao; },
+        caminhoIcone(indice, relativo = './') { return relativo + (dados?.inventario[indice]?.iconPath); },
+        qualNome(indice) { return dados?.inventario[indice]?.name; },
+        qualDescricao(indice) { return dados?.inventario[indice]?.description; },
+        qualRaridade(indice) { return dados?.inventario[indice]?.rarity; },
 
         qualUrlIcone(indice, relativo = './') { return `url('${this.caminhoIcone(indice, relativo)}')`; }
     })
