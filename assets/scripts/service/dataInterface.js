@@ -49,9 +49,7 @@ const dados = {
         { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista I', descricao: 'Nona Conquista!', xp: 300, clamado: false },
         { caminhoIcone: 'assets/images/icones/progresso.png', nome: 'Conquista J', descricao: 'Décima Conquista!', xp: 400, clamado: false }
     ],
-    inventario: [
-        { caminhoIcone: '', nome: '', descricao: 'espaço para item' },
-    ],
+    inventario: [],
     ranking: {
         pessoal: [
             { id: '?', rank: '?1', nome: '?', nivel: '?', xp: 0 },
@@ -80,15 +78,6 @@ const dados = {
             { id: 'akledas', rank: '?', nome: 'você', nivel: '?', xp: 0 }
         ]
     }
-}
-
-
-function normalizarItemInventario(item) {
-    if (!item) return null;
-    const caminhoIcone = item.caminhoIcone ?? item.iconPath ?? item.icon_path ?? item.icon ?? '';
-    const nome = item.nome ?? item.name ?? '';
-    const descricao = item.descricao ?? item.description ?? '';
-    return { caminhoIcone, nome, descricao };
 }
 
 //Funções Internas
@@ -133,7 +122,7 @@ function solicitarLogin(){
 async function buscarDadosPerfil() {
   const dadosUsuario = (await fazerRequisicao('/user/me'))?.data;
   const moedas = (await fazerRequisicao('/tickets/balance'))?.data;
-  const xp = (await fazerRequisicao('/user/xp'))?.data;
+  const xp = (await fazerRequisicao('/xp/balance'))?.data;
   const nivel = (await fazerRequisicao('/user/level'))?.data;
 
   dados.perfil.id = dadosUsuario?.id ?? dados.perfil.id;
@@ -141,7 +130,7 @@ async function buscarDadosPerfil() {
   dados.perfil.nome = dadosUsuario?.name ?? dados.perfil.nome;
   dados.perfil.nivel = nivel?.level ?? dados.perfil.nivel;
   dados.perfil.moedas = moedas?.balance ?? dados.perfil.moedas;
-  dados.perfil.xp = xp?.xp ?? dados.perfil.xp;
+  dados.perfil.xp = xp?.balance ?? dados.perfil.xp;
 
 }
 async function buscarDadosSlots(){
@@ -153,9 +142,9 @@ async function buscarDadosSlots(){
 
     const slotDefault = {
         /*Slot Bloqueado*/
-        id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10,
+        id: "ss_01", name: 'Slot Bloqueado', rarity: '', price: 10, xpReward: 0,
         description: 'Slot bloqueado temporariamente',
-        blocked: true, revealed: false, claimed: false,
+        blocked: true, revealed: false, claimed: false, convertedToXp: false,
         iconPath: 'assets/images/icones/cadeado.png',
         cardPath: 'assets/images/silhueta-cadeado.png'
     }
@@ -185,16 +174,8 @@ async function buscarDadosColecao(){
 }
 
 async function buscarDadosInventario(){
-    const inventarioResposta = (await fazerRequisicao('/inventory'))?.data;
-    const itensOrigemBruto = inventarioResposta?.items ?? inventarioResposta?.inventory ?? inventarioResposta;
-    const itensOrigem = Array.isArray(itensOrigemBruto) ? itensOrigemBruto : [];
-
-    if (!itensOrigem.length) return;
-
-    const itensNormalizados = itensOrigem.map(normalizarItemInventario).filter(Boolean);
-    if (!itensNormalizados.length) return;
-
-    dados.inventario = itensNormalizados;
+    const resposta = (await fazerRequisicao('/inventory'))?.data;
+    dados.inventario = resposta?.items ?? dados.inventario;
 }
 
 async function fazerRequisicao(rota, metodo = 'GET', corpo = null) {
@@ -277,15 +258,17 @@ function criarSlot(pool, slot) {
         qualNome() { return dados?.slots[pool]?.[slot]?.name; },
         qualDescricao() { return dados?.slots[pool]?.[slot]?.description; },
 
-        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; },
+        foiBloqueado() { return dados?.slots[pool]?.[slot]?.blocked ?? false; }, //Se vir algum dado, desbloquear slot
         foiRevelado() { return dados?.slots[pool]?.[slot]?.revealed; },
         foiComprado() { return dados?.slots[pool]?.[slot]?.claimed; },
+        foiConvertidoEmXp() { return dados?.slots[pool]?.[slot]?.convertedToXp; },
 
         qualCaminhoIcone(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.iconPath);},
         qualCaminhoCarta(relativo = './') {return relativo + (dados?.slots[pool]?.[slot]?.cardPath);},
 
         qualRaridade() { return dados?.slots[pool]?.[slot]?.rarity; },
         qualCusto() { return dados?.slots[pool]?.[slot]?.price; },
+        quantoXp() { return dados?.slots[pool]?.[slot]?.xpReward ?? 0; },
 
         // Formatação dos dados
         qualUrlIcone(relativo = './') { return `url('${this.qualCaminhoIcone(relativo)}')` },
@@ -313,7 +296,7 @@ function criarSlot(pool, slot) {
         },
 
         pegarCustoFormatado() {
-            if (this.foiComprado()) return 'Obtido'
+            if (this.foiComprado()) return this.foiConvertidoEmXp ? 'Convertido em XP' : 'Obtido';
             if (this.qualCusto() > 0) return this.qualCusto();
             else return 'Grátis';
         },
@@ -337,6 +320,7 @@ function criarSlot(pool, slot) {
 
             if(resposta?.ok){
                 dados.slots[pool][slot].claimed = true;
+                await buscarDadosInventario();
                 return true;
             } else {
                 return false;
@@ -435,9 +419,10 @@ function criarProgresso() {
 function criarInventario() {
     return Object.freeze({
         tamanho() { return dados?.inventario?.length ?? 0; },
-        caminhoIcone(indice, relativo = './') { return relativo + (dados?.inventario[indice]?.caminhoIcone); },
-        qualNome(indice) { return dados?.inventario[indice]?.nome; },
-        qualDescricao(indice) { return dados?.inventario[indice]?.descricao; },
+        caminhoIcone(indice, relativo = './') { return relativo + (dados?.inventario[indice]?.iconPath); },
+        qualNome(indice) { return dados?.inventario[indice]?.name; },
+        qualDescricao(indice) { return dados?.inventario[indice]?.description; },
+        qualRaridade(indice) { return dados?.inventario[indice]?.rarity; },
 
         qualUrlIcone(indice, relativo = './') { return `url('${this.caminhoIcone(indice, relativo)}')`; }
     })

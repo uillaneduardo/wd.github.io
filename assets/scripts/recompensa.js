@@ -59,11 +59,11 @@ selecionarDiario();
 function selecionarDiario() {
 
     btnSelecionado = Server.Pool.Diario;
-    btnSelecionarDiario.classList.remove('btn-liberdade');
+    btnSelecionarDiario.classList.remove('btn-desabilitado');
     btnSelecionarDiario.classList.add('btn-autoescola');
 
-    btnSelecionarOferta.classList.remove('btn-autoescola');
-    btnSelecionarOferta.classList.add('btn-liberdade');
+    btnSelecionarOferta.classList.remove('btn-liberdade');
+    btnSelecionarOferta.classList.add('btn-desabilitado');
 
     aoSelecionar();
 }
@@ -71,10 +71,10 @@ function selecionarOferta() {
 
     btnSelecionado = Server.Pool.Oferta;
     btnSelecionarDiario.classList.remove('btn-autoescola');
-    btnSelecionarDiario.classList.add('btn-liberdade');
+    btnSelecionarDiario.classList.add('btn-desabilitado');
 
-    btnSelecionarOferta.classList.remove('btn-liberdade');
-    btnSelecionarOferta.classList.add('btn-autoescola');
+    btnSelecionarOferta.classList.remove('btn-desabilitado');
+    btnSelecionarOferta.classList.add('btn-liberdade');
 
     aoSelecionar();
 }
@@ -151,7 +151,10 @@ function popupConfirmarCompra(slot) {
                         <i style="color: ${cardRaridadeCor}; font-size: 0.90rem; background-color: black;">
                             [${cardRaridade}]
                         </i>`;
-    const cardDescription = cardObject.qualDescricao();
+    const xp = cardObject.quantoXp();
+    const alertaItemDuplicado = `Atenção: você já possui este item. Caso prossiga, ele será convertido em ${xp*10} XP extra.`;
+    const corTextoAlerta = cardObject.foiConvertidoEmXp() ? 'color: red;' : '';
+    const cardDescription = cardObject.foiConvertidoEmXp() ? alertaItemDuplicado : cardObject.qualDescricao();
     const cardIcone = cardObject.qualCaminhoIcone();
     const cardPrice = cardObject.pegarCustoFormatado();
 
@@ -162,8 +165,9 @@ function popupConfirmarCompra(slot) {
 
             <img style="border-radius: 5px; width:100px; height: 100px;" src="${cardIcone}" alt="Icone">
 
-            <p style="text-align: justify;">
+            <p style="text-align: justify; ${corTextoAlerta}">
                 ${cardDescription}<br>
+                XP: ${xp}<br>
                 Custo: ${cardPrice}
             </p>
 
