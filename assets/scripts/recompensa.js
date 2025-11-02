@@ -136,15 +136,9 @@ function aoRevelarSlot(cardElement, slot) {
 
 }
 
-//debug 
- //   console.log({ slotId: cardObject.qualID?.() ?? dados.slots[btnSelecionado][slot].id, pool: btnSelecionado });
-    
-
 function popupConfirmarCompra(slot) {
-    
-    const cardObject = Server?.card(btnSelecionado, slot);
 
-    
+    const cardObject = Server?.card(btnSelecionado, slot);
 
     if (cardObject.foiComprado() || cardObject.foiBloqueado()) return;
 
